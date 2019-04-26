@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RNews.DAL;
 using RNews.DAL.dbContext;
 
 namespace RNews
@@ -33,12 +32,9 @@ namespace RNews
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("RNewsDatabase")));
-            services.AddDefaultIdentity<User>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("RNewsDatabase"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
