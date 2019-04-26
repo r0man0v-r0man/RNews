@@ -24,6 +24,7 @@ namespace RNews.Models.ViewModels
         [Compare("Password",ErrorMessage = "The password and confirmation password do not match.")]
         public string PasswordConfirm { get; set; }
         [Required]
+        [Display(Name = "Gender")]
         public GenderView Gender { get; set; }
 
     }
