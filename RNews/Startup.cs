@@ -32,12 +32,17 @@ namespace RNews
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                
+            });
+            services.AddAuthentication().AddCookie(options =>
+            {
+                options.LoginPath = "/auth/login";
+                options.AccessDeniedPath = "/auth/accessdenied";
             });
             services.AddDbContext<ApplicationDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("RNewsDatabase")));
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
         }
