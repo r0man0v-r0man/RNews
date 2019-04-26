@@ -6,33 +6,37 @@
 
 <div class="row justify-content-center">
     <div class="col-md-4 ">
-        <h1 class="justify-content-center">Registration</h1>
+        <h1 class="text-center">Registration</h1>
 
         <hr />
         <form asp-action="Register">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <input asp-for="Email" class="form-control" placeholder="Email address" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" placeholder="Password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PasswordConfirm" class="control-label"></label>
-                <input asp-for="PasswordConfirm" class="form-control" />
+                <input asp-for="PasswordConfirm" class="form-control" placeholder="Confirm password" />
                 <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<RNews.Models.ViewModels.GenderView>()" class="form-control"></select>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="gender">Gender: </label>
+                </div>
+                <select asp-for="Gender" id="gender" asp-items="Html.GetEnumSelectList<RNews.Models.ViewModels.GenderView>()" class="form-control"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block" />
             </div>
         </form>
     </div>
