@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190425211002_testInitDb")]
-    partial class testInitDb
+    [Migration("20190428185818_initData")]
+    partial class initData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

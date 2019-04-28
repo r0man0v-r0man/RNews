@@ -11,7 +11,6 @@ using RNews.Models.ViewModels;
 
 namespace RNews.Controllers.Auth
 {
-    [Authorize]
     public class AuthController : Controller
     {
         private UserManager<User> userManager { get;  }
