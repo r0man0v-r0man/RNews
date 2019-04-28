@@ -38,7 +38,9 @@ namespace RNews
             {
                 options.LoginPath = "/auth/login";
                 options.AccessDeniedPath = "/auth/accessdenied";
-            });
+            })
+                    
+            ;
             services.AddDbContext<ApplicationDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("RNewsDatabase")));
             services.AddIdentity<User, IdentityRole>()
