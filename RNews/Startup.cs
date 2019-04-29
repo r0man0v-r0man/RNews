@@ -48,8 +48,8 @@ namespace RNews
             })
                 .AddGoogle(options =>
                  {
-                     options.ClientId = "992356344313-782hen42mjrmheel8415uoe63r2tgsek.apps.googleusercontent.com";
-                     options.ClientSecret = "I6o49F54Ms4CRuGutcG7LOR7";
+                     options.ClientId = "******";
+                     options.ClientSecret = "************";
                      
                  })
             ;
