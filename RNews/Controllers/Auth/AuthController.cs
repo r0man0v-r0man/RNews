@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -51,6 +52,10 @@ namespace RNews.Controllers.Auth
             return View(model);
         }
 
+        
+
+
+
         [HttpGet]
         public IActionResult Login(string returnUrl = null) => View(new LoginViewModel() { ReturnUrl = returnUrl});
         [HttpPost]
@@ -83,44 +88,42 @@ namespace RNews.Controllers.Auth
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOut()
         {
-            await signInManager.SignOutAsync();
+            await HttpContext.SignOutAsync("Identity.Application");
+            await HttpContext.SignOutAsync("Identity.External");
             return RedirectToAction("Index", "Home");
         }
-        [HttpGet("~/signin")]
-        public async Task<IActionResult> SignIn()
-        {
-            return View("SignIn", await HttpContext.GetExternalProvidersAsync());
-        }
 
-        [HttpPost("~/signin")]
-        public async Task<IActionResult> SignIn([FromForm] string provider)
+
+
+
+        public IActionResult SignInWithGoogle()
         {
-            // Note: the "provider" parameter corresponds to the external
-            // authentication provider choosen by the user agent.
-            if (string.IsNullOrWhiteSpace(provider))
+            var authenticationProperties = new AuthenticationProperties
             {
-                return BadRequest();
-            }
+                RedirectUri = Url.Action("HandleExternalLogin", "Auth")
+            };
 
-            if (!await HttpContext.IsProviderSupportedAsync(provider))
-            {
-                return BadRequest();
-            }
-
-            // Instruct the middleware corresponding to the requested external identity
-            // provider to redirect the user agent to its own authorization endpoint.
-            // Note: the authenticationScheme parameter must match the value configured in Startup.cs
-            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, provider);
+            return Challenge(authenticationProperties, "TempCookie");
         }
 
-        [HttpGet("signout"), HttpPost("signout")]
-        public IActionResult SignOut()
+        public async Task<IActionResult> HandleExternalLogin()
         {
-            // Instruct the cookies middleware to delete the local cookie created
-            // when the user agent is redirected from the external identity provider
-            // after a successful authentication flow (e.g Google or Facebook).
-            return SignOut(new AuthenticationProperties { RedirectUri = "/" },
-                CookieAuthenticationDefaults.AuthenticationScheme);
+            var result = await HttpContext.AuthenticateAsync("TempCookie");
+           
+            User user = new User {
+                UserName = result.Principal.FindFirstValue(ClaimTypes.Name),
+                Email = result.Principal.FindFirstValue(ClaimTypes.Email)
+            };
+            var u = await userManager.CreateAsync(user);
+            if (u.Succeeded)
+            {
+                await signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home");
+            } 
+            //do something the the claimsPrincipal, possibly create a new one with additional information
+            //create a local user, etc
+            return Redirect("~/");
         }
+
     }
 }

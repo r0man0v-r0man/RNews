@@ -1,5 +1,5 @@
-﻿@model RNews.Models.ViewModels.RegisterViewModel
-
+﻿@inject Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider schemeProvider
+@model RNews.Models.ViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -39,7 +39,18 @@
             </div>
         </form>
         <hr />
-        @*<partial name="_SignIn" />*@
+        
+
+        @foreach (var scheme in await schemeProvider.GetRequestHandlerSchemesAsync())
+        {
+            <form asp-action="signin" asp-controller="authexternal" method="post">
+                <input type="hidden" name="Provider" value="@scheme.Name" />
+                <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+
+                <button class="btn btn-lg btn-link btn-block" type="submit">Connect using @scheme.DisplayName</button>
+            </form>
+        }
+
     </div>
 </div>
 
