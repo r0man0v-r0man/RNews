@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using RNews.DAL;
 using RNews.Extensions;
 using RNews.Models.ViewModels;
+using RNews.Services;
 
 namespace RNews.Controllers
 {
@@ -25,7 +26,7 @@ namespace RNews.Controllers
 
         public async Task<IActionResult> SignIn()
         {
-            return View( await HttpContext.GetExternalProvidersAsync());
+            return View(await HttpContext.GetExternalProvidersAsync());
         }
 
         [HttpPost]
@@ -40,26 +41,27 @@ namespace RNews.Controllers
             {
                 return BadRequest();
             }
-           
 
-            return Challenge(new AuthenticationProperties { RedirectUri ="/LogIn"} ,provider);
+
+            return Challenge(new AuthenticationProperties { RedirectUri = "/LogInExternal" }, provider);
         }
-        [Route("~/LogIn")]
+        [Route("~/LogInExternal")]
         public async Task<IActionResult> LogIn()
         {
             var authResult = await HttpContext.AuthenticateAsync("Identity.External");
             User externalUser = new User
             {
-                UserName = (string) authResult.Principal.FindFirstValue(ClaimTypes.Email),
+                UserName = authResult.Principal.FindFirstValue(ClaimTypes.Email),
                 Email = authResult.Principal.FindFirstValue(ClaimTypes.Email)
             };
-            var sd = await userManager.CreateAsync(externalUser);
-            if (sd.Succeeded)
+            var result = await userManager.CreateAsync(externalUser, PasswordGenerator.Generate());
+            if (result.Succeeded)
             {
-                await signInManager.SignInAsync(externalUser, isPersistent:false);
+                await signInManager.SignInAsync(externalUser, isPersistent: false);
             }
 
             return RedirectToAction("Index", "Home");
         }
+       
     }
 }

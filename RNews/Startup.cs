@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RNews.DAL;
 using RNews.DAL.dbContext;
+using RNews.Hubs;
 
 namespace RNews
 {
@@ -44,11 +45,17 @@ namespace RNews
                 
             services.AddDbContext<ApplicationDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("RNewsDatabase")));
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options=> {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+            })
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +71,10 @@ namespace RNews
             }
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<GeneratePasswordHub>("/GeneratePasswordHub");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

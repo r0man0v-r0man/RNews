@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,10 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using RNews.DAL;
 using RNews.Extensions;
 using RNews.Models.ViewModels;
+using RNews.Services;
 
 namespace RNews.Controllers.Auth
 {
-    
     public class AuthController : Controller
     {
         private UserManager<User> userManager { get;  }
@@ -52,10 +51,6 @@ namespace RNews.Controllers.Auth
             return View(model);
         }
 
-        
-
-
-
         [HttpGet]
         public IActionResult Login(string returnUrl = null) => View(new LoginViewModel() { ReturnUrl = returnUrl});
         [HttpPost]
@@ -91,38 +86,6 @@ namespace RNews.Controllers.Auth
             await HttpContext.SignOutAsync("Identity.Application");
             await HttpContext.SignOutAsync("Identity.External");
             return RedirectToAction("Index", "Home");
-        }
-
-
-
-
-        public IActionResult SignInWithGoogle()
-        {
-            var authenticationProperties = new AuthenticationProperties
-            {
-                RedirectUri = Url.Action("HandleExternalLogin", "Auth")
-            };
-
-            return Challenge(authenticationProperties, "TempCookie");
-        }
-
-        public async Task<IActionResult> HandleExternalLogin()
-        {
-            var result = await HttpContext.AuthenticateAsync("TempCookie");
-           
-            User user = new User {
-                UserName = result.Principal.FindFirstValue(ClaimTypes.Name),
-                Email = result.Principal.FindFirstValue(ClaimTypes.Email)
-            };
-            var u = await userManager.CreateAsync(user);
-            if (u.Succeeded)
-            {
-                await signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");
-            } 
-            //do something the the claimsPrincipal, possibly create a new one with additional information
-            //create a local user, etc
-            return Redirect("~/");
         }
 
     }
