@@ -17,6 +17,13 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "library": "popper.js@1.15.0",
+      "destination": "wwwroot/lib/popper/",
+      "files": [
+        "popper.min.js"
+      ]
     }
   ]
 }

@@ -42,7 +42,10 @@ namespace RNews
                     options.ClientSecret = "I6o49F54Ms4CRuGutcG7LOR7";
                     options.CallbackPath = "/signin-google";
                 });
-                
+            services.ConfigureExternalCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(7);
+            });  
             services.AddDbContext<ApplicationDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("RNewsDatabase")));
             services.AddIdentity<User, IdentityRole>(options=> {

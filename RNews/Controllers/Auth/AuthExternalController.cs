@@ -52,9 +52,10 @@ namespace RNews.Controllers
             User externalUser = new User
             {
                 UserName = authResult.Principal.FindFirstValue(ClaimTypes.Email),
-                Email = authResult.Principal.FindFirstValue(ClaimTypes.Email)
+                Email = authResult.Principal.FindFirstValue(ClaimTypes.Email),
             };
-            var result = await userManager.CreateAsync(externalUser, PasswordGenerator.Generate());
+
+            var result = await userManager.CreateAsync(externalUser);
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(externalUser, isPersistent: false);
