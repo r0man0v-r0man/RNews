@@ -38,7 +38,7 @@ namespace RNews.Controllers.Auth
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return LocalRedirect("~/Profile");
                 }
                 else
                 {
@@ -68,7 +68,7 @@ namespace RNews.Controllers.Auth
                     }
                     else
                     {
-                        return LocalRedirect("~/Profile");
+                        return RedirectToAction("Index","Home");
                     }
                 }
                 else
