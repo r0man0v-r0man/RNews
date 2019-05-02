@@ -68,7 +68,7 @@ namespace RNews.Controllers.Auth
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return LocalRedirect("~/Profile");
                     }
                 }
                 else

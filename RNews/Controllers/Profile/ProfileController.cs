@@ -8,7 +8,8 @@ namespace RNews.Controllers.Profile
 {
     public class ProfileController : Controller
     {
-        public IActionResult Index()
+        [Route("~/Profile")]
+        public IActionResult Profile()
         {
             return View();
         }

@@ -61,7 +61,7 @@ namespace RNews.Controllers
                 await signInManager.SignInAsync(externalUser, isPersistent: false);
             }
 
-            return RedirectToAction("Index", "Home");
+            return LocalRedirect("~/Profile");
         }
        
     }

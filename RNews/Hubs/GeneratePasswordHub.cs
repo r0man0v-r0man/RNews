@@ -9,10 +9,6 @@ namespace RNews.Hubs
 {
     public class GeneratePasswordHub : Hub
     {
-        public async Task Send()
-        {
-            var randomPassword = PasswordGenerator.Generate();
-            await  Clients.Caller.SendAsync("sendPassword", randomPassword);
-        }
+        public async Task Send() => await Clients.Caller.SendAsync("sendPassword", PasswordGenerator.Generate());
     }
 }
