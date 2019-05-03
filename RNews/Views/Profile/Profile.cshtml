@@ -1,12 +1,43 @@
-﻿
+﻿@model RNews.Models.ViewModels.ProfileViewModel
+
 @{
     ViewData["Title"] = "Profile";
 }
 
-<h2 class="font-weight-light">Profile - @User.Identity.Name</h2>
-<hr />
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h4 class="text-center font-weight-light">@Model.Name</h4>
+        <hr />
+        <div class="row align-content-center">
+            <div class="col-md-3">
+                <div class="text-right">
+                    <label asp-for="Name" class="font-weight-light "></label>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <input asp-for="Name" class="form-control" placeholder="Email address" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="text-right">
+                    <label asp-for="Email" class="font-weight-light"></label>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <input asp-for="Email" class="form-control" placeholder="Email address" />
+                </div>
+            </div>
+        </div>
 
-@if (User.Identity.IsAuthenticated)
+        
+    </div>
+</div>
+
+@*@if (User.Identity.IsAuthenticated)
 {
     @foreach (var claim in User.Claims)
     {
@@ -16,4 +47,4 @@
 else
 {
     <p>User is not signed in</p>
-}
+}*@
