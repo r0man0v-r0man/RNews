@@ -24,6 +24,10 @@
       "files": [
         "popper.min.js"
       ]
+    },
+    {
+      "library": "simplemde@1.11.2",
+      "destination": "wwwroot/simplemde/"
     }
   ]
 }

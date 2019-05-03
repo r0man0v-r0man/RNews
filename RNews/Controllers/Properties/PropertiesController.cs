@@ -9,16 +9,16 @@ using RNews.Models.ViewModels;
 
 namespace RNews.Controllers.Profile
 {
-    public class ProfileController : Controller
+    public class PropertiesController : Controller
     {
         private UserManager<User> userManager { get; }
-        public ProfileController(UserManager<User> userManager)
+        public PropertiesController(UserManager<User> userManager)
         {
             this.userManager = userManager;
         }
         
-        [Route("~/Profile")]
-        public IActionResult Profile(ProfileViewModel model)
+        [Route("~/Properties")]
+        public IActionResult Properties(ProfileViewModel model)
         {
             var userId = userManager.GetUserId(HttpContext.User);
             var user = userManager.FindByIdAsync(userId).Result;

@@ -13,10 +13,10 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
-    
+
 </head>
 <body>
     <header>
@@ -41,8 +41,12 @@
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Profile" asp-action="Profile"> @User.Identity.Name</a>
+                            <li class="dropdown">
+                                <button class="dropdown-toggle nav-link nav-link btn btn-link text-dark" data-toggle="dropdown"> @User.Identity.Name</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link text-dark" asp-controller="Properties" asp-action="Properties">Properties</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="Publication" asp-action="Publication">Publications</a></li>
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <form class="form-inline" asp-controller="Auth" asp-action="LogOut" asp-route-returnUrl="@Url.Action("Index", "Home")">
@@ -51,8 +55,6 @@
                             </li>
                         }
                     </ul>
-
-
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -100,6 +102,6 @@
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-     @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

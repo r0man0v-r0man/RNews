@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Publications";
+}
+    <head>
+        <link href="~/simplemde/simplemde.min.css" rel="stylesheet" />
+    </head>
+<h4 class="font-weight-light">Publications</h4>
+<hr />
+<div class="row">
+
+    <div class="col-md-8">
+        <h3>New Publication</h3>
+        <br />
+        <form>
+            <div class="form-group row">
+                <label for="staticTitle" class="col-sm-2 col-form-label font-weight-bold text-right">Title:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control-plaintext" id="staticTitle" value="" placeholder="Your Title">
+                </div>
+            </div>
+        </form>
+        <textarea id="post-text"></textarea>
+        <button type="submit" class="btn btn-primary btn-block">Publish</button>
+    </div>
+    <div class="col-md-4">
+       
+    </div>
+   
+</div>
+
+
+@section Scripts{
+    <script src="~/simplemde/simplemde.min.js"></script>
+    <script src="~/js/simplemde.js"></script>
+}
+
+   
