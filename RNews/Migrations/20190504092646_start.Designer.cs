@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190428185818_initData")]
-    partial class initData
+    [Migration("20190504092646_start")]
+    partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,9 +141,18 @@ namespace RNews.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000);
 
-                    b.Property<string>("UserId");
+                    b.Property<int?>("Rating");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("PostId");
 
@@ -254,7 +263,8 @@ namespace RNews.Migrations
                 {
                     b.HasOne("RNews.DAL.User", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

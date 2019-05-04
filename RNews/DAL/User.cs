@@ -9,7 +9,7 @@ namespace RNews.DAL
     public class User : IdentityUser
     {
         public Gender Gender { get; set; }
-        public ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
     public enum Gender
     {
