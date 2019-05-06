@@ -10,6 +10,10 @@ namespace RNews.Models.ViewModels
         public string Name { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-
+        public ICollection<string> Posts { get; set; }
+        public ProfileViewModel()
+        {
+            Posts = new List<string>();
+        }
     }
 }
