@@ -129,11 +129,26 @@ namespace RNews.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("RNews.DAL.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("RNews.DAL.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Content");
 
@@ -153,6 +168,8 @@ namespace RNews.Migrations
                         .IsRequired();
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -259,6 +276,11 @@ namespace RNews.Migrations
 
             modelBuilder.Entity("RNews.DAL.Post", b =>
                 {
+                    b.HasOne("RNews.DAL.Category", "Category")
+                        .WithMany("Posts")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("RNews.DAL.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")

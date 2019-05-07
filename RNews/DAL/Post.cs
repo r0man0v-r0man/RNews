@@ -15,10 +15,12 @@ namespace RNews.DAL
         public int? Rating { get; set; }
         public string UserId { get; set; }
         public virtual User User { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
 
         public Post()
         {
-            User = new User();
+           
             Created = DateTime.Now;
         }
     }

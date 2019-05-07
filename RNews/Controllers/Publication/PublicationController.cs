@@ -39,7 +39,8 @@ namespace RNews.Controllers.Publication
                 Title = model.Title,
                 Description = model.Description,
                 Content = model.Content,
-                User = user
+                User = user,
+                CategoryId = 1
             };
             db.Posts.Add(newPost);
             db.SaveChanges();

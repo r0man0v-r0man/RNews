@@ -17,7 +17,7 @@ namespace RNews.Units
         public static IEnumerable<Post> LastAddedPosts(ApplicationDbContext db, int count) => db.Posts.OrderByDescending(c => c.Created).Take(count).ToList();
         public static List<string> LastAddedPostsTitle(ApplicationDbContext db, int count)
         {
-            var list = db.Posts.OrderByDescending(c => c.Created).Take(count).ToList();
+            var list = db.Posts.OrderByDescending(c => c.Rating).Take(count).ToList();
             var result = new List<string>();
             foreach (var item in list)
             {
