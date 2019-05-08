@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RNews.Models.ViewModels
 {
-    public class PostViewModel
+    public class PostCreateViewModel
     {
         public string Title { get; set; }
         public string Content { get; set; }

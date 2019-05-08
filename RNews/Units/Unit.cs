@@ -10,14 +10,12 @@ namespace RNews.Units
 {
     public static class Unit
     {
-        //users
-        public static IEnumerable<User> TopPublicatedUsers(ApplicationDbContext db, int count) => db.People.OrderByDescending(c => c.Posts).Take(count).ToList();
         //posts
         public static IEnumerable<Post> TopRatingPost(ApplicationDbContext db, int count) => db.Posts.OrderByDescending(c => c.Rating).Take(count).ToList();
         public static IEnumerable<Post> LastAddedPosts(ApplicationDbContext db, int count) => db.Posts.OrderByDescending(c => c.Created).Take(count).ToList();
         public static List<string> LastAddedPostsTitle(ApplicationDbContext db, int count)
         {
-            var list = db.Posts.OrderByDescending(c => c.Rating).Take(count).ToList();
+            var list = db.Posts.OrderByDescending(c => c.Created).Take(count).ToList();
             var result = new List<string>();
             foreach (var item in list)
             {
@@ -25,6 +23,17 @@ namespace RNews.Units
             }
             return result;
         }
-
+        public static Post GetPost(ApplicationDbContext db, int id)
+        {
+            Post post = db.Posts.Find(id);
+            if (post != null)
+            {
+                return post;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

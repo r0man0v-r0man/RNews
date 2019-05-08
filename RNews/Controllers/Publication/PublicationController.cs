@@ -8,18 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
+using RNews.Units;
 
 namespace RNews.Controllers.Publication
 {
-    [Authorize]
+    
     public class PublicationController : Controller
     {
-        private UserManager<User> userManager { get; }
-        private ApplicationDbContext db;
+        private UserManager<User> UserManager { get; }
+        private readonly ApplicationDbContext db;
         public PublicationController(UserManager<User> userManager, ApplicationDbContext db)
         {
             this.db = db;
-            this.userManager = userManager;
+            this.UserManager = userManager;
         }
         public IActionResult Publication()
         {
@@ -30,10 +31,10 @@ namespace RNews.Controllers.Publication
             return View();
         }
         [HttpPost]
-        public IActionResult Create(PostViewModel model)
+        public IActionResult Create(PostCreateViewModel model)
         {
-            var userId = userManager.GetUserId(HttpContext.User);
-            var user = userManager.FindByIdAsync(userId).Result;
+            var userId = UserManager.GetUserId(HttpContext.User);
+            var user = UserManager.FindByIdAsync(userId).Result;
             var newPost = new Post
             {
                 Title = model.Title,
@@ -46,5 +47,19 @@ namespace RNews.Controllers.Publication
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Show(int id)
+        {
+            Post post = Unit.GetPost(db, id);
+            var showPost = new PostShowViewModel
+            {
+                Title = post.Title,
+                Content = post.Content
+            };
+            return View(showPost);
+        }
+
+
+
     }
 }

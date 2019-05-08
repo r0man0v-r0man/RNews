@@ -16,12 +16,12 @@ namespace RNews.Controllers
 {
     public class AuthExternalController : Controller
     {
-        private UserManager<User> userManager { get; }
-        private SignInManager<User> signInManager { get; }
+        private UserManager<User> UserManager { get; }
+        private SignInManager<User> SignInManager { get; }
         public AuthExternalController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            this.UserManager = userManager;
+            this.SignInManager = signInManager;
         }
 
         public async Task<IActionResult> SignIn()
@@ -55,10 +55,10 @@ namespace RNews.Controllers
                 Email = authResult.Principal.FindFirstValue(ClaimTypes.Email),
             };
 
-            var result = await userManager.CreateAsync(externalUser);
+            var result = await UserManager.CreateAsync(externalUser);
             if (result.Succeeded)
             {
-                await signInManager.SignInAsync(externalUser, isPersistent: false);
+                await SignInManager.SignInAsync(externalUser, isPersistent: false);
             }
 
             return LocalRedirect("~/Properties");

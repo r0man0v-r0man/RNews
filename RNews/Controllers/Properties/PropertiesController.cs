@@ -13,18 +13,18 @@ namespace RNews.Controllers.Profile
 {
     public class PropertiesController : Controller
     {
-        private UserManager<User> userManager { get; }
-        private ApplicationDbContext db;
+        private UserManager<User> UserManager { get; }
+        private readonly ApplicationDbContext db;
         public PropertiesController(UserManager<User> userManager, ApplicationDbContext db)
         {
             this.db = db;
-            this.userManager = userManager;
+            this.UserManager = userManager;
         }
         
         [Route("~/Properties")]
         public IActionResult Properties(ProfileViewModel model)
         {
-            var userId = userManager.GetUserId(HttpContext.User);
+            var userId = UserManager.GetUserId(HttpContext.User);
             var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == userId);
 
             model.Name = user.UserName;
