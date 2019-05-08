@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RNews.DAL;
+using RNews.Extensions;
 using RNews.Models.ViewModels;
+using RNews.Services;
 
 namespace RNews.Controllers.Auth
 {
     public class AuthController : Controller
     {
-        private UserManager<User> userManager { get;  }
-        private SignInManager<User> signInManager { get; }
+        private UserManager<User> UserManager { get;  }
+        private SignInManager<User> SignInManager { get; }
 
         public AuthController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            this.UserManager = userManager;
+            this.SignInManager = signInManager;
         }
 
         [HttpGet]
@@ -30,11 +34,11 @@ namespace RNews.Controllers.Auth
             if (ModelState.IsValid)
             {
                 User user = new User { UserName = model.Email, Email = model.Email, Gender  = (Gender) model.Gender};
-                var result = await userManager.CreateAsync(user, model.Password);
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    await SignInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect("~/Properties");
                 }
                 else
                 {
@@ -55,7 +59,7 @@ namespace RNews.Controllers.Auth
         {
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(model.Email,model.Password,model.RememberMe,false);
+                var result = await SignInManager.PasswordSignInAsync(model.Email,model.Password,model.RememberMe,false);
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
@@ -64,7 +68,7 @@ namespace RNews.Controllers.Auth
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index","Home");
                     }
                 }
                 else
@@ -79,7 +83,8 @@ namespace RNews.Controllers.Auth
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOut()
         {
-            await signInManager.SignOutAsync();
+            await HttpContext.SignOutAsync("Identity.Application");
+            await HttpContext.SignOutAsync("Identity.External");
             return RedirectToAction("Index", "Home");
         }
 

@@ -8,6 +8,26 @@
       "files": [
         "css/all.min.css"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "@aspnet/signalr@1",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
+    },
+    {
+      "library": "popper.js@1.15.0",
+      "destination": "wwwroot/lib/popper/",
+      "files": [
+        "popper.min.js"
+      ]
+    },
+    {
+      "library": "simplemde@1.11.2",
+      "destination": "wwwroot/simplemde/"
     }
   ]
 }

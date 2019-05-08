@@ -13,9 +13,10 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 <body>
     <header>
@@ -27,13 +28,39 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                    <ul class="navbar-nav">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Auth" asp-action="Register"> Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Auth" asp-action="LogIn">LogIn</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="dropdown">
+                                <button class="dropdown-toggle nav-link nav-link btn btn-link text-dark" data-toggle="dropdown"> @User.Identity.Name</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link text-dark" asp-controller="Properties" asp-action="Properties">Properties</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="Publication" asp-action="Publication">Publications</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline" asp-controller="Auth" asp-action="LogOut" asp-route-returnUrl="@Url.Action("Index", "Home")">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">LogOut</button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -43,6 +70,8 @@
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
+
+
         </main>
     </div>
 
@@ -55,6 +84,7 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"

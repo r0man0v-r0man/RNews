@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190425211002_testInitDb")]
-    partial class testInitDb
+    [Migration("20190507173128_fst")]
+    partial class fst
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,21 +131,47 @@ namespace RNews.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("RNews.DAL.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("RNews.DAL.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryId");
+
                     b.Property<string>("Content");
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000);
 
-                    b.Property<string>("UserId");
+                    b.Property<int?>("Rating");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -252,9 +278,15 @@ namespace RNews.Migrations
 
             modelBuilder.Entity("RNews.DAL.Post", b =>
                 {
+                    b.HasOne("RNews.DAL.Category", "Category")
+                        .WithMany("Posts")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("RNews.DAL.User", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

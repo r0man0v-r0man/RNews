@@ -4,14 +4,22 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RNews.DAL.dbContext;
 using RNews.Models;
+using RNews.Units;
 
 namespace RNews.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext db;
+        public HomeController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
         public IActionResult Index()
         {
+            ViewBag.LastAdded = Unit.LastAddedPostsTitle(db, 5);
             return View();
         }
 
