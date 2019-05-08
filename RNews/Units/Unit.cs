@@ -25,5 +25,6 @@ namespace RNews.Units
             }
             return result;
         }
+
     }
 }

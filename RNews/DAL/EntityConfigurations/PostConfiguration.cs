@@ -24,7 +24,9 @@ namespace RNews.DAL.EntityConfigurations
             builder
                 .HasOne(c => c.Category)
                 .WithMany(p => p.Posts)
-                .HasForeignKey(c => c.CategoryId);
+                .HasForeignKey(c => c.CategoryId)
+                .IsRequired();
+            
         }
     }
 }
