@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -50,11 +51,12 @@ namespace RNews.Controllers.Publication
 
         public IActionResult Show(int id)
         {
+            
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {
                 Title = post.Title,
-                Content = post.Content
+                Content = Markdown.ToHtml(post.Content)
             };
             return View(showPost);
         }
