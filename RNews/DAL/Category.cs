@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace RNews.DAL
 {
-    public class Category
+    public enum Category
     {
-        public int CategoryId { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
+        [Display(Description = "Java")]
+        Java = 1,
+        [Display(Description = "C#/.Net")]
+        CSharpAndDotNet,
+        [Display(Description = "C/C++")]
+        CAndCPlusPlus,
+        [Display(Description = "Web")]
+        Web
     }
 }

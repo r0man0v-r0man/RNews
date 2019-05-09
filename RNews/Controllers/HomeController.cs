@@ -19,7 +19,8 @@ namespace RNews.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.LastAdded = Unit.LastAddedPostsTitle(db, 5);
+            ViewBag.LastAdded = Unit.LastAddedPosts(db, 6);
+            ViewBag.TopRatingPost = Unit.TopRatingPost(db, 6);
             return View();
         }
 

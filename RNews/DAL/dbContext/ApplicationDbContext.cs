@@ -12,7 +12,6 @@ namespace RNews.DAL.dbContext
     {
         public virtual DbSet<User> People { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             Database.EnsureCreated();

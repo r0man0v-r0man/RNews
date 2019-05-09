@@ -42,7 +42,7 @@ namespace RNews.Controllers.Publication
                 Description = model.Description,
                 Content = model.Content,
                 User = user,
-                CategoryId = 1
+                Category = model.Category
             };
             db.Posts.Add(newPost);
             db.SaveChanges();
