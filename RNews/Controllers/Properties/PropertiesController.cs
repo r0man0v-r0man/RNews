@@ -22,7 +22,7 @@ namespace RNews.Controllers.Profile
         }
         
         [Route("~/Properties")]
-        public IActionResult Properties(ProfileViewModel model)
+        public IActionResult Properties(PropertyViewModel model)
         {
             var userId = UserManager.GetUserId(HttpContext.User);
             var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == userId);
@@ -30,10 +30,7 @@ namespace RNews.Controllers.Profile
             model.Name = user.UserName;
             model.Email = user.Email;
 
-            foreach (var post in user.Posts)
-            {
-                model.Posts.Add(post.Title);
-            }
+            
 
             return View(model);
         }

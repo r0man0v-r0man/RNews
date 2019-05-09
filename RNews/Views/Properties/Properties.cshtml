@@ -1,4 +1,4 @@
-﻿@model RNews.Models.ViewModels.ProfileViewModel
+﻿@model RNews.Models.ViewModels.PropertyViewModel
 
 @{
     ViewData["Title"] = "Properties";
@@ -22,14 +22,7 @@
                 </div>
             </div>
         </form>
-        <div class="form-group row">
-            <ul>
-                @foreach (var item in @Model.Posts)
-                {
-                    <li>@item</li>
-                }
-            </ul>
-        </div>
+        
         
     </div>
 </div>
