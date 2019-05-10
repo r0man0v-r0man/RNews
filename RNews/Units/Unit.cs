@@ -35,5 +35,15 @@ namespace RNews.Units
                 return null;
             }
         }
+        public static string CreateDescription(string descriptionText)
+        {
+            string[] temp = descriptionText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string tempDescription = "";
+            for (int i = 0; i < 14; i++)
+            {
+                tempDescription += " " + temp[i];
+            }
+            return String.Concat(tempDescription, "...");
+        }
     }
 }

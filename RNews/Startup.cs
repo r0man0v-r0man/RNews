@@ -77,6 +77,7 @@ namespace RNews
             app.UseSignalR(routes =>
             {
                 routes.MapHub<GeneratePasswordHub>("/GeneratePasswordHub");
+                routes.MapHub<UserPropertyHub>("/UserPropertyHub");
             });
             app.UseMvc(routes =>
             {

@@ -39,7 +39,7 @@ namespace RNews.Controllers.Publication
             var newPost = new Post
             {
                 Title = model.Title,
-                Description = model.Description,
+                Description = Unit.CreateDescription(model.Description),
                 Content = model.Content,
                 User = user,
                 Category = model.Category
