@@ -34,5 +34,11 @@ namespace RNews.Controllers.Profile
 
             return View(model);
         }
+        
+        public IActionResult Edit(string temp)
+        {
+            var jso = 123;
+            return r
+        }
     }
 }

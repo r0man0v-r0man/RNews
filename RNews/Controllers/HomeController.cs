@@ -15,17 +15,14 @@ namespace RNews.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext db;
-        private readonly IHubContext<RNewsCRUDHub> hubContext;
-        public HomeController(ApplicationDbContext db, IHubContext<RNewsCRUDHub> hubContext)
+        public HomeController(ApplicationDbContext db)
         {
-            this.hubContext = hubContext;
             this.db = db;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.LastAdded = Unit.LastAddedPosts(db, 6);
             ViewBag.TopRatingPost = Unit.TopRatingPost(db, 6);
-            await hubContext.Clients.All.SendAsync("Notify", $"Home page loaded at: {DateTime.Now}");
             return View();
         }
 

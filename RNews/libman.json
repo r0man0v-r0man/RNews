@@ -28,6 +28,10 @@
     {
       "library": "simplemde@1.11.2",
       "destination": "wwwroot/simplemde/"
+    },
+    {
+      "library": "jeditable.js@2.0.8",
+      "destination": "wwwroot/lib/jeditable/"
     }
   ]
 }

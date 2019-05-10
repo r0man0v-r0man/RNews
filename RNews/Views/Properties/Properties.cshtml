@@ -27,14 +27,19 @@
     </div>
 </div>
 
-@*@if (User.Identity.IsAuthenticated)
-{
-    @foreach (var claim in User.Claims)
-    {
-        <div>@claim.Issuer | @claim.Type | @claim.Value</div>
-    }
+<p class="editable-text">example</p>
+
+@section Scripts { 
+    <script src="~/lib/jeditable/jquery.jeditable.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".editable-text").editable('/properties/edit', {
+                submit: 'ok',
+                cancel: 'cancel',
+                cssclass: 'editable',
+                width: '99%'
+            });
+            console.log("iasdfasdfasf");
+        });
+    </script>
 }
-else
-{
-    <p>User is not signed in</p>
-}*@
