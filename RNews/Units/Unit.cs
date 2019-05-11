@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using System;
@@ -10,6 +11,12 @@ namespace RNews.Units
 {
     public static class Unit
     {
+        public static User GetUser(ApplicationDbContext db, string id) => db.People.Find(id);
+        public static void SaveUser(ApplicationDbContext db, User user)
+        {
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
         //posts
         public static IEnumerable<Post> TopRatingPost(ApplicationDbContext db, int count) => db.Posts.OrderByDescending(c => c.Rating).Take(count).ToList();
         public static IEnumerable<Post> LastAddedPosts(ApplicationDbContext db, int count) => db.Posts.OrderByDescending(c => c.Created).Take(count).ToList();
@@ -34,6 +41,16 @@ namespace RNews.Units
             {
                 return null;
             }
+        }
+        public static string CreateDescription(string descriptionText)
+        {
+            string[] temp = descriptionText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string tempDescription = "";
+            for (int i = 0; i < 14; i++)
+            {
+                tempDescription += " " + temp[i];
+            }
+            return String.Concat(tempDescription, "...");
         }
     }
 }

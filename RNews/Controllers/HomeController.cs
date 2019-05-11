@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RNews.DAL.dbContext;
+using RNews.Hubs;
 using RNews.Models;
 using RNews.Units;
 
@@ -19,7 +21,8 @@ namespace RNews.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.LastAdded = Unit.LastAddedPostsTitle(db, 5);
+            ViewBag.LastAdded = Unit.LastAddedPosts(db, 6);
+            ViewBag.TopRatingPost = Unit.TopRatingPost(db, 6);
             return View();
         }
 
