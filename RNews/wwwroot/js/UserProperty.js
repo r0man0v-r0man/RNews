@@ -66,10 +66,11 @@ $(document).ready(function () {
 });
 function doCheck() {
     var allFilled = true;
-
+    var name = document.getElementById("user-property-name").value;
+    var e = document.getElementById("user-property-email").value;
     var inputs = document.getElementsByTagName('input');
     for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].type == "text" && inputs[i].value == '') {
+        if (inputs[i].type == "text" && inputs[i].value == "")  {
             allFilled = false;
             break;
         }
