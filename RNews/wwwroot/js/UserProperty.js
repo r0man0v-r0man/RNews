@@ -40,7 +40,7 @@ document.getElementById("user-property-email").addEventListener("keypress", func
         event.preventDefault();
     }
 });
-document.getElementById("user-property-btn").addEventListener("click", function () {
+document.getElementById("user-property-btn").addEventListener("click", function (event) {
         var userId = document.getElementById("PropertyViewModelId").value;
         var name = document.getElementById("user-property-name").value;
         var email = document.getElementById("user-property-email").value;
@@ -48,6 +48,7 @@ document.getElementById("user-property-btn").addEventListener("click", function 
             .catch(function (err) {
                 return console.error(err.toString());
             });
+    event.preventDefault();
     }
 );
 $(document).ready(function () {
