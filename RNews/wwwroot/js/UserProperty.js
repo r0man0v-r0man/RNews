@@ -26,3 +26,19 @@ document.getElementById("user-property-name").addEventListener("keypress", funct
         event.preventDefault();
     }
 });
+
+
+$(document).ready(function () {
+
+    $('input[type=text]').keypress(function (e) {
+        if (e.keyCode == 13) {
+
+            if ($(this).attr('class') === "last") {
+                $('input[type=text]').eq(0).focus()
+            } else {
+
+                $('input[type=text]').closest('input[type=text]').focus();
+            }
+        }
+    });
+});
