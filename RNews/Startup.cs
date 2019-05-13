@@ -78,6 +78,8 @@ namespace RNews
             {
                 routes.MapHub<GeneratePasswordHub>("/GeneratePasswordHub");
                 routes.MapHub<UserPropertyHub>("/UserPropertyHub");
+                routes.MapHub<UserAvatarHub>("/UserAvatarHub");
+
             });
             app.UseMvc(routes =>
             {

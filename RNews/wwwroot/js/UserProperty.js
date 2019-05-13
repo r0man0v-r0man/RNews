@@ -1,11 +1,34 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/UserPropertyHub").build();
+var connectionAvatar = new signalR.HubConnectionBuilder().withUrl("/UserAvatarHub").build();
+//user avatar
+connectionAvatar.on("UserAvatarSend", function (path) {
+    console.log(path);
+});
+
+connectionAvatar.start()
+    .then(function () {
+        console.log("connection avatar started");
+    })
+    .catch(error => {
+        console.error(error.message);
+    });
+
+document.getElementById("user-avatar-download-btn").addEventListener("click", function (event) {
+    var userId = document.getElementById("PropertyViewModelId").value;
+    //var file = document.getElementById("exampleFormControlFile1").value;
+    connectionAvatar.invoke("UserAvatarRecieve", userId)
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+    event.preventDefault();
+});
+//user properties
 connection.on("UserPropertySend", function (name, email) {
     document.getElementById("user-property-name").value = name;
     document.getElementById("user-name").innerText = name;
     document.getElementById("user-property-email").value = email;
 });
-
 connection.start()
     .then(function () {
         console.log("connection started");
@@ -14,13 +37,13 @@ connection.start()
         console.error(error.message);
     });
 
-document.getElementById("user-property-name").addEventListener("keypress", function (event) {
+document.getElementById("user-property-name").addEventListener("keypress",async function (event) {
     var key = event.which || event.keyCode;
     if (key === 13) {
         var userId = document.getElementById("PropertyViewModelId").value;
         var name = document.getElementById("user-property-name").value;
         var email = document.getElementById("user-property-email").value;
-        connection.invoke("UserProperty", name, email, userId)
+       await  connection.invoke("UserProperty", name, email, userId)
             .catch(function (err) {
                 return console.error(err.toString());
             });
