@@ -30,6 +30,12 @@ namespace RNews.Units
             }
             return result;
         }
+        public static void DeletePost(ApplicationDbContext db, int id)
+        {
+            Post post = Unit.GetPost(db, id);
+            db.Posts.Remove(post);
+            db.SaveChanges();
+        }
         public static Post GetPost(ApplicationDbContext db, int id)
         {
             Post post = db.Posts.Find(id);

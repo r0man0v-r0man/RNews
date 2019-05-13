@@ -11,7 +11,11 @@
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text">@item.Description</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        @Html.ActionLink("Читать", "show", "publication", new { id = item.PostId }, new { @class = "btn btn-link" })
+                        <div class="btn-group">
+                           @Html.ActionLink("View", "show", "publication", new { id = item.PostId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                           @Html.ActionLink("Edit", "edit", "publication", new { id = item.PostId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                           @Html.ActionLink("Delete", "delete", "publication", new { id = item.PostId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                        </div>
                         <small class="text-muted">@item.Category | @item.Created.ToString("d")</small>
                     </div>
                 </div>
@@ -39,5 +43,4 @@
 <ul id="messages-list"></ul>
 @section Scripts {
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
-    <script src="~/js/RNewsCrud.js"></script>
 }

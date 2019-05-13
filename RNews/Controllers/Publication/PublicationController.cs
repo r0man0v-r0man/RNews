@@ -61,7 +61,15 @@ namespace RNews.Controllers.Publication
             return View(showPost);
         }
 
-
+        public IActionResult Delete(int id)
+        {
+            if (id != 0)
+            {
+                Unit.DeletePost(db, id);
+            }
+            
+            return RedirectToAction("Index", "Home");
+        }
 
     }
 }
