@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RNews.Migrations
 {
-    public partial class categoryEnumAdd : Migration
+    public partial class _123 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,9 @@ namespace RNews.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Gender = table.Column<int>(nullable: false)
+                    Gender = table.Column<int>(nullable: false),
+                    ImagePath = table.Column<string>(nullable: true),
+                    ImageName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

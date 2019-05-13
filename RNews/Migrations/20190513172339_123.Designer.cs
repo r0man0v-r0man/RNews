@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190509151813_categoryEnumAdd")]
-    partial class categoryEnumAdd
+    [Migration("20190513172339_123")]
+    partial class _123
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -179,6 +179,10 @@ namespace RNews.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<int>("Gender");
+
+                    b.Property<string>("ImageName");
+
+                    b.Property<string>("ImagePath");
 
                     b.Property<bool>("LockoutEnabled");
 

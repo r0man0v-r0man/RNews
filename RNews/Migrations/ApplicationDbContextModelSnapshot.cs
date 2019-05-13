@@ -178,6 +178,10 @@ namespace RNews.Migrations
 
                     b.Property<int>("Gender");
 
+                    b.Property<string>("ImageName");
+
+                    b.Property<string>("ImagePath");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");

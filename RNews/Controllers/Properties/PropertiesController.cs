@@ -27,7 +27,8 @@ namespace RNews.Controllers.Profile
             {
                 PropertyViewModelId = user.Id,
                 Name = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                ImagePath = user.ImagePath
             });
         }
 
