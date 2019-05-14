@@ -7,16 +7,9 @@
 <div class="row justify-content-center">
     <div class="col-md-8 row">
         <div class="col-md-4 box-shadow">
-            <img src="@Model.ImagePath" alt="User Avatar" class="img-fluid" />
+            <img src="@Model.ImagePath" alt="User Avatar" class="img-fluid" id="user-avatar" />
             <p id="src-image"></p>
-            <form>
-                <div class="form-group">
-                    <input type="file" class="form-control-file form-control-sm my-4" id="exampleFormControlFile1" enctype="multipart/form-data">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-secondary btn-block btn-sm" id="user-avatar-download-btn">Download</button>
-                </div>
-            </form>
+            <partial name="UploadAvatar" />
         </div>
         <div class="col-md-8">
             <h4 class="text-center font-weight-light" id="user-name">@Model.Name</h4>

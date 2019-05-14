@@ -2,8 +2,9 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/UserPropertyHub").build();
 var connectionAvatar = new signalR.HubConnectionBuilder().withUrl("/UserAvatarHub").build();
 //user avatar
-connectionAvatar.on("UserAvatarSend", function (path) {
-    console.log(path);
+connectionAvatar.on("UserAvatarSend", function (data) {
+    document.getElementById("src-image").innerText = data;
+    console.log(data);
 });
 
 connectionAvatar.start()
@@ -16,8 +17,7 @@ connectionAvatar.start()
 
 document.getElementById("user-avatar-download-btn").addEventListener("click", function (event) {
     var userId = document.getElementById("PropertyViewModelId").value;
-    //var file = document.getElementById("exampleFormControlFile1").value;
-    connectionAvatar.invoke("UserAvatarRecieve", userId)
+    connectionAvatar.invoke("UserAvatarRecieve",  userId)
         .catch(function (err) {
             return console.error(err.toString());
         });
@@ -90,8 +90,6 @@ $(document).ready(function () {
 });
 function doCheck() {
     var allFilled = true;
-    var name = document.getElementById("user-property-name").value;
-    var e = document.getElementById("user-property-email").value;
     var inputs = document.getElementsByTagName('input');
     for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].type == "text" && inputs[i].value == "")  {
