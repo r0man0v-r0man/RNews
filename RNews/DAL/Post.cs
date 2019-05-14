@@ -17,10 +17,12 @@ namespace RNews.DAL
         public virtual User User { get; set; }
         public Category Category { get; set; }
         public string ImagePath { get; set; }
+        public string ImageName { get; set; }
 
         public Post()
         {
             Created = DateTime.Now;
+            ImageName = PostId.ToString();
         }
     }
 }
