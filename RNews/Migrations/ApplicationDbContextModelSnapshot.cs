@@ -145,6 +145,8 @@ namespace RNews.Migrations
                         .IsRequired()
                         .HasMaxLength(2000);
 
+                    b.Property<string>("ImagePath");
+
                     b.Property<int?>("Rating");
 
                     b.Property<string>("Title")

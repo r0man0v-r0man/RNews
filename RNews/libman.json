@@ -30,8 +30,12 @@
       "destination": "wwwroot/simplemde/"
     },
     {
-      "library": "jeditable.js@2.0.8",
-      "destination": "wwwroot/lib/jeditable/"
+      "provider": "unpkg",
+      "library": "dropzone@5.5.1",
+      "destination": "wwwroot/lib/dropzone/",
+      "files": [
+        "dist/min/dropzone.min.js"
+      ]
     }
   ]
 }

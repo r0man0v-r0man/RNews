@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.DAL.dbContext;
+using RNews.Hubs;
 using RNews.Models.ViewModels;
 using RNews.Units;
 using System.IO;
@@ -18,11 +20,16 @@ namespace RNews.Controllers.Profile
         private UserManager<User> UserManager { get; }
         private readonly ApplicationDbContext db;
         private readonly IHostingEnvironment appEnvironment;
-        public PropertiesController(UserManager<User> userManager, ApplicationDbContext db, IHostingEnvironment appEnvironment)
+        private readonly IHubContext<UserAvatarHub> hubContext;
+        public PropertiesController(UserManager<User> userManager,
+                                    ApplicationDbContext db,
+                                    IHostingEnvironment appEnvironment,
+                                    IHubContext<UserAvatarHub> hubContext)
         {
             this.db = db;
             this.UserManager = userManager;
             this.appEnvironment = appEnvironment;
+            this.hubContext = hubContext;
         }
 
         [Route("~/Properties")]
@@ -53,6 +60,7 @@ namespace RNews.Controllers.Profile
                 user.ImagePath = path;
                 user.ImageName = uploadedFile.FileName;
                 Unit.SaveUser(db, user);
+                await hubContext.Clients.All.SendAsync("UserAvatarSend", user.ImagePath);
             }
 
             return RedirectToAction("Properties", "Properties");

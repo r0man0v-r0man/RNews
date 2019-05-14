@@ -51,12 +51,25 @@ namespace RNews.Units
         public static string CreateDescription(string descriptionText)
         {
             string[] temp = descriptionText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var DescriptionLength = 14;
             string tempDescription = "";
-            for (int i = 0; i < 14; i++)
+            if (temp.Length <= DescriptionLength)
             {
-                tempDescription += " " + temp[i];
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
             }
-            return String.Concat(tempDescription, "...");
+            else
+            {
+                for (int i = 0; i < DescriptionLength; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
+            }
+            
         }
     }
 }

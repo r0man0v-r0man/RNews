@@ -3,7 +3,9 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/UserPropertyHub").
 var connectionAvatar = new signalR.HubConnectionBuilder().withUrl("/UserAvatarHub").build();
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {
-    document.getElementById("src-image").innerText = data;
+    var avatar = document.getElementById("user-avatar");
+    avatar.src = data;
+    //document.getElementById("src-image").innerText = data;
     console.log(data);
 });
 
@@ -15,14 +17,14 @@ connectionAvatar.start()
         console.error(error.message);
     });
 
-document.getElementById("user-avatar-download-btn").addEventListener("click", function (event) {
-    var userId = document.getElementById("PropertyViewModelId").value;
-    connectionAvatar.invoke("UserAvatarRecieve",  userId)
-        .catch(function (err) {
-            return console.error(err.toString());
-        });
-    event.preventDefault();
-});
+//document.getElementById("user-avatar-download-btn").addEventListener("click", function (event) {
+//    var userId = document.getElementById("PropertyViewModelId").value;
+//    connectionAvatar.invoke("UserAvatarRecieve",  userId)
+//        .catch(function (err) {
+//            return console.error(err.toString());
+//        });
+//    event.preventDefault();
+//});
 //user properties
 connection.on("UserPropertySend", function (name, email) {
     document.getElementById("user-property-name").value = name;
