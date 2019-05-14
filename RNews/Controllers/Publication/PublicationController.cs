@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RNews.DAL;
@@ -48,7 +49,12 @@ namespace RNews.Controllers.Publication
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
-
+        [HttpPost]
+        public IActionResult UploadPostMainImage(IFormFile uploadedFile)
+        {
+            //upload main image for post
+            return Ok();
+        }
         public IActionResult Show(int id)
         {
             
