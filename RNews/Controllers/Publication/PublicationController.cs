@@ -63,6 +63,7 @@ namespace RNews.Controllers.Publication
             {
 
                 Title = post.Title,
+                ImagePath = post.ImagePath,
                 Content = Markdown.ToHtml(post.Content)
             };
             return View(showPost);
