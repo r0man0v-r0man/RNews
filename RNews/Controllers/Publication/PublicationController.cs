@@ -12,6 +12,7 @@ using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
 using RNews.Units;
+using Newtonsoft.Json;
 
 namespace RNews.Controllers.Publication
 {
@@ -78,10 +79,17 @@ namespace RNews.Controllers.Publication
             return RedirectToAction("Index", "Home");
         }
         [HttpPost("~/upload")]
-        public IActionResult Upload(IFormFile file)
+        public async Task<IActionResult> Upload(IFormFile file)
         {
-
-            return Json("32");
+            var tt = new t { filename = await Unit.UploadPostMainImageAndGetPathAsync(file, appEnvironment) };
+            //var filename = await Unit.UploadPostMainImageAndGetPathAsync(file, appEnvironment);
+            string output = JsonConvert.SerializeObject(tt);
+            return new JsonResult(output);
+            //how response right????
+        }
+        class t
+        {
+            public string filename { get; set; }
         }
     }
 }
