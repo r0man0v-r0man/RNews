@@ -37,6 +37,7 @@ namespace RNews.Controllers.Publication
         {
             var userId = UserManager.GetUserId(HttpContext.User);
             var user = UserManager.FindByIdAsync(userId).Result;
+            var img = model.Image;
             var newPost = new Post
             {
                 Title = model.Title,
@@ -49,12 +50,7 @@ namespace RNews.Controllers.Publication
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
-        [HttpPost]
-        public IActionResult UploadPostMainImage(IFormFile uploadedFile)
-        {
-            //upload main image for post
-            return Ok();
-        }
+        
         public IActionResult Show(int id)
         {
             

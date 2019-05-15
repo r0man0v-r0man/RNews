@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.DAL.dbContext;
@@ -11,6 +12,7 @@ namespace RNews.Units
 {
     public static class Unit
     {
+        
         public static User GetUser(ApplicationDbContext db, string id) => db.People.Find(id);
         public static void SaveUser(ApplicationDbContext db, User user)
         {
@@ -70,6 +72,10 @@ namespace RNews.Units
                 return String.Concat(tempDescription, "...");
             }
             
+        }
+        public static string PostMainImage(IFormFile file)
+        {
+            return 
         }
     }
 }

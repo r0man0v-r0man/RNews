@@ -22,7 +22,6 @@ namespace RNews.DAL
         public Post()
         {
             Created = DateTime.Now;
-            ImageName = PostId.ToString();
         }
     }
 }

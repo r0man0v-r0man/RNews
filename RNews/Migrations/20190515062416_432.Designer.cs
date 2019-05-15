@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190514175340_321")]
-    partial class _321
+    [Migration("20190515062416_432")]
+    partial class _432
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -146,6 +146,8 @@ namespace RNews.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(2000);
+
+                    b.Property<string>("ImageName");
 
                     b.Property<string>("ImagePath");
 
