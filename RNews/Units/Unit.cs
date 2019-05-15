@@ -74,7 +74,7 @@ namespace RNews.Units
             }
             
         }
-        public static async Task<string> GetPostMainImageAsync(IFormFile file, IHostingEnvironment appEnvironment)
+        public static async Task<string> UploadPostMainImageAndGetPathAsync(IFormFile file, IHostingEnvironment appEnvironment)
         {
             
             if (file != null)

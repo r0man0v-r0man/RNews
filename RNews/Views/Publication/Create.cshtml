@@ -11,9 +11,6 @@
     <div class="col-md-8">
         <h3>New Publication</h3>
         <br />
-
-
-
         <hr />
 
         <form method="post" asp-action="Create" asp-controller="Publication" enctype="multipart/form-data">
@@ -53,11 +50,16 @@
     </div>
 
 </div>
-
+<textarea id="code" rows="10" cols="50"></textarea>
 
 @section Scripts{
     <script src="~/simplemde/simplemde.min.js"></script>
     <script src="~/js/simplemde.js"></script>
+    <script src="~/lib/inline-attachment.js"></script>
+    <script src="~/lib/input.inline-attachment.js"></script>
+    <script type="text/javascript">
+        inlineAttachment.editors.input.attachToInput(document.getElementById("code"));
+    </script>
 }
 
 

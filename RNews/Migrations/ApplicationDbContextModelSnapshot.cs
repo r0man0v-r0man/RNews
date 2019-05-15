@@ -175,6 +175,8 @@ namespace RNews.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("Created");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 

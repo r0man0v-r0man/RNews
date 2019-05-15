@@ -44,7 +44,7 @@ namespace RNews.Controllers.Publication
                 Content = model.Content,
                 User = user,
                 Category = model.Category,
-                ImagePath = await Unit.GetPostMainImageAsync(model.Image, appEnvironment)
+                ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
             };
 
             db.Posts.Add(newPost);
@@ -58,7 +58,9 @@ namespace RNews.Controllers.Publication
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {
-
+                DateOfCreatedAuthor = post.User.Created,
+                AuthorName = post.User.UserName,
+                AuthorAvatar = post.User.ImagePath,
                 Title = post.Title,
                 ImagePath = post.ImagePath,
                 Content = Markdown.ToHtml(post.Content)
@@ -76,7 +78,7 @@ namespace RNews.Controllers.Publication
             return RedirectToAction("Index", "Home");
         }
         [HttpPost("~/upload")]
-        public IActionResult Upload(IFormFile formFile)
+        public IActionResult Upload(IFormFile file)
         {
 
             return Json("32");

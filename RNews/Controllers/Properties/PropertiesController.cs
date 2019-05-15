@@ -62,11 +62,7 @@ namespace RNews.Controllers.Profile
                 Unit.SaveUser(db, user);
                 await hubContext.Clients.All.SendAsync("UserAvatarSend", user.ImagePath);
             }
-
             return RedirectToAction("Properties", "Properties");
-            
         }
-
-
     }
 }

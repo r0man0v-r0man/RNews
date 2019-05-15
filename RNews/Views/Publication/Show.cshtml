@@ -5,12 +5,22 @@
 
 
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-8 box-shadow">
         <h2 class="text-center font-weight-light">@Model.Title</h2>
         <hr />
         <img src="@Model.ImagePath" alt="Alternate Text" class="img-fluid" />
         <div>
             @Html.Raw(Model.Content)
+        </div>
+        <div class="media row">
+            <div class="col-sm-2">
+                <img src="@Model.AuthorAvatar" class="mr-3 img-fluid" alt="Author Avatar">
+            </div>
+            
+            <div class="media-body col-sm-10">
+                <h5 class="mt-0">@Model.AuthorName</h5>
+                на "RNews" с  @Model.DateOfCreatedAuthor.ToString("Y")
+            </div>
         </div>
         <partial name="_Comments" />
     </div>
