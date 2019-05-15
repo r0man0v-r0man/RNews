@@ -27,10 +27,7 @@ namespace RNews.Controllers.Publication
             this.UserManager = userManager;
             this.appEnvironment = appEnvironment;
         }
-        public IActionResult Publication()
-        {
-            return View();
-        }
+        
         public  IActionResult Create()
         {
             return View();
@@ -78,6 +75,11 @@ namespace RNews.Controllers.Publication
             
             return RedirectToAction("Index", "Home");
         }
+        [HttpPost("~/upload")]
+        public IActionResult Upload(IFormFile formFile)
+        {
 
+            return Json("32");
+        }
     }
 }

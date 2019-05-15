@@ -28,14 +28,6 @@
     {
       "library": "simplemde@1.11.2",
       "destination": "wwwroot/simplemde/"
-    },
-    {
-      "provider": "unpkg",
-      "library": "dropzone@5.5.1",
-      "destination": "wwwroot/lib/dropzone/",
-      "files": [
-        "dist/min/dropzone.min.js"
-      ]
     }
   ]
 }
