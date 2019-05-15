@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,12 @@ namespace RNews.Controllers.Publication
     {
         private UserManager<User> UserManager { get; }
         private readonly ApplicationDbContext db;
-        public PublicationController(UserManager<User> userManager, ApplicationDbContext db)
+        private readonly IHostingEnvironment appEnvironment;
+        public PublicationController(UserManager<User> userManager, ApplicationDbContext db, IHostingEnvironment appEnvironment)
         {
             this.db = db;
             this.UserManager = userManager;
+            this.appEnvironment = appEnvironment;
         }
         public IActionResult Publication()
         {
@@ -33,19 +36,20 @@ namespace RNews.Controllers.Publication
             return View();
         }
         [HttpPost]
-        public IActionResult Create(PostCreateViewModel model)
+        public async Task<IActionResult> Create(PostCreateViewModel model)
         {
             var userId = UserManager.GetUserId(HttpContext.User);
             var user = UserManager.FindByIdAsync(userId).Result;
-            var img = model.Image;
             var newPost = new Post
             {
                 Title = model.Title,
                 Description = Unit.CreateDescription(model.Description),
                 Content = model.Content,
                 User = user,
-                Category = model.Category
+                Category = model.Category,
+                ImagePath = await Unit.GetPostMainImageAsync(model.Image, appEnvironment)
             };
+
             db.Posts.Add(newPost);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -57,6 +61,7 @@ namespace RNews.Controllers.Publication
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {
+
                 Title = post.Title,
                 Content = Markdown.ToHtml(post.Content)
             };
