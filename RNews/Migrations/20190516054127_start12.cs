@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RNews.Migrations
 {
-    public partial class s : Migration
+    public partial class start12 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
