@@ -25,7 +25,7 @@ namespace RNews.Controllers
             ViewBag.TopRatingPost = Unit.TopRatingPost(db, 3);
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();

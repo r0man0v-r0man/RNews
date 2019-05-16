@@ -31,18 +31,18 @@ namespace RNews.Controllers.Profile
             this.appEnvironment = appEnvironment;
             this.hubContext = hubContext;
         }
-
-        [Route("~/Properties")]
-        public IActionResult Properties(PropertyViewModel model)
+        
+        public IActionResult Properties()
         {
             var userId = UserManager.GetUserId(HttpContext.User);
             var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == userId);
-
-            model.PropertyViewModelId = user.Id;
-            model.Name = user.UserName;
-            model.Email = user.Email;
-            model.ImagePath = user.ImagePath;
-            
+            var model = new PropertyViewModel
+            {
+                PropertyViewModelId = user.Id,
+                Name = user.UserName,
+                Email = user.Email,
+                ImagePath = user.ImagePath
+            };
             return View(model);
         }
         [HttpPost]

@@ -42,26 +42,29 @@ namespace RNews.Controllers
                 return BadRequest();
             }
 
-
+            var sdfsdf = await HttpContext.AuthenticateAsync("Identity.External");
             return Challenge(new AuthenticationProperties { RedirectUri = "/LogInExternal" }, provider);
         }
         [Route("~/LogInExternal")]
         public async Task<IActionResult> LogIn()
         {
             var authResult = await HttpContext.AuthenticateAsync("Identity.External");
+            //проверить есть ли пользователь с такой почтой если нет - создать, 
+
             User externalUser = new User
             {
                 UserName = authResult.Principal.FindFirstValue(ClaimTypes.Email),
                 Email = authResult.Principal.FindFirstValue(ClaimTypes.Email),
+                IsExternal = authResult.Principal.Identity.IsAuthenticated
             };
+            
+                var result = await UserManager.CreateAsync(externalUser);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(externalUser, isPersistent: false);
+                }
 
-            var result = await UserManager.CreateAsync(externalUser);
-            if (result.Succeeded)
-            {
-                await SignInManager.SignInAsync(externalUser, isPersistent: false);
-            }
-
-            return LocalRedirect("~/Properties");
+            return RedirectToAction("Properties", "properties");
         }
        
     }

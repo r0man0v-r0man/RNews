@@ -27,11 +27,13 @@ namespace RNews.Controllers.Publication
             this.UserManager = userManager;
             this.appEnvironment = appEnvironment;
         }
-        
+        [Authorize]
         public  IActionResult Create()
         {
             return View();
         }
+
+        
         [HttpPost]
         public async Task<IActionResult> Create(PostCreateViewModel model)
         {

@@ -188,6 +188,8 @@ namespace RNews.Migrations
 
                     b.Property<string>("ImagePath");
 
+                    b.Property<bool?>("IsExternal");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
