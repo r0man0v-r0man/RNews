@@ -54,7 +54,6 @@ namespace RNews.Controllers.Publication
         
         public IActionResult Show(int id)
         {
-            
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {
@@ -81,7 +80,6 @@ namespace RNews.Controllers.Publication
         public async Task<IActionResult> Upload(IFormFile file)
         {
             var output = new { filename = await Unit.UploadPostMainImageAndGetPathAsync(file, appEnvironment) };
-            var filename = await Unit.UploadPostMainImageAndGetPathAsync(file, appEnvironment);
             return Json(output);
         }
         

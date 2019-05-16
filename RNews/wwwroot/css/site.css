@@ -61,3 +61,6 @@ body {
 img[src*="?img-fluid"] {
     max-width: 100%;
 }
+.card{
+    border-top-width: 3px;
+}
