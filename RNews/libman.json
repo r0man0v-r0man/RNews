@@ -28,6 +28,24 @@
     {
       "library": "simplemde@1.11.2",
       "destination": "wwwroot/simplemde/"
+    },
+    {
+      "library": "bootstrap-star-rating@4.0.5",
+      "destination": "wwwroot/lib/bootstrap-star-rating/",
+      "files": [
+        "img/loading.gif",
+        "js/star-rating.min.js",
+        "css/star-rating.min.css"
+      ]
     }
+  ,
+{
+  "provider": "unpkg",
+  "library": "bootstrap-star-rating@4.0.4",
+  "destination": "wwwroot/lib/bootstrap-star-rating/",
+  "files": [
+    "img/loading.gif"
   ]
+}
+]
 }

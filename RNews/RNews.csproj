@@ -23,6 +23,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Controllers\administrator\" />
     <Folder Include="wwwroot\imgs\posts\" />
   </ItemGroup>
 
