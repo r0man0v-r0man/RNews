@@ -58,3 +58,6 @@ body {
     height: 40px;
     width: 40px;
 }
+img[src*="?img-fluid"] {
+    max-width: 100%;
+}
