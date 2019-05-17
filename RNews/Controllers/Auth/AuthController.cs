@@ -38,7 +38,7 @@ namespace RNews.Controllers.Auth
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Properties", "Properties");
+                    return RedirectToAction("Properties", "Properties", new { id= user.Id });
                 }
                 else
                 {

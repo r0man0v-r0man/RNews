@@ -45,6 +45,21 @@ namespace RNews.Controllers.Profile
             };
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult Properties(string id)
+        {
+            
+            var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == id);
+            var model = new PropertyViewModel
+            {
+                PropertyViewModelId = user.Id,
+                Name = user.UserName,
+                Email = user.Email,
+                ImagePath = user.ImagePath
+            };
+            return View(model);
+        }
         [HttpPost]
         public async Task<IActionResult> UploadAvatar(IFormFile uploadedFile)
         {

@@ -60,6 +60,9 @@ body {
 }
 img[src*="?img-fluid"] {
     max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 .card{
     border-top-width: 3px;

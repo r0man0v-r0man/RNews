@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190516210300_ttrtrttrrr")]
-    partial class ttrtrttrrr
+    [Migration("20190517060524_ererer")]
+    partial class ererer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -190,7 +190,7 @@ namespace RNews.Migrations
 
                     b.Property<string>("ImagePath");
 
-                    b.Property<bool?>("IsExternal");
+                    b.Property<bool>("IsExternal");
 
                     b.Property<bool>("LockoutEnabled");
 

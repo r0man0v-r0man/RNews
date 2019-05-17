@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RNews.DAL;
+using RNews.DAL.dbContext;
 using RNews.Extensions;
-using RNews.Models.ViewModels;
-using RNews.Services;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace RNews.Controllers
 {
@@ -18,10 +14,12 @@ namespace RNews.Controllers
     {
         private UserManager<User> UserManager { get; }
         private SignInManager<User> SignInManager { get; }
-        public AuthExternalController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly ApplicationDbContext db;
+        public AuthExternalController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationDbContext db)
         {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
+            this.db = db;
         }
 
         public async Task<IActionResult> SignIn()
@@ -42,30 +40,38 @@ namespace RNews.Controllers
                 return BadRequest();
             }
 
-            var sdfsdf = await HttpContext.AuthenticateAsync("Identity.External");
+
             return Challenge(new AuthenticationProperties { RedirectUri = "/LogInExternal" }, provider);
         }
         [Route("~/LogInExternal")]
         public async Task<IActionResult> LogIn()
         {
             var authResult = await HttpContext.AuthenticateAsync("Identity.External");
-            //проверить есть ли пользователь с такой почтой если нет - создать, 
 
-            User externalUser = new User
+            var isExist = db.People
+                .Where(x=>x.IsExternal == true)
+                .FirstOrDefault(p => p.Email == authResult.Principal.FindFirstValue(ClaimTypes.Email));
+            if (authResult.Principal.FindFirstValue(ClaimTypes.Email) == isExist.Email)
             {
-                UserName = authResult.Principal.FindFirstValue(ClaimTypes.Email),
-                Email = authResult.Principal.FindFirstValue(ClaimTypes.Email),
-                IsExternal = authResult.Principal.Identity.IsAuthenticated
-            };
-            
+                await SignInManager.SignInAsync(isExist, isPersistent: false);
+                return RedirectToAction("Properties", "properties", new { id = isExist.Id});
+            }
+            else
+            {
+                User externalUser = new User
+                {
+                    UserName = authResult.Principal.FindFirstValue(ClaimTypes.Email),
+                    Email = authResult.Principal.FindFirstValue(ClaimTypes.Email),
+                    IsExternal = true
+                };
                 var result = await UserManager.CreateAsync(externalUser);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(externalUser, isPersistent: false);
                 }
-
-            return RedirectToAction("Properties", "properties");
+                return RedirectToAction("Properties", "properties", new { id=externalUser.Id});
+            }
         }
-       
+
     }
 }
