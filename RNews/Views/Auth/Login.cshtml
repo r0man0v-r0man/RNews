@@ -30,7 +30,7 @@
         <hr />
         @foreach (var scheme in await schemeProvider.GetRequestHandlerSchemesAsync())
         {
-            <form asp-action="signin" asp-controller="authexternal" method="post">
+            <form asp-action="login" asp-controller="authexternal" method="post">
                 <input type="hidden" name="Provider" value="@scheme.Name" />
                 <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
 

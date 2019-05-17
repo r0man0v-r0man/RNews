@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190517060524_ererer")]
-    partial class ererer
+    [Migration("20190517081858_again start")]
+    partial class againstart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,6 +178,8 @@ namespace RNews.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<DateTime>("Created");
+
+                    b.Property<string>("Description");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);

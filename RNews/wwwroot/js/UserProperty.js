@@ -26,10 +26,11 @@ connectionAvatar.start()
 //    event.preventDefault();
 //});
 //user properties
-connection.on("UserPropertySend", function (name, email) {
+connection.on("UserPropertySend", function (description, name, email) {
     document.getElementById("user-property-name").value = name;
     document.getElementById("user-name").innerText = name;
     document.getElementById("user-property-email").value = email;
+    document.getElementById("user-property-description").value = description;
 });
 connection.start()
     .then(function () {
@@ -45,6 +46,7 @@ document.getElementById("user-property-name").addEventListener("keypress",async 
         var userId = document.getElementById("PropertyViewModelId").value;
         var name = document.getElementById("user-property-name").value;
         var email = document.getElementById("user-property-email").value;
+        var description = document.getElementById("user-property-description").value;
        await  connection.invoke("UserProperty", name, email, userId)
             .catch(function (err) {
                 return console.error(err.toString());
@@ -58,7 +60,23 @@ document.getElementById("user-property-email").addEventListener("keypress", func
         var userId = document.getElementById("PropertyViewModelId").value;
         var name = document.getElementById("user-property-name").value;
         var email = document.getElementById("user-property-email").value;
-        connection.invoke("UserProperty", name, email, userId)
+        var description = document.getElementById("user-property-description").value;
+        connection.invoke("UserProperty", description, name, email, userId)
+            .catch(function (err) {
+                return console.error(err.toString());
+            });
+        event.preventDefault();
+    }
+});
+
+document.getElementById("user-property-description").addEventListener("keypress", function (event) {
+    var key = event.which || event.keyCode;
+    if (key === 13) {
+        var userId = document.getElementById("PropertyViewModelId").value;
+        var name = document.getElementById("user-property-name").value;
+        var email = document.getElementById("user-property-email").value;
+        var description = document.getElementById("user-property-description").value;
+        connection.invoke("UserProperty", description, name, email, userId)
             .catch(function (err) {
                 return console.error(err.toString());
             });
@@ -66,10 +84,11 @@ document.getElementById("user-property-email").addEventListener("keypress", func
     }
 });
 document.getElementById("user-property-btn").addEventListener("click", function (event) {
-        var userId = document.getElementById("PropertyViewModelId").value;
-        var name = document.getElementById("user-property-name").value;
-        var email = document.getElementById("user-property-email").value;
-        connection.invoke("UserProperty", name, email, userId)
+    var userId = document.getElementById("PropertyViewModelId").value;
+    var name = document.getElementById("user-property-name").value;
+    var email = document.getElementById("user-property-email").value;
+    var description = document.getElementById("user-property-description").value;
+    connection.invoke("UserProperty", description, name, email, userId)
             .catch(function (err) {
                 return console.error(err.toString());
             });

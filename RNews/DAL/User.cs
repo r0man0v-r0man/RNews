@@ -11,6 +11,7 @@ namespace RNews.DAL
             ImagePath = "/imgs/avatars/user.png";
             Created = DateTime.Now;
             IsExternal = false;
+            Description = "I love RNews";
         }
         public Gender Gender { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
@@ -18,7 +19,7 @@ namespace RNews.DAL
         public DateTime Created { get; set; }
         public string ImageName { get; set; }
         public bool IsExternal { get; set; }
-        // add prop for description in order to show it in auhtor box
+        public string Description { get; set; }
     }
     public enum Gender
     {

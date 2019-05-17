@@ -41,7 +41,8 @@ namespace RNews.Controllers.Profile
                 PropertyViewModelId = user.Id,
                 Name = user.UserName,
                 Email = user.Email,
-                ImagePath = user.ImagePath
+                ImagePath = user.ImagePath,
+                Description = user.Description
             };
             return View(model);
         }
@@ -56,7 +57,8 @@ namespace RNews.Controllers.Profile
                 PropertyViewModelId = user.Id,
                 Name = user.UserName,
                 Email = user.Email,
-                ImagePath = user.ImagePath
+                ImagePath = user.ImagePath,
+                Description = user.Description
             };
             return View(model);
         }

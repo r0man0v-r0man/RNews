@@ -177,6 +177,8 @@ namespace RNews.Migrations
 
                     b.Property<DateTime>("Created");
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 

@@ -13,13 +13,14 @@ namespace RNews.Hubs
         {
             this.db = db;
         }
-        public async Task UserProperty(string userPropertyName, string userPropertyEmail, string userId)
+        public async Task UserProperty(string userPropertyDescription, string userPropertyName, string userPropertyEmail, string userId)
         {
             var user = Unit.GetUser(db, userId);
             user.UserName = userPropertyName;
             user.Email = userPropertyEmail;
+            user.Description = userPropertyDescription;
             Unit.SaveUser(db, user);
-            await Clients.All.SendAsync("UserPropertySend", user.UserName, user.Email);
+            await Clients.All.SendAsync("UserPropertySend", user.Description, user.UserName, user.Email );
         }
         
     }

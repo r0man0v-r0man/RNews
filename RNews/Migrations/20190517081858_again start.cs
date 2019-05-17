@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RNews.Migrations
 {
-    public partial class ererer : Migration
+    public partial class againstart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,8 @@ namespace RNews.Migrations
                     ImagePath = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     ImageName = table.Column<string>(nullable: true),
-                    IsExternal = table.Column<bool>(nullable: false)
+                    IsExternal = table.Column<bool>(nullable: false),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

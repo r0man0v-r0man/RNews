@@ -12,5 +12,6 @@ namespace RNews.Models.ViewModels
         public string Password { get; set; }
         public string Email { get; set; }
         public string ImagePath { get; set; }
+        public string Description { get; set; }
     }
 }
