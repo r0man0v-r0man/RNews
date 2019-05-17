@@ -19,6 +19,7 @@ namespace RNews.DAL
         public DateTime Created { get; set; }
         public string ImageName { get; set; }
         public bool IsExternal { get; set; }
+        public string ExternalId { get; set; }
         public string Description { get; set; }
     }
     public enum Gender

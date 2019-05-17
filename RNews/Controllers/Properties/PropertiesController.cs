@@ -34,8 +34,12 @@ namespace RNews.Controllers.Profile
         
         public IActionResult Properties()
         {
-            var userId = UserManager.GetUserId(HttpContext.User);
-            var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == userId);
+            var externalId = UserManager.GetUserId(HttpContext.User);//external Id кавычки из за них не работает
+            var userTemp = db.People.SingleOrDefault(u => u.ExternalId == externalId);
+            
+            var user = db.People
+                .Include(c => c.Posts)
+                .SingleOrDefault(c => c.Id == userTemp.Id);
             var model = new PropertyViewModel
             {
                 PropertyViewModelId = user.Id,

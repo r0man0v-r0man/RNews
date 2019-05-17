@@ -184,6 +184,8 @@ namespace RNews.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("ExternalId");
+
                     b.Property<int>("Gender");
 
                     b.Property<string>("ImageName");

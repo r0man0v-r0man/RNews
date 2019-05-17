@@ -52,7 +52,8 @@ namespace RNews.Controllers
             {
                 UserName = authResult.Principal.FindFirstValue(ClaimTypes.Email),
                 Email = authResult.Principal.FindFirstValue(ClaimTypes.Email),
-                IsExternal = true
+                IsExternal = true,
+                ExternalId = authResult.Principal.FindFirst(ClaimTypes.NameIdentifier).ToString()
             };
             var result = await UserManager.CreateAsync(externalUser);
             if (result.Succeeded)

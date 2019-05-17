@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190517081858_again start")]
-    partial class againstart
+    [Migration("20190517105024_trrrrr")]
+    partial class trrrrr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -185,6 +185,8 @@ namespace RNews.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("ExternalId");
 
                     b.Property<int>("Gender");
 
