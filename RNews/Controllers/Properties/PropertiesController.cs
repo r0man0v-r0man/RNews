@@ -31,31 +31,30 @@ namespace RNews.Controllers.Profile
             this.appEnvironment = appEnvironment;
             this.hubContext = hubContext;
         }
-        
+        //[HttpPost]
+        //public IActionResult Properties(string id)
+        //{
+        //    var userTemp = db.People.SingleOrDefault(u => u.Email == id);
+            
+        //    var user = db.People
+        //        .Include(c => c.Posts)
+        //        .SingleOrDefault(c => c.Id == userTemp.Id);
+        //    var model = new PropertyViewModel
+        //    {
+        //        PropertyViewModelId = user.Id,
+        //        Name = user.UserName,
+        //        Email = user.Email,
+        //        ImagePath = user.ImagePath,
+        //        Description = user.Description
+        //    };
+        //    return View(model);
+        //}
+
+
         public IActionResult Properties()
         {
-            var externalId = UserManager.GetUserId(HttpContext.User);//external Id кавычки из за них не работает
-            var userTemp = db.People.SingleOrDefault(u => u.ExternalId == externalId);
-            
-            var user = db.People
-                .Include(c => c.Posts)
-                .SingleOrDefault(c => c.Id == userTemp.Id);
-            var model = new PropertyViewModel
-            {
-                PropertyViewModelId = user.Id,
-                Name = user.UserName,
-                Email = user.Email,
-                ImagePath = user.ImagePath,
-                Description = user.Description
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult Properties(string id)
-        {
-            
-            var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == id);
+            var userId = UserManager.GetUserId(HttpContext.User);
+            var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == userId);
             var model = new PropertyViewModel
             {
                 PropertyViewModelId = user.Id,
@@ -69,7 +68,7 @@ namespace RNews.Controllers.Profile
         [HttpPost]
         public async Task<IActionResult> UploadAvatar(IFormFile uploadedFile)
         {
-            var userId = UserManager.GetUserId(HttpContext.User);
+            var userId = UserManager.GetUserId(HttpContext.User);//how to upload img to ExternalUser
             if (uploadedFile != null)
             {
                 string path = "/imgs/avatars/" + uploadedFile.FileName;
