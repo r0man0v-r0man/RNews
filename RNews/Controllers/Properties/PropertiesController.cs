@@ -31,26 +31,7 @@ namespace RNews.Controllers.Profile
             this.appEnvironment = appEnvironment;
             this.hubContext = hubContext;
         }
-        //[HttpPost]
-        //public IActionResult Properties(string id)
-        //{
-        //    var userTemp = db.People.SingleOrDefault(u => u.Email == id);
-            
-        //    var user = db.People
-        //        .Include(c => c.Posts)
-        //        .SingleOrDefault(c => c.Id == userTemp.Id);
-        //    var model = new PropertyViewModel
-        //    {
-        //        PropertyViewModelId = user.Id,
-        //        Name = user.UserName,
-        //        Email = user.Email,
-        //        ImagePath = user.ImagePath,
-        //        Description = user.Description
-        //    };
-        //    return View(model);
-        //}
-
-
+       
         public IActionResult Properties()
         {
             var userId = UserManager.GetUserId(HttpContext.User);

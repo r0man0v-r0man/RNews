@@ -44,8 +44,8 @@
                             <li class="dropdown">
                                 <button class="dropdown-toggle nav-link nav-link btn btn-link text-dark" data-toggle="dropdown"> Account</button>
                                 <ul class="dropdown-menu">
-                                    
-                                    <li><a class="nav-link text-dark" asp-controller="Properties" asp-action="Properties" >Properties</a></li>
+
+                                    <li><a class="nav-link text-dark" asp-controller="Properties" asp-action="Properties">Properties</a></li>
                                     <li><a class="nav-link text-dark" asp-controller="Publication" asp-action="Create">Add Post</a></li>
                                 </ul>
                             </li>
@@ -78,9 +78,23 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-3">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-action="Index" asp-controller="Admin">Control Panel</a>
+                }
+            </div>
             &copy; 2019 - RNews - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
+       
     </footer>
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
