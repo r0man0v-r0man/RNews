@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.Models.ViewModels;
+using RNews.Models.ViewModels.Admin;
 
 namespace RNews.Controllers.administrator
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -21,7 +23,7 @@ namespace RNews.Controllers.administrator
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
-        [Authorize]
+        
         public async Task<IActionResult> Index()
         {
             var users = await userManager.Users.ToListAsync();
@@ -31,6 +33,21 @@ namespace RNews.Controllers.administrator
                 listModels.Add(new AccountViewModel {UserId = user.Id, UserName = user.UserName, UserEmail = user.Email, UserRole = "test" });
             }
             return View(listModels);
+        }
+        public async Task<IActionResult> Show(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            var accountInfo = new AccountInfoViewModel
+            {
+                Id = user.Id,
+                Name = user.UserName,
+                Email = user.Email,
+                Description = user.Description,
+                RegisterDate = user.Created.ToShortDateString(),
+                Role = "test",
+                IsExternal = user.IsExternal.ToString()
+            };
+            return View(accountInfo);
         }
     }
 }

@@ -27,11 +27,10 @@
                         <td>@user.UserName</td>
                         <td>@user.UserEmail</td>
                         <td>@user.UserRole</td>
-                        <td class="btn-group">
-                            
-                                @Html.ActionLink("Show", "show", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-primary" })
-                                @Html.ActionLink("Edit", "edit", "Admin", new { id = user.UserId  }, new { @class = "btn btn-sm btn-primary" })
-                                @Html.ActionLink("Delete", "delete", "Admin", new { id = user.UserId  }, new { @class = "btn btn-sm btn-danger" })
+                        <td>
+                            @Html.ActionLink("Show", "Show", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-primary" })
+                            @Html.ActionLink("block", "block", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-dark" })
+                            @Html.ActionLink("Delete", "delete", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-danger" })
 
                         </td>
                     </tr>
