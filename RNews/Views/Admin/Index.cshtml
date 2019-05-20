@@ -16,15 +16,24 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var user in Model)
                 {
                     <tr>
+                        @Html.Hidden("UserId", user.UserId)
                         <td>@user.UserName</td>
                         <td>@user.UserEmail</td>
                         <td>@user.UserRole</td>
+                        <td class="btn-group">
+                            
+                                @Html.ActionLink("Show", "show", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-primary" })
+                                @Html.ActionLink("Edit", "edit", "Admin", new { id = user.UserId  }, new { @class = "btn btn-sm btn-primary" })
+                                @Html.ActionLink("Delete", "delete", "Admin", new { id = user.UserId  }, new { @class = "btn btn-sm btn-danger" })
+
+                        </td>
                     </tr>
                 }
             </tbody>

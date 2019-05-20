@@ -7,6 +7,7 @@ namespace RNews.Models.ViewModels
 {
     public class AccountViewModel
     {
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public string UserRole { get; set; }
         public string UserEmail { get; set; }

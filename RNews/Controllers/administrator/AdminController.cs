@@ -28,7 +28,7 @@ namespace RNews.Controllers.administrator
             var listModels = new List<AccountViewModel>();
             foreach (var user in users)
             {
-                listModels.Add(new AccountViewModel { UserName = user.UserName, UserEmail = user.Email, UserRole = "test" });
+                listModels.Add(new AccountViewModel {UserId = user.Id, UserName = user.UserName, UserEmail = user.Email, UserRole = "test" });
             }
             return View(listModels);
         }
