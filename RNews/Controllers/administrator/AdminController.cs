@@ -58,7 +58,6 @@ namespace RNews.Controllers.administrator
         }
         public async Task<IActionResult> Ban(string id)
         {
-            
             var user = await userManager.FindByIdAsync(id);
             var roles = await userManager.GetRolesAsync(user);
             var result = await userManager.RemoveFromRolesAsync(user, roles);
@@ -68,5 +67,16 @@ namespace RNews.Controllers.administrator
             }
             return RedirectToAction("Index", "Admin");
         }
+        public async Task<IActionResult> SetReader(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            var result = await userManager.AddToRoleAsync(user, "reader");
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
     }
 }
