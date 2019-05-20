@@ -37,6 +37,7 @@ namespace RNews.Controllers.Auth
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user, "reader");
                     await SignInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Properties", "Properties", new { id= user.Id });
                 }

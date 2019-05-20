@@ -28,7 +28,6 @@ connectionAvatar.start()
 //user properties
 connection.on("UserPropertySend", function (description, name, email) {
     document.getElementById("user-property-name").value = name;
-    document.getElementById("user-name").innerText = name;
     document.getElementById("user-property-email").value = email;
     document.getElementById("user-property-description").value = description;
 });

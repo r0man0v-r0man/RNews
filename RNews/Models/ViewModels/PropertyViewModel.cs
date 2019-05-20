@@ -13,5 +13,6 @@ namespace RNews.Models.ViewModels
         public string Email { get; set; }
         public string ImagePath { get; set; }
         public string Description { get; set; }
+        public IList<string> Roles { get; set; }
     }
 }

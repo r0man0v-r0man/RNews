@@ -17,7 +17,7 @@ namespace RNews.Controllers.Profile
 {
     public class PropertiesController : Controller
     {
-        private UserManager<User> UserManager { get; }
+        private UserManager<User> userManager { get; }
         private readonly ApplicationDbContext db;
         private readonly IHostingEnvironment appEnvironment;
         private readonly IHubContext<UserAvatarHub> hubContext;
@@ -27,14 +27,14 @@ namespace RNews.Controllers.Profile
                                     IHubContext<UserAvatarHub> hubContext)
         {
             this.db = db;
-            this.UserManager = userManager;
+            this.userManager = userManager;
             this.appEnvironment = appEnvironment;
             this.hubContext = hubContext;
         }
        
-        public IActionResult Properties()
+        public async Task<IActionResult> Properties()
         {
-            var userId = UserManager.GetUserId(HttpContext.User);
+            var userId = userManager.GetUserId(HttpContext.User);
             var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == userId);
             var model = new PropertyViewModel
             {
@@ -42,14 +42,15 @@ namespace RNews.Controllers.Profile
                 Name = user.UserName,
                 Email = user.Email,
                 ImagePath = user.ImagePath,
-                Description = user.Description
+                Description = user.Description,
+                Roles = await userManager.GetRolesAsync(user)
             };
             return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> UploadAvatar(IFormFile uploadedFile)
         {
-            var userId = UserManager.GetUserId(HttpContext.User);//how to upload img to ExternalUser
+            var userId = userManager.GetUserId(HttpContext.User);//how to upload img to ExternalUser
             if (uploadedFile != null)
             {
                 string path = "/imgs/avatars/" + uploadedFile.FileName;

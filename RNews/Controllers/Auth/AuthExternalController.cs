@@ -55,6 +55,7 @@ namespace RNews.Controllers
             var result = await UserManager.CreateAsync(externalUser);
             if (result.Succeeded)
             {
+                await UserManager.AddToRoleAsync(externalUser, "reader");
                 await SignInManager.SignInAsync(externalUser, isPersistent: false);
             }
 

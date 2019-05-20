@@ -12,7 +12,11 @@
             <partial name="UploadAvatar" />
         </div>
         <div class="col-md-8">
-            <h4 class="text-center font-weight-light" id="user-name">@Model.Name</h4>
+            <h4 class="text-center font-weight-light">@foreach (var role in Model.Roles)
+            {
+                @role
+            }
+            </h4>
             <hr />
             <form>
                 @Html.HiddenFor(m => m.PropertyViewModelId)

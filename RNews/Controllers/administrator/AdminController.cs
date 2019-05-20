@@ -30,7 +30,13 @@ namespace RNews.Controllers.administrator
             var listModels = new List<AccountViewModel>();
             foreach (var user in users)
             {
-                listModels.Add(new AccountViewModel {UserId = user.Id, UserName = user.UserName, UserEmail = user.Email, UserRole = "test" });
+                listModels.Add(new AccountViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    UserEmail = user.Email,
+                    UserRoles = await userManager.GetRolesAsync(user)
+                });
             }
             return View(listModels);
         }
@@ -44,7 +50,7 @@ namespace RNews.Controllers.administrator
                 Email = user.Email,
                 Description = user.Description,
                 RegisterDate = user.Created.ToShortDateString(),
-                Role = "test",
+                Roles = await userManager.GetRolesAsync(user),
                 IsExternal = user.IsExternal.ToString()
             };
             await roleManager.CreateAsync(new IdentityRole("admin"));

@@ -26,7 +26,11 @@
                         @Html.Hidden("UserId", user.UserId)
                         <td>@user.UserName</td>
                         <td>@user.UserEmail</td>
-                        <td>@user.UserRole</td>
+                        <td>@foreach (var role in user.UserRoles)
+                                {
+                                    <span>@role</span>
+                                }
+                        </td>
                         <td>
                             @Html.ActionLink("Show", "Show", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-primary" })
                             @Html.ActionLink("block", "block", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-dark" })
