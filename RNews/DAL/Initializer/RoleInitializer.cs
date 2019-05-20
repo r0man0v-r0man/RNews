@@ -26,21 +26,30 @@ namespace RNews.DAL.Initializer
             {
                 await roleManager.CreateAsync(new IdentityRole("reader"));
             }
+
+
+
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
                 User admin = new User { Email = adminEmail, UserName = adminEmail, EmailConfirmed = true };
-                User writer = new User { Email = writerEmail, UserName = writerEmail, EmailConfirmed = true };
-                User reader = new User { Email = readerEmail, UserName = readerEmail, EmailConfirmed = true };
                 IdentityResult resultAdmin = await userManager.CreateAsync(admin, password);
                 if (resultAdmin.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, "admin");
                 }
+            }
+            if (await userManager.FindByNameAsync(writerEmail) == null)
+            {
+                User writer = new User { Email = writerEmail, UserName = writerEmail, EmailConfirmed = true };
                 IdentityResult resultWriter = await userManager.CreateAsync(writer, password);
                 if (resultWriter.Succeeded)
                 {
                     await userManager.AddToRoleAsync(writer, "writer");
                 }
+            }
+            if (await userManager.FindByNameAsync(readerEmail) == null)
+            {
+                User reader = new User { Email = readerEmail, UserName = readerEmail, EmailConfirmed = true };
                 IdentityResult resultReader = await userManager.CreateAsync(reader, password);
                 if (resultReader.Succeeded)
                 {

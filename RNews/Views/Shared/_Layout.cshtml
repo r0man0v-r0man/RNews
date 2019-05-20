@@ -85,7 +85,7 @@
 
             </div>
             <div class="col-md-3">
-                @if (User.Identity.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
                 {
                     <a asp-action="Index" asp-controller="Admin">Control Panel</a>
                 }

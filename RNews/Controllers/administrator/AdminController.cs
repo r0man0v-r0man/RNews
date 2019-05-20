@@ -12,7 +12,7 @@ using RNews.Models.ViewModels.Admin;
 
 namespace RNews.Controllers.administrator
 {
-    [Authorize]
+    [Authorize(Roles ="admin")]
     public class AdminController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -55,6 +55,18 @@ namespace RNews.Controllers.administrator
             };
             await roleManager.CreateAsync(new IdentityRole("admin"));
             return View(accountInfo);
+        }
+        public async Task<IActionResult> Ban(string id)
+        {
+            
+            var user = await userManager.FindByIdAsync(id);
+            var roles = await userManager.GetRolesAsync(user);
+            var result = await userManager.RemoveFromRolesAsync(user, roles);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
         }
     }
 }
