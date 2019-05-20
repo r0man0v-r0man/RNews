@@ -47,6 +47,7 @@ namespace RNews.Controllers.administrator
                 Role = "test",
                 IsExternal = user.IsExternal.ToString()
             };
+            await roleManager.CreateAsync(new IdentityRole("admin"));
             return View(accountInfo);
         }
     }
