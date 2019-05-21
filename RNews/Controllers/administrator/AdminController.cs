@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.Models.ViewModels;
-using RNews.Models.ViewModels.Admin;
 
 namespace RNews.Controllers.administrator
 {
@@ -41,52 +39,7 @@ namespace RNews.Controllers.administrator
             }
             return View(listModels);
         }
-        public async Task<IActionResult> Show(string id)
-        {
-            var user = await userManager.FindByIdAsync(id);
-            var accountInfo = new AccountInfoViewModel
-            {
-                Id = user.Id,
-                Name = user.UserName,
-                Email = user.Email,
-                Description = user.Description,
-                RegisterDate = user.Created.ToShortDateString(),
-                Roles = await userManager.GetRolesAsync(user),
-                IsExternal = user.IsExternal.ToString()
-            };
-            await roleManager.CreateAsync(new IdentityRole("admin"));
-            return View(accountInfo);
-        }
-        public async Task<IActionResult> Edit(string id)
-        {
-            var user = await userManager.FindByIdAsync(id);
-            var editModel = new AccountInfoViewModel
-            {
-                Name = user.UserName,
-                Roles = await userManager.GetRolesAsync(user),
-                Description = user.Description,
-                Id = user.Id
-            };
-            return View(editModel);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit(string id, AccountInfoViewModel model)
-        {
-            var user = await userManager.FindByIdAsync(id);
-            
-            if (user != null)
-            {
-                user.Description = model.Description;
-                await userManager.AddToRolesAsync(user, model.Roles);
-                user.UserName = model.Name;
-                var result = await userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                {
-                    RedirectToAction("Index", "Admin");
-                }
-            }
-            return View(model);
-        }
+        
         public async Task<IActionResult> Ban(string id)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -122,6 +75,21 @@ namespace RNews.Controllers.administrator
                 await userManager.RemoveFromRolesAsync(user, roles);
             }
             var result = await userManager.AddToRoleAsync(user, "writer");
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+        public async Task<IActionResult> SetAdmin(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            var roles = await userManager.GetRolesAsync(user);
+            if (roles != null)
+            {
+                await userManager.RemoveFromRolesAsync(user, roles);
+            }
+            var result = await userManager.AddToRoleAsync(user, "admin");
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Admin");
