@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
+using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
+using RNews.Models.ViewModels.Admin;
 
 namespace RNews.Controllers.administrator
 {
@@ -16,11 +18,14 @@ namespace RNews.Controllers.administrator
     {
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly ApplicationDbContext db;
         public AdminController(UserManager<User> userManager,
-                               RoleManager<IdentityRole> roleManager)
+                               RoleManager<IdentityRole> roleManager,
+                               ApplicationDbContext db)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.db = db;
         }
         
         public async Task<IActionResult> Index()
@@ -37,9 +42,28 @@ namespace RNews.Controllers.administrator
                     UserRoles = await userManager.GetRolesAsync(user)
                 });
             }
+            
             return View(listModels);
         }
-        
+        public async Task<IActionResult> Posts()
+        {
+            var posts = await db.Posts.Include(u=>u.User).ToListAsync();
+            var listModels = new List<AdminPostViewModel>();
+            foreach (var post in posts)
+            {
+                listModels.Add(new AdminPostViewModel
+                {
+                    id = post.PostId,
+                    Title = post.Title,
+                    Author = post.User.UserName,
+                    Category = post.Category.ToString(),
+                    DateCreated = post.Created.ToShortDateString(),
+                    Rating = "12" /*не должно быть пустым*/
+                });
+            }
+            return View(listModels);
+        }
+
         public async Task<IActionResult> Ban(string id)
         {
             var user = await userManager.FindByIdAsync(id);

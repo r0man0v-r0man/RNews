@@ -1,0 +1,44 @@
+﻿@model List<RNews.Models.ViewModels.Admin.AdminPostViewModel>
+@{
+    ViewData["Title"] = "Posts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Posts</h1>
+
+<div>
+    <h4>Total Users: @Model.Count</h4>
+    <input id="what-search" type="text" placeholder="Search..." class="form-control border-0" />
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody id="where-search">
+                @foreach (var post in Model)
+                {
+                    <tr>
+                        @Html.Hidden("Id", post.id)
+                        <td>@post.Title</td>
+                        <td>@post.Author</td>
+                        <td>@post.Category</td>
+                        <td>@post.DateCreated</td>
+                        <td>@post.Rating</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/Admin.js"></script>
+}
