@@ -33,6 +33,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Show", "Show", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-primary" })
+                            @Html.ActionLink("Edit", "Edit", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-primary" })
                             @Html.ActionLink("Set Reader", "SetReader", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-success" })
                             @Html.ActionLink("Set Writer", "SetWriter", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-success" })
                             @Html.ActionLink("Ban", "Ban", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-dark" })
