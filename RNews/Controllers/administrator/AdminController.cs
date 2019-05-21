@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.Models.ViewModels;
@@ -72,6 +73,7 @@ namespace RNews.Controllers.administrator
         public async Task<IActionResult> Edit(string id, AccountInfoViewModel model)
         {
             var user = await userManager.FindByIdAsync(id);
+            
             if (user != null)
             {
                 user.Description = model.Description;
