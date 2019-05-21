@@ -56,10 +56,19 @@ namespace RNews.Controllers.administrator
             await roleManager.CreateAsync(new IdentityRole("admin"));
             return View(accountInfo);
         }
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            var user = await userManager.FindByIdAsync(id);
+            var editModel = new AccountInfoViewModel
+            {
+                Name = user.UserName,
+                Roles = await userManager.GetRolesAsync(user),
+                Description = user.Description,
+                Id = user.Id
+            };
+            return View(editModel);
         }
+        [HttpPost]
         public async Task<IActionResult> Edit(string id, AccountInfoViewModel model)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -74,7 +83,7 @@ namespace RNews.Controllers.administrator
                     RedirectToAction("Index", "Admin");
                 }
             }
-            return View();
+            return View(model);
         }
         public async Task<IActionResult> Ban(string id)
         {
