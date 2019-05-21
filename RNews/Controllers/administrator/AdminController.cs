@@ -70,6 +70,11 @@ namespace RNews.Controllers.administrator
         public async Task<IActionResult> SetReader(string id)
         {
             var user = await userManager.FindByIdAsync(id);
+            var roles = await userManager.GetRolesAsync(user);
+            if (roles != null)
+            {
+                await userManager.RemoveFromRolesAsync(user, roles);
+            }
             var result = await userManager.AddToRoleAsync(user, "reader");
             if (result.Succeeded)
             {
@@ -77,6 +82,22 @@ namespace RNews.Controllers.administrator
             }
             return RedirectToAction("Index", "Admin");
         }
+        public async Task<IActionResult> SetWriter(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            var roles = await userManager.GetRolesAsync(user);
+            if (roles != null)
+            {
+                await userManager.RemoveFromRolesAsync(user, roles);
+            }
+            var result = await userManager.AddToRoleAsync(user, "writer");
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+        
 
     }
 }
