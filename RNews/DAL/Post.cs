@@ -12,12 +12,14 @@ namespace RNews.DAL
         public string Description { get; set; }
         public string Content { get; set; }
         public DateTime Created { get; set; }
-        public int? Rating { get; set; }
+        public int Rating { get; set; }
         public string UserId { get; set; }
         public virtual User User { get; set; }
         public Category Category { get; set; }
         public string ImagePath { get; set; }
         public string ImageName { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
 
         public Post()
         {

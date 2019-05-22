@@ -23,6 +23,12 @@
                 на "RNews" с  @Model.DateOfCreatedAuthor.ToString("Y")
             </div>
         </div>
+        <form asp-controller="Comment" asp-action="Create">
+            <input type="hidden" name="postId" value="@Model.PostId" />
+            <textarea name="content" class="form-control form-control rounded-0 border-top-0 border-left-0 border-right-0" type="text"></textarea>
+            <button type="submit">Ok</button>
+        </form>
+        <hr />
         <partial name="_Comments" />
     </div>
 </div>

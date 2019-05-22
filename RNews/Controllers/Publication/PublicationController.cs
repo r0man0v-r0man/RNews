@@ -59,6 +59,7 @@ namespace RNews.Controllers.Publication
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {
+                PostId = post.PostId,
                 DateOfCreatedAuthor = post.User.Created,
                 AuthorName = post.User.UserName,
                 AuthorAvatar = post.User.ImagePath,

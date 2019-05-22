@@ -24,7 +24,9 @@ namespace RNews.DAL.EntityConfigurations
             builder
                 .Property(c => c.Category)
                 .IsRequired();
-            
+            builder
+                .HasMany(c => c.Comments)
+                .WithOne(p => p.Post);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace RNews.DAL
             IsExternal = false;
             Description = "I love RNews";
         }
+        public virtual ICollection<Comment> Comments { get; set; }
         public Gender Gender { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public string ImagePath { get; set; }
