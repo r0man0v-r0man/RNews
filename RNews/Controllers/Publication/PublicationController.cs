@@ -53,7 +53,7 @@ namespace RNews.Controllers.Publication
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
-        
+        [AllowAnonymous]
         public IActionResult Show(int id)
         {
             Post post = Unit.GetPost(db, id);
@@ -68,7 +68,7 @@ namespace RNews.Controllers.Publication
             };
             return View(showPost);
         }
-
+        [Authorize(Roles = "admin, writer")]
         public IActionResult Delete(int id)
         {
             if (id != 0)
