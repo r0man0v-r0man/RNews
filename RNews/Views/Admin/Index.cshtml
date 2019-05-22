@@ -39,6 +39,7 @@
                             @Html.ActionLink("Set Writer", "SetWriter", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-success" })
                             @Html.ActionLink("Set Admin", "SetAdmin", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-success" })
                             @Html.ActionLink("Ban", "Ban", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-dark" })
+                            @Html.ActionLink("Delete", "Delete", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-danger" })
                         </td>
                     </tr>
                 }

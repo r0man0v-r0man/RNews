@@ -47,7 +47,7 @@ namespace RNews.Controllers.administrator
         }
         public async Task<IActionResult> Posts()
         {
-            var posts = await db.Posts.Include(u=>u.User).ToListAsync();
+            var posts = await db.Posts.ToListAsync();
             var listModels = new List<AdminPostViewModel>();
             foreach (var post in posts)
             {
@@ -73,7 +73,17 @@ namespace RNews.Controllers.administrator
             {
                 return RedirectToAction("Index", "Admin");
             }
-            return RedirectToAction("Index", "Admin");
+            return View();
+        }
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            var result = await userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            return View();
         }
         public async Task<IActionResult> SetReader(string id)
         {
@@ -88,7 +98,7 @@ namespace RNews.Controllers.administrator
             {
                 return RedirectToAction("Index", "Admin");
             }
-            return RedirectToAction("Index", "Admin");
+            return View();
         }
         public async Task<IActionResult> SetWriter(string id)
         {
@@ -103,7 +113,7 @@ namespace RNews.Controllers.administrator
             {
                 return RedirectToAction("Index", "Admin");
             }
-            return RedirectToAction("Index", "Admin");
+            return View();
         }
         public async Task<IActionResult> SetAdmin(string id)
         {
@@ -118,7 +128,7 @@ namespace RNews.Controllers.administrator
             {
                 return RedirectToAction("Index", "Admin");
             }
-            return RedirectToAction("Index", "Admin");
+            return View();
         }
         
 
