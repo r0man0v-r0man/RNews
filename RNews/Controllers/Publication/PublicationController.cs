@@ -65,7 +65,8 @@ namespace RNews.Controllers.Publication
                 AuthorAvatar = post.User.ImagePath,
                 Title = post.Title,
                 ImagePath = post.ImagePath,
-                Content = Markdown.ToHtml(post.Content)
+                Content = Markdown.ToHtml(post.Content),
+                PostComments = post.Comments.ToList()
             };
             return View(showPost);
         }

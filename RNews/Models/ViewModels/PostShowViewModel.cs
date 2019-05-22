@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RNews.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,6 @@ namespace RNews.Models.ViewModels
         public string AuthorName { get; set; }
         public string AuthorAvatar { get; set; }
         public DateTime DateOfCreatedAuthor { get; set; }
-
+        public List<Comment> PostComments { get; set; }
     }
 }

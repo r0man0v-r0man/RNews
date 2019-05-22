@@ -29,6 +29,10 @@
             <button type="submit">Ok</button>
         </form>
         <hr />
+        @foreach (var comment in Model.PostComments)
+        {
+            <div>@comment.Content</div>
+        }
         <partial name="_Comments" />
     </div>
 </div>
