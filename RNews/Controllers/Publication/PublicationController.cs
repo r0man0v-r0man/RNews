@@ -15,7 +15,7 @@ using RNews.Units;
 
 namespace RNews.Controllers.Publication
 {
-    
+    [Authorize(Roles ="admin, writer")]
     public class PublicationController : Controller
     {
         private UserManager<User> UserManager { get; }
@@ -27,7 +27,7 @@ namespace RNews.Controllers.Publication
             this.UserManager = userManager;
             this.appEnvironment = appEnvironment;
         }
-        [Authorize]
+       
         public  IActionResult Create()
         {
             return View();

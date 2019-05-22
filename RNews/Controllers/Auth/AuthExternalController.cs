@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RNews.DAL;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace RNews.Controllers
 {
+    [AllowAnonymous]
     public class AuthExternalController : Controller
     {
         private UserManager<User> UserManager { get; }

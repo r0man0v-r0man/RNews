@@ -14,6 +14,7 @@ using RNews.Services;
 
 namespace RNews.Controllers.Auth
 {
+    [AllowAnonymous]
     public class AuthController : Controller
     {
         private UserManager<User> UserManager { get;  }
