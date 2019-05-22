@@ -3,17 +3,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Search</h1>
-
-<div class="row justify-content-center">
-    <div class="col-md-12 box-shadow">
-        @foreach (var post in Model)
-        {
-            <div class="col-md-1">@post.Id</div>
-            <div class="col-md-3">@post.Title</div>
-            <div class="col-md-4">@post.Description</div>
-            <div class="col-md-2">@post.DateOfCreated</div>
-            <div class="col-md-2">@post.Author</div>
-        }
+<h1>We Founded</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12 box-shadow">
+            @foreach (var post in Model)
+            {
+            <div class="row">
+                <div class="col-md-1">@post.Id</div>
+                <div class="col-md-3">@post.Title</div>
+                <div class="col-md-4">@post.Description</div>
+                <div class="col-md-2">@post.DateOfCreated</div>
+                <div class="col-md-2">@post.Author</div>
+            </div>
+            }
+        </div>
     </div>
 </div>
