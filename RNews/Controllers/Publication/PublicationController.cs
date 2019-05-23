@@ -56,6 +56,8 @@ namespace RNews.Controllers.Publication
         [AllowAnonymous]
         public IActionResult Show(int id)
         {
+            ViewBag.CurrentUserId = UserManager.GetUserId(HttpContext.User);
+            
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {

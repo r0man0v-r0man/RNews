@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Show";
 }
-    <link href="~/lib/bootstrap-star-rating/css/star-rating.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap-star-rating/css/star-rating.min.css" rel="stylesheet" />
 <div class="row justify-content-center">
     <div class="col-md-8 box-shadow">
         <h2 class="text-center font-weight-light">@Model.Title</h2>
@@ -23,21 +23,27 @@
                 на "RNews" с  @Model.DateOfCreatedAuthor.ToString("Y")
             </div>
         </div>
-        <form asp-controller="Comment" asp-action="Create">
-            <input type="hidden" name="postId" value="@Model.PostId" />
-            <textarea name="content" class="form-control form-control rounded-0 border-top-0 border-left-0 border-right-0" type="text"></textarea>
-            <button type="submit">Ok</button>
+        <hr />
+        <form>
+            <input id="post-id" type="hidden" name="postId" value="@Model.PostId" />
+            <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
+            <textarea id="comment-content" name="content" class="form-control form-control rounded-0 border-top-0 border-left-0 border-right-0" type="text"></textarea>
+            <button id="comment-submit" type="submit" class="btn btn-primary btn-sm btn-block">Ok</button>
         </form>
         <hr />
         @foreach (var comment in Model.PostComments)
         {
-            <div>@comment.Content</div>
+            <div id="comment-box" class="row">@comment.Content</div>
         }
-        <partial name="_Comments" />
+        @*<div id="comment-box" class="row"></div>*@
+
+        @*<partial name="_Comments" />*@
     </div>
 </div>
 
 @section Scripts{
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/Comments.js"></script>
     <script src="~/lib/bootstrap-star-rating/js/star-rating.min.js"></script>
     <script src="~/js/ratepost.js"></script>
 }

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RNews.DAL;
 using RNews.DAL.dbContext;
+using RNews.Hubs;
 using RNews.Models.ViewModels;
 using RNews.Units;
 
@@ -15,10 +17,13 @@ namespace RNews.Controllers.Comments
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<User> userManager;
-        public CommentController(ApplicationDbContext db, UserManager<User> userManager)
+        private readonly IHubContext<CommentHub> hubContext;
+
+        public CommentController(ApplicationDbContext db, UserManager<User> userManager, IHubContext<CommentHub> hubContext)
         {
             this.db = db;
             this.userManager = userManager;
+            this.hubContext = hubContext;
         }
 
         public async Task< IActionResult> Create(string content, int postId)
@@ -34,7 +39,8 @@ namespace RNews.Controllers.Comments
             };
             db.Comments.Add(comment);
             await db.SaveChangesAsync();
-            return RedirectToAction("Show", "Publication", new { id = postId });
+            //await hubContext.Clients.All.SendAsync("ContentComment", comment.Content);
+            return PartialView();
         }
         
     }
