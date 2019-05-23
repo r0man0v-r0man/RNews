@@ -31,13 +31,21 @@
             <button id="comment-submit" type="submit" class="btn btn-primary btn-sm btn-block">Ok</button>
         </form>
         <hr />
-        @foreach (var comment in Model.PostComments)
-        {
-            <div id="comment-box" class="row">@comment.Content</div>
-        }
-        @*<div id="comment-box" class="row"></div>*@
+        <div class="row">
+            <div class="col-12">
+                <ul id="messagesList">
+                    @foreach (var comment in Model.PostComments)
+                    {
+                        <li>@comment.Content</li>
+                    }
+                    
 
-        @*<partial name="_Comments" />*@
+                </ul>
+            </div>
+        </div>
+       
+        
+
     </div>
 </div>
 

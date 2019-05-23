@@ -1,7 +1,11 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/CommentHub").build();
 connection.on("ContentComment", function (content) {
-    document.getElementById("comment-box").innerText = content;
+    //have to craete html for each new comment
+    //document.getElementById("comment-box").innerText = content;
+    var li = document.createElement("li");
+    li.textContent = content;
+    document.getElementById("messagesList").appendChild(li);
     console.log(content);
 });
 
