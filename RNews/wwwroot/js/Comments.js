@@ -4,6 +4,7 @@ connection.on("ContentComment", function (content) {
     //have to craete html for each new comment
     //document.getElementById("comment-box").innerText = content;
     var li = document.createElement("li");
+    li.classList.add("list-group-item");
     li.textContent = content;
     document.getElementById("messagesList").appendChild(li);
     console.log(content);

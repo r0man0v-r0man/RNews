@@ -27,16 +27,16 @@
         <form>
             <input id="post-id" type="hidden" name="postId" value="@Model.PostId" />
             <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
-            <textarea id="comment-content" name="content" class="form-control form-control rounded-0 border-top-0 border-left-0 border-right-0" type="text"></textarea>
+            <textarea id="comment-content" name="content" class="form-control form-control rounded-0 border-top-0 border-left-0 border-right-0" type="text" placeholder="let's disqus"></textarea>
             <button id="comment-submit" type="submit" class="btn btn-primary btn-sm btn-block">Ok</button>
         </form>
         <hr />
         <div class="row">
             <div class="col-12">
-                <ul id="messagesList">
+                <ul id="messagesList" class="list-group list-group-flush">
                     @foreach (var comment in Model.PostComments)
                     {
-                        <li>@comment.Content</li>
+                        <li class="list-group-item">@comment.Content</li>
                     }
                     
 
