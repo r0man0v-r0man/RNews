@@ -15,6 +15,7 @@ namespace RNews.Controllers.Comments
 {
     public class CommentController : Controller
     {
+        //может убрать? в хабе ж добавляется комментарий
         private readonly ApplicationDbContext db;
         private readonly UserManager<User> userManager;
         private readonly IHubContext<CommentHub> hubContext;
