@@ -3,13 +3,6 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "font-awesome@5.8.1",
-      "destination": "wwwroot/lib/font-awesome/",
-      "files": [
-        "css/all.min.css"
-      ]
-    },
-    {
       "provider": "unpkg",
       "library": "@aspnet/signalr@1",
       "destination": "wwwroot/lib/signalr/",
@@ -30,8 +23,22 @@
       "destination": "wwwroot/simplemde/"
     },
     {
-      "library": "jeditable.js@2.0.8",
-      "destination": "wwwroot/lib/jeditable/"
+      "library": "bootstrap-star-rating@4.0.5",
+      "destination": "wwwroot/lib/bootstrap-star-rating/",
+      "files": [
+        "img/loading.gif",
+        "js/star-rating.min.js",
+        "css/star-rating.min.css"
+      ]
     }
+  ,
+{
+  "provider": "unpkg",
+  "library": "bootstrap-star-rating@4.0.4",
+  "destination": "wwwroot/lib/bootstrap-star-rating/",
+  "files": [
+    "img/loading.gif"
   ]
+}
+]
 }

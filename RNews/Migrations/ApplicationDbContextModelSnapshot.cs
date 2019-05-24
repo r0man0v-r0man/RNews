@@ -129,6 +129,29 @@ namespace RNews.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("RNews.DAL.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("RNews.DAL.Post", b =>
                 {
                     b.Property<int>("PostId")
@@ -145,7 +168,11 @@ namespace RNews.Migrations
                         .IsRequired()
                         .HasMaxLength(2000);
 
-                    b.Property<int?>("Rating");
+                    b.Property<string>("ImageName");
+
+                    b.Property<string>("ImagePath");
+
+                    b.Property<int>("Rating");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -171,12 +198,24 @@ namespace RNews.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("Description");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("ExternalId");
+
                     b.Property<int>("Gender");
+
+                    b.Property<string>("ImageName");
+
+                    b.Property<string>("ImagePath");
+
+                    b.Property<bool>("IsExternal");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -257,6 +296,18 @@ namespace RNews.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RNews.DAL.Comment", b =>
+                {
+                    b.HasOne("RNews.DAL.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RNews.DAL.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("RNews.DAL.Post", b =>

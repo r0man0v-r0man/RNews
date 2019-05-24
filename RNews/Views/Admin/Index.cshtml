@@ -1,0 +1,55 @@
+﻿@model List<RNews.Models.ViewModels.AccountViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+
+<h1>Users</h1>
+<hr />
+
+<div>
+    <h4>Total Users: @Model.Count</h4>
+    <input id="what-search" type="text" placeholder="Search..." class="form-control border-0" />
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="where-search">
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        @Html.Hidden("UserId", user.UserId)
+                        <td>@user.UserName</td>
+                        <td>@user.UserEmail</td>
+                        <td>
+                            @foreach (var role in user.UserRoles)
+                            {
+                                <span>@role</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Set Reader", "SetReader", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-success" })
+                            @Html.ActionLink("Set Writer", "SetWriter", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-success" })
+                            @Html.ActionLink("Set Admin", "SetAdmin", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-success" })
+                            @Html.ActionLink("Ban", "Ban", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-dark" })
+                            @Html.ActionLink("Delete", "Delete", "Admin", new { id = user.UserId }, new { @class = "btn btn-sm btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/Admin.js"></script>
+}

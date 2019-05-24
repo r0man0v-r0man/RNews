@@ -1,4 +1,5 @@
-﻿using RNews.DAL;
+﻿using Microsoft.AspNetCore.Http;
+using RNews.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace RNews.Models.ViewModels
         public string Content { get; set; }
         public string Description { get; set; }
         public Category Category { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

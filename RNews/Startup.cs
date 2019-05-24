@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Hubs;
+using System;
 
 namespace RNews
 {
@@ -29,6 +25,22 @@ namespace RNews
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<ApplicationDbContext>(options => options
+                    .UseSqlServer(Configuration.GetConnectionString("RNewsDatabase")));
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+                options.User.RequireUniqueEmail = true;
+            })
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -42,21 +54,16 @@ namespace RNews
                     options.ClientSecret = "I6o49F54Ms4CRuGutcG7LOR7";
                     options.CallbackPath = "/signin-google";
                 });
+            services.ConfigureApplicationCookie(options =>
+                {
+                    options.LoginPath = "/auth/login";
+                    options.LogoutPath = "/auth/logout";
+                    options.AccessDeniedPath = "/auth/accessdenied";
+                });
             services.ConfigureExternalCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);
-            });  
-            services.AddDbContext<ApplicationDbContext>(options => options
-                    .UseSqlServer(Configuration.GetConnectionString("RNewsDatabase")));
-            services.AddIdentity<User, IdentityRole>(options=> {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredLength = 8;
-            })
-                    .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders();
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSignalR();
         }
@@ -78,6 +85,9 @@ namespace RNews
             {
                 routes.MapHub<GeneratePasswordHub>("/GeneratePasswordHub");
                 routes.MapHub<UserPropertyHub>("/UserPropertyHub");
+                routes.MapHub<UserAvatarHub>("/UserAvatarHub");
+                routes.MapHub<CommentHub>("/CommentHub");
+
             });
             app.UseMvc(routes =>
             {

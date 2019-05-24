@@ -8,13 +8,10 @@ namespace RNews.DAL
 {
     public enum Category
     {
-        [Display(Description = "Java")]
         Java = 1,
-        [Display(Description = "C#/.Net")]
+        [Display(Name = "C#/.NET")]
         CSharpAndDotNet,
-        [Display(Description = "C/C++")]
         CAndCPlusPlus,
-        [Display(Description = "Web")]
         Web
     }
 }

@@ -2,16 +2,54 @@
 @{
     ViewData["Title"] = "Show";
 }
-
-
+<link href="~/lib/bootstrap-star-rating/css/star-rating.min.css" rel="stylesheet" />
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-8 box-shadow">
         <h2 class="text-center font-weight-light">@Model.Title</h2>
         <hr />
+        <img src="@Model.ImagePath" alt="Alternate Text" class="img-fluid mx-auto d-block" />
         <div>
             @Html.Raw(Model.Content)
         </div>
-        <partial name="_Comments" />
+        <label for="input-1-ltr-star-xs" class="control-label">Rate This</label>
+        <input id="input-1-ltr-star-xs" name="input-1-ltr-star-xs" class="kv-ltr-theme-default-star rating-loading" value="1" dir="ltr" data-size="xs">
+        <div class="media row">
+            <div class="col-sm-2">
+                <img src="@Model.AuthorAvatar" class="mr-3 img-fluid" alt="Author Avatar">
+            </div>
+
+            <div class="media-body col-sm-10">
+                <h5 class="mt-0">@Model.AuthorName</h5>
+                на "RNews" с  @Model.DateOfCreatedAuthor.ToString("Y")
+            </div>
+        </div>
+        <hr />
+        <form>
+            <input id="post-id" type="hidden" name="postId" value="@Model.PostId" />
+            <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
+            <textarea id="comment-content" name="content" class="form-control form-control mb-3" type="text" placeholder="let's disqus"></textarea>
+            <button id="comment-submit" type="submit" class="btn btn-primary btn-sm btn-block">Ok</button>
+        </form>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <ul id="messagesList" class="list-group list-group-flush">
+                    @foreach (var comment in Model.PostComments)
+                    {
+                        <li class="list-group-item">@comment.Content</li>
+                    }
+                </ul>
+            </div>
+        </div>
+       
+        
+
     </div>
-    
 </div>
+
+@section Scripts{
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/Comments.js"></script>
+    <script src="~/lib/bootstrap-star-rating/js/star-rating.min.js"></script>
+    <script src="~/js/ratepost.js"></script>
+}

@@ -14,6 +14,7 @@ using RNews.Services;
 
 namespace RNews.Controllers.Auth
 {
+    [AllowAnonymous]
     public class AuthController : Controller
     {
         private UserManager<User> UserManager { get;  }
@@ -37,8 +38,9 @@ namespace RNews.Controllers.Auth
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user, "reader");
                     await SignInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect("~/Properties");
+                    return RedirectToAction("Properties", "Properties", new { id= user.Id });
                 }
                 else
                 {

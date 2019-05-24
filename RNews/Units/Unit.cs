@@ -1,9 +1,12 @@
 ﻿
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +33,12 @@ namespace RNews.Units
             }
             return result;
         }
+        public static void DeletePost(ApplicationDbContext db, int id)
+        {
+            Post post = Unit.GetPost(db, id);
+            db.Posts.Remove(post);
+            db.SaveChanges();
+        }
         public static Post GetPost(ApplicationDbContext db, int id)
         {
             Post post = db.Posts.Find(id);
@@ -45,12 +54,43 @@ namespace RNews.Units
         public static string CreateDescription(string descriptionText)
         {
             string[] temp = descriptionText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var DescriptionLength = 14;
             string tempDescription = "";
-            for (int i = 0; i < 14; i++)
+            if (temp.Length <= DescriptionLength)
             {
-                tempDescription += " " + temp[i];
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
             }
-            return String.Concat(tempDescription, "...");
+            else
+            {
+                for (int i = 0; i < DescriptionLength; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
+            }
+            
+        }
+        public static async Task<string> UploadPostMainImageAndGetPathAsync(IFormFile file, IHostingEnvironment appEnvironment)
+        {
+            
+            if (file != null)
+            {
+                string path = "/imgs/posts/" + file.FileName;
+                using (var fileStream = new FileStream(appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+                return path;
+            }
+            else
+            {
+                return "test";
+            }
+            
         }
     }
 }
