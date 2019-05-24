@@ -27,7 +27,7 @@ namespace RNews.Hubs
             };
             db.Comments.Add(newComment);
             await db.SaveChangesAsync();
-            await Clients.All.SendAsync("ContentComment", newComment.Content);
+            await Clients.All.SendAsync("ContentComment", newComment.Content, user.UserName);
         }
     }
 }

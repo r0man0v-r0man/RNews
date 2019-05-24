@@ -18,13 +18,13 @@ namespace RNews.Controllers.Publication
     [Authorize(Roles ="admin, writer")]
     public class PublicationController : Controller
     {
-        private UserManager<User> UserManager { get; }
+        private UserManager<User> userManager { get; }
         private readonly ApplicationDbContext db;
         private readonly IHostingEnvironment appEnvironment;
         public PublicationController(UserManager<User> userManager, ApplicationDbContext db, IHostingEnvironment appEnvironment)
         {
             this.db = db;
-            this.UserManager = userManager;
+            this.userManager = userManager;
             this.appEnvironment = appEnvironment;
         }
        
@@ -37,8 +37,8 @@ namespace RNews.Controllers.Publication
         [HttpPost]
         public async Task<IActionResult> Create(PostCreateViewModel model)
         {
-            var userId = UserManager.GetUserId(HttpContext.User);
-            var user = UserManager.FindByIdAsync(userId).Result;
+            var userId = userManager.GetUserId(HttpContext.User);
+            var user = userManager.FindByIdAsync(userId).Result;
             var newPost = new Post
             {
                 Title = model.Title,
@@ -56,8 +56,8 @@ namespace RNews.Controllers.Publication
         [AllowAnonymous]
         public IActionResult Show(int id)
         {
-            ViewBag.CurrentUserId = UserManager.GetUserId(HttpContext.User);
-            
+            ViewBag.CurrentUserId = userManager.GetUserId(HttpContext.User);
+
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {
