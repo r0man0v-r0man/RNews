@@ -2,13 +2,14 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/CommentHub").build();
 connection.on("ContentComment", function (content, userName) {
     var li = document.createElement("li");
-    var span = document.createElement("span");
+    var strong = document.createElement("strong");
     li.classList.add("list-group-item", "list-group-item-primary");
     li.textContent = content;
-    span.innerText = userName;
-    document.getElementById("messagesList").appendChild(span);
+    strong.innerText = userName + ":";
+    document.getElementById("messagesList").appendChild(strong);
     document.getElementById("messagesList").appendChild(li);
     console.log(content);
+    console.log(userName);
 });
 
 connection.start()

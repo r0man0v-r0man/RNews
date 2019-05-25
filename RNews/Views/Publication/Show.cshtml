@@ -36,7 +36,7 @@
                 <ul id="messagesList" class="list-group list-group-flush">
                     @foreach (var comment in Model.PostComments)
                     {
-                        <li class="list-group-item">@comment.Content</li>
+                        <li class="list-group-item"><strong>@comment.User.UserName</strong><br />@comment.Content</li>
                     }
                 </ul>
             </div>
