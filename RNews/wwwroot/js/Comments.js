@@ -2,10 +2,10 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/CommentHub").build();
 connection.on("ContentComment", function (content, userName) {
     var li = document.createElement("li");
-    var strong = document.createElement("strong");
     li.classList.add("list-group-item", "list-group-item-primary");
-    li.innerHTML = "<div class='row'><div class='col-12'><small>" + userName + "</small></div><div class='col-12'>" + content + "</div></div>";
+    li.innerHTML = "<div class='row'><div class='col-12'><small class='text-muted'>" + userName + "</small></div><div class='col-12'>" + content + "</div></div>";
     document.getElementById("messagesList").appendChild(li);
+    document.getElementById("messagesList").lastElementChild.scrollIntoView();
     console.log(content);
     console.log(userName);
 });
