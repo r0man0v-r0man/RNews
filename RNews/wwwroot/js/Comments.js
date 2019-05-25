@@ -5,7 +5,8 @@ connection.on("ContentComment", function (content, userName) {
     li.classList.add("list-group-item", "list-group-item-primary");
     li.innerHTML = "<div class='row'><div class='col-12'><small class='text-muted'>" + userName + "</small></div><div class='col-12'>" + content + "</div></div>";
     document.getElementById("messagesList").appendChild(li);
-    document.getElementById("messagesList").lastElementChild.scrollIntoView();
+    //document.getElementById("messagesList").lastElementChild.scrollIntoView(); 
+    //Скрол у всех пользователей, а хотелось бы у одного
     console.log(content);
     console.log(userName);
 });
@@ -28,3 +29,13 @@ document.getElementById("comment-submit").addEventListener("click", function (ev
     event.preventDefault();
 }
 );
+
+var button = document.getElementById("comment-submit"),
+    textarea = document.getElementById("comment-content");
+
+button.disabled = true;
+
+textarea.addEventListener('keyup', function () {
+    button.disabled = !this.value;
+});
+
