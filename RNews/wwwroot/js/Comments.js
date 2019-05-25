@@ -4,9 +4,7 @@ connection.on("ContentComment", function (content, userName) {
     var li = document.createElement("li");
     var strong = document.createElement("strong");
     li.classList.add("list-group-item", "list-group-item-primary");
-    li.textContent = content;
-    strong.innerText = userName + ":";
-    document.getElementById("messagesList").appendChild(strong);
+    li.innerHTML = "<div class='row'><div class='col-12'><small>" + userName + "</small></div><div class='col-12'>" + content + "</div></div>";
     document.getElementById("messagesList").appendChild(li);
     console.log(content);
     console.log(userName);
