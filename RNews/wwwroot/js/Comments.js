@@ -24,6 +24,7 @@ document.getElementById("comment-submit").addEventListener("click", function (ev
     var postId = document.getElementById("post-id").value;
     var content = document.getElementById("comment-content").value;
     document.getElementById("messagesList").lastElementChild.scrollIntoView(); 
+    button.disabled = true;
     connection.invoke("Comments", content, postId, userId)
         .catch(function (err) {
             return console.error(err.toString());
