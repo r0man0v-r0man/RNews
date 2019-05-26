@@ -45,6 +45,19 @@ namespace RNews.Controllers.administrator
             
             return View(listModels);
         }
+        public async Task<IActionResult> Categories()
+        {
+            var categories = await db.Categories.ToListAsync();
+            var listModels = new List<AdminCategoryViewModel>();
+            foreach (var category in categories)
+            {
+                listModels.Add(new AdminCategoryViewModel
+                {
+                    Name = category.Name
+                });
+            }
+            return View(listModels);
+        }
         public async Task<IActionResult> Posts()
         {
             var posts = await db.Posts.ToListAsync();
