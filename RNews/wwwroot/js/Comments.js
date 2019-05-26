@@ -30,6 +30,7 @@ button.addEventListener("click", function (event) {
             return console.error(err.toString());
         });
     event.preventDefault();
+    document.getElementById("messagesList").lastElementChild.scrollIntoView();
 });
 //нормально не работает, и куда вставлять код, чтоб перебрасывало к новому посту автора?
 textarea.addEventListener("keyup", function () {
