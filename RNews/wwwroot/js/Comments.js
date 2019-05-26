@@ -1,10 +1,7 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/CommentHub").build();
-
-
-var button = document.getElementById("comment-submit"),
-    textarea = document.getElementById("comment-content");
-
+var button = document.getElementById("comment-submit");
+var textarea = document.getElementById("comment-content");
 button.disabled = true;
 
 connection.on("ContentComment", function (content, userName, dateOfCreated) {
@@ -28,15 +25,13 @@ button.addEventListener("click", function (event) {
     var userId = document.getElementById("user-id").value;
     var postId = document.getElementById("post-id").value;
     var content = document.getElementById("comment-content").value;
-    document.getElementById("messagesList").lastElementChild.scrollIntoView(); 
-    button.disabled = true;
     connection.invoke("Comments", content, postId, userId)
         .catch(function (err) {
             return console.error(err.toString());
         });
     event.preventDefault();
 });
-
+//нормально не работает, и куда вставлять код, чтоб перебрасывало к новому посту автора?
 textarea.addEventListener("keyup", function () {
     button.disabled = !this.value;
 });
