@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RNews.DAL.dbContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,9 @@ namespace RNews.DAL.Initializer
 {
     public class RoleInitializer
     {
-        public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeAsync(UserManager<User> userManager,
+                                                 RoleManager<IdentityRole> roleManager,
+                                                 ApplicationDbContext db)
         {
             string adminEmail = "admin@rnews.com";
             string writerEmail = "writer@rnews.com";
@@ -55,6 +58,20 @@ namespace RNews.DAL.Initializer
                 {
                     await userManager.AddToRoleAsync(reader, "reader");
                 }
+            }
+
+
+            if (db.Categories.Any())
+            {
+                return;
+            }
+            else
+            {
+                db.Categories.Add(new Category { Name = "Java" });
+                db.Categories.Add(new Category { Name = "HTML/CSS" });
+                db.Categories.Add(new Category { Name = "C#/.NET" });
+                db.Categories.Add(new Category { Name = "UI/UX" });
+                await db.SaveChangesAsync();
             }
         }
     }

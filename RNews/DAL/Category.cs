@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace RNews.DAL
 {
-    public enum Category
+    public class Category
     {
-        Java = 1,
-        [Display(Name = "C#/.NET")]
-        CSharpAndDotNet,
-        CAndCPlusPlus,
-        Web
+        public int CategoryId { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
+    //public enum Category
+    //{
+    //    Java = 1,
+    //    [Display(Name = "C#/.NET")]
+    //    CSharpAndDotNet,
+    //    CAndCPlusPlus,
+    //    Web
+    //}
 }

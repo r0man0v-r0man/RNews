@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
@@ -18,34 +19,42 @@ namespace RNews.Controllers.Publication
     [Authorize(Roles ="admin, writer")]
     public class PublicationController : Controller
     {
-        private UserManager<User> UserManager { get; }
+        private UserManager<User> userManager { get; }
         private readonly ApplicationDbContext db;
         private readonly IHostingEnvironment appEnvironment;
         public PublicationController(UserManager<User> userManager, ApplicationDbContext db, IHostingEnvironment appEnvironment)
         {
             this.db = db;
-            this.UserManager = userManager;
+            this.userManager = userManager;
             this.appEnvironment = appEnvironment;
         }
        
         public  IActionResult Create()
         {
-            return View();
+            var model = new PostCreateViewModel();
+            model.Categories = db.Categories
+                                  .Select(a => new SelectListItem()
+                                  {
+                                      Value = a.CategoryId.ToString(),
+                                      Text = a.Name
+                                  })
+                                  .ToList();
+            return View(model);
         }
 
         
         [HttpPost]
         public async Task<IActionResult> Create(PostCreateViewModel model)
         {
-            var userId = UserManager.GetUserId(HttpContext.User);
-            var user = UserManager.FindByIdAsync(userId).Result;
+            var userId = userManager.GetUserId(HttpContext.User);
+            var user = userManager.FindByIdAsync(userId).Result;
             var newPost = new Post
             {
                 Title = model.Title,
                 Description = Unit.CreateDescription(model.Description),
                 Content = model.Content,
                 User = user,
-                Category = model.Category,
+                CategoryId = model.CategoryId,
                 ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
             };
 
@@ -56,8 +65,8 @@ namespace RNews.Controllers.Publication
         [AllowAnonymous]
         public IActionResult Show(int id)
         {
-            ViewBag.CurrentUserId = UserManager.GetUserId(HttpContext.User);
-            
+            ViewBag.CurrentUserId = userManager.GetUserId(HttpContext.User);
+
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {

@@ -22,7 +22,9 @@ namespace RNews.DAL.EntityConfigurations
                 .HasForeignKey(c => c.UserId)
                 .IsRequired();
             builder
-                .Property(c => c.Category)
+                .HasOne(c => c.Category)
+                .WithMany(p => p.Posts)
+                .HasForeignKey(c => c.CategoryId)
                 .IsRequired();
             builder
                 .HasMany(c => c.Comments)

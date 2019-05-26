@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RNews.DAL;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace RNews.Models.ViewModels
         public string Title { get; set; }
         public string Content { get; set; }
         public string Description { get; set; }
-        public Category Category { get; set; }
+        public int CategoryId { get; set; }
+        public List<SelectListItem> Categories { get; set; }
         public IFormFile Image { get; set; }
     }
 }
