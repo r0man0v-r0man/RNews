@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
@@ -30,7 +31,15 @@ namespace RNews.Controllers.Publication
        
         public  IActionResult Create()
         {
-            return View();
+            var model = new PostCreateViewModel();
+            model.Categories = db.Categories
+                                  .Select(a => new SelectListItem()
+                                  {
+                                      Value = a.CategoryId.ToString(),
+                                      Text = a.Name
+                                  })
+                                  .ToList();
+            return View(model);
         }
 
         
@@ -45,7 +54,7 @@ namespace RNews.Controllers.Publication
                 Description = Unit.CreateDescription(model.Description),
                 Content = model.Content,
                 User = user,
-                Category = model.Category,
+                CategoryId = model.CategoryId,
                 ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
             };
 

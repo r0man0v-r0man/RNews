@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190523052749_again stert")]
-    partial class againstert
+    [Migration("20190526182113_againF")]
+    partial class againF
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,6 +131,19 @@ namespace RNews.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("RNews.DAL.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("RNews.DAL.Comment", b =>
                 {
                     b.Property<int>("CommentId")
@@ -160,7 +173,7 @@ namespace RNews.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Category");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Content");
 
@@ -184,6 +197,8 @@ namespace RNews.Migrations
                         .IsRequired();
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -314,6 +329,11 @@ namespace RNews.Migrations
 
             modelBuilder.Entity("RNews.DAL.Post", b =>
                 {
+                    b.HasOne("RNews.DAL.Category", "Category")
+                        .WithMany("Posts")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("RNews.DAL.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")

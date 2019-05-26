@@ -1,5 +1,7 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/CommentHub").build();
+
+
 var button = document.getElementById("comment-submit");
 var textarea = document.getElementById("comment-content");
 if (textarea.value == "") {
@@ -34,7 +36,7 @@ button.addEventListener("click", function (event) {
     button.disabled = true;
     textarea.value = "";
 });
-//нормально не работает, и куда вставлять код, чтоб перебрасывало к новому посту автора?
+
 textarea.addEventListener("keyup", function () {
     button.disabled = !this.value;
 });

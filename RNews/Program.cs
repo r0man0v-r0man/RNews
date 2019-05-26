@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RNews.DAL;
+using RNews.DAL.dbContext;
 using RNews.DAL.Initializer;
 
 namespace RNews
@@ -27,7 +28,8 @@ namespace RNews
                 {
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await RoleInitializer.InitializeAsync(userManager, rolesManager);
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    await RoleInitializer.InitializeAsync(userManager, rolesManager, context);
                 }
                 catch (Exception ex)
                 {
