@@ -4,6 +4,7 @@
 }
 <head>
     <link href="~/simplemde/simplemde.min.css" rel="stylesheet" />
+    <link href="~/lib/tagify/tagify.css" rel="stylesheet" />
 </head>
 <div class="row">
     <div class="col-md-8">
@@ -38,6 +39,9 @@
                     <select asp-for="CategoryId" asp-items="@Model.Categories" class="selectpicker form-control"></select>
                 </div>
             </div>
+            <div>
+                <textarea name="tags2" placeholder="tags"></textarea>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Publish</button>
             </div>
@@ -52,6 +56,8 @@
     <script src="~/lib/inline-attachment.js"></script>
     <script src="~/lib/codemirror-4.inline-attachment.js"></script>
     <script src="~/js/simplemde.js"></script>
+    <script src="~/lib/tagify/tagify.min.js"></script>
+    <script src="~/js/Tags.js"></script>
 }
 
 
