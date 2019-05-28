@@ -51,11 +51,7 @@ namespace RNews.Controllers.Publication
         {
             var userId = userManager.GetUserId(HttpContext.User);
             var user = userManager.FindByIdAsync(userId).Result;
-            var postTags = (JArray) JsonConvert.DeserializeObject(model.Tags);
-            foreach (JObject item in postTags)
-            {
-                string name = (string)item.GetValue("value");
-            }
+            var listTags = GetTags(model.Tags);
             var newPost = new Post
             {
                 Title = model.Title,
@@ -63,7 +59,8 @@ namespace RNews.Controllers.Publication
                 Content = model.Content,
                 User = user,
                 CategoryId = model.CategoryId,
-                ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
+                ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment),
+                PostTags = listTags
             };
 
             db.Posts.Add(newPost);
@@ -106,6 +103,18 @@ namespace RNews.Controllers.Publication
             return Json(output);
         }
 
-       
+        public List<Tag> GetTags(string input)
+        {
+
+            var jArray = (JArray)JsonConvert.DeserializeObject(input);
+
+            var list = new List<Tag>();
+            foreach (JObject tag in jArray)
+            {
+                list.Add(new Tag { TagName = (string)tag.GetValue("value") });
+            }
+            return list;
+
+        }
     }
 }

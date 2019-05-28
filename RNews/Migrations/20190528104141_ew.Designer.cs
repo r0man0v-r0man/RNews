@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190527073915_add tags")]
-    partial class addtags
+    [Migration("20190528104141_ew")]
+    partial class ew
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -205,6 +205,32 @@ namespace RNews.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("RNews.DAL.PostTag", b =>
+                {
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("TagId");
+
+                    b.HasKey("PostId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTags");
+                });
+
+            modelBuilder.Entity("RNews.DAL.Tag", b =>
+                {
+                    b.Property<int>("TagId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("TagName");
+
+                    b.HasKey("TagId");
+
+                    b.ToTable("Tag");
+                });
+
             modelBuilder.Entity("RNews.DAL.User", b =>
                 {
                     b.Property<string>("Id")
@@ -337,6 +363,19 @@ namespace RNews.Migrations
                     b.HasOne("RNews.DAL.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RNews.DAL.PostTag", b =>
+                {
+                    b.HasOne("RNews.DAL.Post", "Post")
+                        .WithMany("PostTags")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RNews.DAL.Tag", "Tag")
+                        .WithMany("PostTags")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
