@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Markdig;
+﻿using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
 using RNews.Units;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RNews.Controllers.Publication
 {
-    [Authorize(Roles ="admin, writer")]
+    [Authorize(Roles = "admin, writer")]
     public class PublicationController : Controller
     {
         private UserManager<User> userManager { get; }
@@ -28,26 +29,33 @@ namespace RNews.Controllers.Publication
             this.userManager = userManager;
             this.appEnvironment = appEnvironment;
         }
-       
-        public  IActionResult Create()
+
+        public IActionResult Create()
         {
-            var model = new PostCreateViewModel();
-            model.Categories = db.Categories
+            var model = new PostCreateViewModel
+            {
+                Categories = db.Categories
                                   .Select(a => new SelectListItem()
                                   {
                                       Value = a.CategoryId.ToString(),
                                       Text = a.Name
                                   })
-                                  .ToList();
+                                  .ToList()
+            };
             return View(model);
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> Create(PostCreateViewModel model)
         {
             var userId = userManager.GetUserId(HttpContext.User);
             var user = userManager.FindByIdAsync(userId).Result;
+            var postTags = (JArray) JsonConvert.DeserializeObject(model.Tags);
+            foreach (JObject item in postTags)
+            {
+                string name = (string)item.GetValue("value");
+            }
             var newPost = new Post
             {
                 Title = model.Title,
@@ -88,7 +96,7 @@ namespace RNews.Controllers.Publication
             {
                 Unit.DeletePost(db, id);
             }
-            
+
             return RedirectToAction("Index", "Home");
         }
         [HttpPost("~/upload")]
@@ -97,6 +105,7 @@ namespace RNews.Controllers.Publication
             var output = new { filename = await Unit.UploadPostMainImageAndGetPathAsync(file, appEnvironment) };
             return Json(output);
         }
-        
+
+       
     }
 }

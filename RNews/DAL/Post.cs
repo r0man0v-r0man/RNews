@@ -21,6 +21,7 @@ namespace RNews.DAL
         public string ImageName { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<PostTag> PostTags { get; set; }
 
         public Post()
         {

@@ -14,6 +14,8 @@ namespace RNews.DAL.dbContext
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<PostTag> PostTags { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
@@ -26,6 +28,7 @@ namespace RNews.DAL.dbContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new PostConfiguration());
+            builder.ApplyConfiguration(new PostTagConfiguration());
             base.OnModelCreating(builder);
         }
         

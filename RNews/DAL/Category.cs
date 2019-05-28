@@ -12,12 +12,4 @@ namespace RNews.DAL
         public string Name { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
     }
-    //public enum Category
-    //{
-    //    Java = 1,
-    //    [Display(Name = "C#/.NET")]
-    //    CSharpAndDotNet,
-    //    CAndCPlusPlus,
-    //    Web
-    //}
 }
