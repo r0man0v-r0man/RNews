@@ -21,11 +21,12 @@ namespace RNews.DAL
         public string ImageName { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<PostTag> PostTags { get; set; }
+        public virtual ICollection<PostTag> PostTags { get; set; } //= new List<PostTag>();
 
         public Post()
         {
             Created = DateTime.Now;
+            PostTags = new List<PostTag>();
         }
     }
 }

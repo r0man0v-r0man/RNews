@@ -9,7 +9,12 @@ namespace RNews.DAL
     {
         public int TagId { get; set; }
         public string TagName { get; set; }
-        public virtual ICollection<PostTag> PostTags { get; }
+        public int TagCount { get; set; }
 
+        public virtual ICollection<PostTag> PostTags { get; set; }// = new List<PostTag>();
+        public Tag()
+        {
+            PostTags = new List<PostTag>();
+        }
     }
 }
