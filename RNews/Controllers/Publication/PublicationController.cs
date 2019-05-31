@@ -52,8 +52,6 @@ namespace RNews.Controllers.Publication
         {
             var userId = userManager.GetUserId(HttpContext.User);
             var user = userManager.FindByIdAsync(userId).Result;
-            var listDbTags = await db.Tags.ToListAsync();
-            var listTags = GetTags(model.Tags);
             var newPost = new Post
             {
                 Title = model.Title,
@@ -63,20 +61,7 @@ namespace RNews.Controllers.Publication
                 CategoryId = model.CategoryId,
                 ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
             };
-            foreach (var tag in listTags)
-            {
-                var oldTag = db.Tags.FirstOrDefault(c => c.TagName == tag.TagName);
-                if (oldTag != null)
-                {
-                    oldTag.TagCount++;
-                    newPost.PostTags.Add(new PostTag { Post = newPost, Tag = oldTag });
-                }
-                else
-                {
-                    db.Tags.Add(tag);
-                    newPost.PostTags.Add(new PostTag { Post = newPost, Tag = tag });
-                }
-            }
+            await SetPostTagsAsync(GetTags(model.Tags), newPost);
             db.Posts.Add(newPost);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -127,7 +112,23 @@ namespace RNews.Controllers.Publication
                 listInputTags.Add(new Tag { TagName = (string)tag.GetValue("value") });
             }
             return listInputTags;
-
+        }
+        public async Task SetPostTagsAsync(List<Tag> tags, Post post)
+        {
+            foreach (var tag in tags)
+            {
+                var existTag = await db.Tags.FirstOrDefaultAsync(c => c.TagName == tag.TagName);
+                if (existTag != null)
+                {
+                    existTag.TagCount++;
+                    post.PostTags.Add(new PostTag { Post = post, Tag = existTag });
+                }
+                else
+                {
+                    db.Tags.Add(tag);
+                    post.PostTags.Add(new PostTag { Post = post, Tag = tag });
+                }
+            }
         }
     }
 }
