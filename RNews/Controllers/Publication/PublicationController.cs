@@ -70,7 +70,6 @@ namespace RNews.Controllers.Publication
         public IActionResult Show(int id)
         {
             ViewBag.CurrentUserId = userManager.GetUserId(HttpContext.User);
-
             Post post = Unit.GetPost(db, id);
             var showPost = new PostShowViewModel
             {
@@ -81,7 +80,8 @@ namespace RNews.Controllers.Publication
                 Title = post.Title,
                 ImagePath = post.ImagePath,
                 Content = Markdown.ToHtml(post.Content),
-                PostComments = post.Comments.ToList()
+                PostComments = post.Comments.ToList(),
+                Tags = post.PostTags.ToList()
             };
             return View(showPost);
         }
