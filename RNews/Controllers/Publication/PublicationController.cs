@@ -86,12 +86,15 @@ namespace RNews.Controllers.Publication
             return View(showPost);
         }
         [Authorize(Roles = "admin, writer")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (id != 0)
+            if (id == null)
             {
-                Unit.DeletePost(db, id);
+                return RedirectToAction("Index", "Home");
             }
+            var post = await GetPostAsync(id);
+            db.Posts.Remove(post);
+            await db.SaveChangesAsync();
 
             return RedirectToAction("Index", "Home");
         }
@@ -130,5 +133,18 @@ namespace RNews.Controllers.Publication
                 }
             }
         }
+        public async Task<Post> GetPostAsync(int? id)
+        {
+            var post = await db.Posts.SingleOrDefaultAsync(p=>p.PostId == id);
+            if (post != null)
+            {
+                return post;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
     }
 }

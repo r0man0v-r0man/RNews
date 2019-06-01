@@ -76,7 +76,21 @@ namespace RNews.Controllers.administrator
             }
             return View(listModels);
         }
-
+        public async Task<IActionResult> Tags()
+        {
+            var tags = await db.Tags.ToListAsync();
+            var listModels = new List<AdminTagViewModel>();
+            foreach (var tag in tags)
+            {
+                listModels.Add(new AdminTagViewModel
+                {
+                    Id = tag.TagId,
+                    Name = tag.TagName,
+                    Count = tag.TagCount
+                });
+            }
+            return View(listModels);
+        }
         public async Task<IActionResult> Ban(string id)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -144,6 +158,5 @@ namespace RNews.Controllers.administrator
             return View();
         }
         
-
     }
 }
