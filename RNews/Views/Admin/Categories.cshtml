@@ -15,15 +15,18 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="where-search">
                 @foreach (var category in Model)
                 {
-                    <tr>
-                        @Html.Hidden("Id", category.Id)
-                        <td>@category.Name</td>
-                    </tr>
+                <tr>
+                    <td>@category.Name</td>
+                    
+                    <td>@Html.ActionLink("Delete", "DeleteCategory", "Admin", new { id = category.Id }, new { @class = "btn btn-sm btn-danger" })</td>
+                    
+                </tr>
                 }
             </tbody>
         </table>

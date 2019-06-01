@@ -16,6 +16,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Count</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="where-search">
@@ -25,6 +26,7 @@
                         @Html.Hidden("Id", tag.Id)
                         <td>@tag.Name</td>
                         <td>@tag.Count</td>
+                        <td>@Html.ActionLink("Delete", "DeleteTag", "Admin", new { id = tag.Id}, new { @class = "btn btn-sm btn-danger" })</td>
                     </tr>
                 }
             </tbody>

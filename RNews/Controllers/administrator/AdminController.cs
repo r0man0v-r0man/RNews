@@ -53,7 +53,8 @@ namespace RNews.Controllers.administrator
             {
                 listModels.Add(new AdminCategoryViewModel
                 {
-                    Name = category.Name
+                    Name = category.Name,
+                    Id = category.CategoryId
                 });
             }
             return View(listModels);
@@ -90,6 +91,28 @@ namespace RNews.Controllers.administrator
                 });
             }
             return View(listModels);
+        }
+        public async Task<IActionResult> DeleteTag(int id)
+        {
+            var tagToDelete = await db.Tags.FindAsync(id);
+            if (tagToDelete != null)
+            {
+                db.Tags.Remove(tagToDelete);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Tags", "Admin");
+            }
+            return View();
+        }
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            var categoryToDelete = await db.Categories.FindAsync(id);
+            if (categoryToDelete != null)
+            {
+                db.Categories.Remove(categoryToDelete);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Categories", "Admin");
+            }
+            return View();
         }
         public async Task<IActionResult> Ban(string id)
         {
