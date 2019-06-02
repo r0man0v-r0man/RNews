@@ -114,6 +114,17 @@ namespace RNews.Controllers.administrator
             }
             return View();
         }
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            var postToDelete = await db.Posts.FindAsync(id);
+            if (postToDelete != null)
+            {
+                db.Posts.Remove(postToDelete);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Posts", "Admin");
+            }
+            return View();
+        }
         public async Task<IActionResult> Ban(string id)
         {
             var user = await userManager.FindByIdAsync(id);
