@@ -7,7 +7,22 @@
 <h1>Categories</h1>
 <hr />
 <div>
-    <h4>Total Categories: @Model.Count</h4>
+    <div class="row">
+        <div class="col-4">
+            <h4>Total Categories: @Model.Count</h4>
+        </div>
+        <div class="col-8">
+            <div class="input-group mb-3">
+                    <input id="new-category" type="text" class="form-control" name="nameOfNewCategory" placeholder="New Category" />
+                    <div class="input-group-append">
+                        <button id="btn-create-category" class="btn btn-primary" type="submit">Create</button>
+                    </div>
+            </div>
+            
+        </div>
+    </div>
+
+
 
     <input id="what-search" type="text" placeholder="Search..." class="form-control border-0" />
     <div class="table-responsive">
@@ -21,12 +36,12 @@
             <tbody id="where-search">
                 @foreach (var category in Model)
                 {
-                <tr>
-                    <td>@category.Name</td>
-                    
-                    <td>@Html.ActionLink("Delete", "DeleteCategory", "Admin", new { id = category.Id }, new { @class = "btn btn-sm btn-danger" })</td>
-                    
-                </tr>
+                    <tr>
+                        <td>@category.Name</td>
+
+                        <td>@Html.ActionLink("Delete", "DeleteCategory", "Admin", new { id = category.Id }, new { @class = "btn btn-sm btn-danger" })</td>
+
+                    </tr>
                 }
             </tbody>
         </table>
@@ -36,5 +51,7 @@
 
 
 @section Scripts{
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/AddCategory.js"></script>
     <script src="~/js/Admin.js"></script>
 }
