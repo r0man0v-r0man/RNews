@@ -30,4 +30,5 @@ buttonCreateCategory.addEventListener("click", function (event) {
             return console.error(err.toString());
         });
     event.preventDefault();
+    inputNameForNewCategory.value = "";
 })
