@@ -10,11 +10,3 @@ $(function () {
         },
     });
 });
-$(function () {
-    $("#tagcloud a").tagcloud({
-        color: {
-            start: "#1c5866",
-            end: "#661c49"
-        }
-    });
-});
