@@ -187,6 +187,8 @@ namespace RNews.Migrations
 
                     b.Property<int>("Rating");
 
+                    b.Property<int>("RatingCount");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255);

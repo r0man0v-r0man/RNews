@@ -20,7 +20,7 @@ class simpleRating{
   }
 
   init(){
-    var html='<div class="simple-rating star-rating">';
+    var html='<div id="star-post" class="simple-rating star-rating">';
     for(var i=0;i<5;i++){html+='<i class="fa fa-star-o" data-rating="'+(i+1)+'"></i>';}
     html+='</div>';
   
