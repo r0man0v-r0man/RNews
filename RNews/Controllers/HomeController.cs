@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using RNews.DAL.dbContext;
 using RNews.Hubs;
 using RNews.Models;
+using RNews.Models.ViewModels;
 using RNews.Units;
 
 namespace RNews.Controllers
@@ -19,10 +21,12 @@ namespace RNews.Controllers
         {
             this.db = db;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.LastAdded = Unit.LastAddedPosts(db, 3);
             ViewBag.TopRatingPost = Unit.TopRatingPost(db, 3);
+
+            ViewBag.Tags = await db.Tags.OrderBy(c => c.TagName).ToListAsync();
             return View();
         }
         
