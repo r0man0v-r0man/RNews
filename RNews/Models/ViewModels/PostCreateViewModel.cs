@@ -16,5 +16,6 @@ namespace RNews.Models.ViewModels
         public int CategoryId { get; set; }
         public List<SelectListItem> Categories { get; set; }
         public IFormFile Image { get; set; }
+        public string Tags { get; set; }
     }
 }

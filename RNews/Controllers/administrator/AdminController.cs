@@ -45,6 +45,20 @@ namespace RNews.Controllers.administrator
             
             return View(listModels);
         }
+        public async Task<IActionResult> Categories()
+        {
+            var categories = await db.Categories.ToListAsync();
+            var listModels = new List<AdminCategoryViewModel>();
+            foreach (var category in categories)
+            {
+                listModels.Add(new AdminCategoryViewModel
+                {
+                    Name = category.Name,
+                    Id = category.CategoryId
+                });
+            }
+            return View(listModels);
+        }
         public async Task<IActionResult> Posts()
         {
             var posts = await db.Posts.ToListAsync();
@@ -63,7 +77,54 @@ namespace RNews.Controllers.administrator
             }
             return View(listModels);
         }
-
+        public async Task<IActionResult> Tags()
+        {
+            var tags = await db.Tags.ToListAsync();
+            var listModels = new List<AdminTagViewModel>();
+            foreach (var tag in tags)
+            {
+                listModels.Add(new AdminTagViewModel
+                {
+                    Id = tag.TagId,
+                    Name = tag.TagName,
+                    Count = tag.TagCount
+                });
+            }
+            return View(listModels);
+        }
+        public async Task<IActionResult> DeleteTag(int id)
+        {
+            var tagToDelete = await db.Tags.FindAsync(id);
+            if (tagToDelete != null)
+            {
+                db.Tags.Remove(tagToDelete);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Tags", "Admin");
+            }
+            return View();
+        }
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            var categoryToDelete = await db.Categories.FindAsync(id);
+            if (categoryToDelete != null)
+            {
+                db.Categories.Remove(categoryToDelete);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Categories", "Admin");
+            }
+            return View();
+        }
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            var postToDelete = await db.Posts.FindAsync(id);
+            if (postToDelete != null)
+            {
+                db.Posts.Remove(postToDelete);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Posts", "Admin");
+            }
+            return View();
+        }
         public async Task<IActionResult> Ban(string id)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -131,6 +192,5 @@ namespace RNews.Controllers.administrator
             return View();
         }
         
-
     }
 }

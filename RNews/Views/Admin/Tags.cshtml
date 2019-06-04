@@ -1,0 +1,41 @@
+﻿@model List<RNews.Models.ViewModels.Admin.AdminTagViewModel>
+@{
+    ViewData["Title"] = "Tags";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Tags</h1>
+<hr />
+<div>
+    <h4>Total Tags: @Model.Count</h4>
+
+    <input id="what-search" type="text" placeholder="Search..." class="form-control border-0" />
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Count</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="where-search">
+                @foreach (var tag in Model)
+                {
+                    <tr>
+                        @Html.Hidden("Id", tag.Id)
+                        <td>@tag.Name</td>
+                        <td>@tag.Count</td>
+                        <td>@Html.ActionLink("Delete", "DeleteTag", "Admin", new { id = tag.Id}, new { @class = "btn btn-sm btn-danger" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/Admin.js"></script>
+}

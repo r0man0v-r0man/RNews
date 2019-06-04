@@ -2,9 +2,7 @@
 @{
     ViewData["Title"] = "Publications";
 }
-<head>
-    <link href="~/simplemde/simplemde.min.css" rel="stylesheet" />
-</head>
+
 <div class="row">
     <div class="col-md-8">
         <h3>New Publication</h3>
@@ -38,7 +36,10 @@
                     <select asp-for="CategoryId" asp-items="@Model.Categories" class="selectpicker form-control"></select>
                 </div>
             </div>
-            <div class="form-group">
+            <div>
+                <textarea name="Tags" placeholder="tags"></textarea>
+            </div>
+            <div class="form-group mt-3">
                 <button type="submit" class="btn btn-primary btn-block">Publish</button>
             </div>
         </form>
@@ -52,6 +53,8 @@
     <script src="~/lib/inline-attachment.js"></script>
     <script src="~/lib/codemirror-4.inline-attachment.js"></script>
     <script src="~/js/simplemde.js"></script>
+    <script src="~/lib/tagify/tagify.min.js"></script>
+    <script src="~/js/Tags.js"></script>
 }
 
 

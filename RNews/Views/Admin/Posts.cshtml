@@ -19,19 +19,22 @@
                     <th>Category</th>
                     <th>Date</th>
                     <th>Rating</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="where-search">
                 @foreach (var post in Model)
                 {
-                    <tr>
-                        @Html.Hidden("Id", post.id)
-                        <td>@post.Title</td>
-                        <td>@post.Author</td>
-                        <td>@post.Category</td>
-                        <td>@post.DateCreated</td>
-                        <td>@post.Rating</td>
-                    </tr>
+                <tr>
+                    @Html.Hidden("Id", post.id)
+                    <td>@post.Title</td>
+                    <td>@post.Author</td>
+                    <td>@post.Category</td>
+                    <td>@post.DateCreated</td>
+                    <td>@post.Rating</td>
+                    <td>@Html.ActionLink("Delete", "DeletePost", "Admin", new { id = post.id }, new { @class = "btn btn-sm btn-danger" })</td>
+
+                </tr>
                 }
             </tbody>
         </table>

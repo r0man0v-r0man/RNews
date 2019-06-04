@@ -73,6 +73,15 @@ namespace RNews.DAL.Initializer
                 db.Categories.Add(new Category { Name = "UI/UX" });
                 await db.SaveChangesAsync();
             }
+            if (db.Tags.Any())
+            {
+                return;
+            }
+            else
+            {
+                db.Tags.Add(new Tag { TagName = "test"});
+                await db.SaveChangesAsync();
+            }
         }
     }
 }
