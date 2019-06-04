@@ -2,16 +2,20 @@
 @{
     ViewData["Title"] = "Show";
 }
-<link href="~/lib/bootstrap-star-rating/css/star-rating.min.css" rel="stylesheet" />
+
 <div class="row justify-content-center">
     <div class="col-md-8 box-shadow">
         <h2 class="text-center font-weight-light">@Model.Title</h2>
         <hr />
-        
+
         <img src="@Model.ImagePath" alt="Alternate Text" class="img-fluid mx-auto d-block" />
         <div>
             @Html.Raw(Model.Content)
         </div>
+        <div>
+            <input class="rating">
+        </div>
+
         <div class="row justify-content-center">
             @foreach (var tag in Model.Tags)
             {
@@ -51,8 +55,8 @@
                 </ul>
             </div>
         </div>
-       
-        
+
+
 
     </div>
 </div>
@@ -60,5 +64,6 @@
 @section Scripts{
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/Comments.js"></script>
-
+    <script src="~/lib/Input-Field-Star-Rating-Plugin-jQuery/js/simple-rating.js"></script>
+    <script src="~/js/RatingPost.js"></script>
 }
