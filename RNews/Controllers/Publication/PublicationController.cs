@@ -62,8 +62,9 @@ namespace RNews.Controllers.Publication
                 ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
             };
             await SetPostTagsAsync(GetTags(model.Tags), newPost);
-            db.Posts.Add(newPost);
-            db.SaveChanges();
+            
+            await db.Posts.AddAsync(newPost);
+            await db.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
         [AllowAnonymous]

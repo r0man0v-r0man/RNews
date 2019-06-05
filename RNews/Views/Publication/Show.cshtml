@@ -12,6 +12,8 @@
         <div>
             @Html.Raw(Model.Content)
         </div>
+        <input id="post-id" type="hidden" name="postId" value="@Model.PostId" />
+        <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
         <div>
             <input id="post-rating" name="ratingPost" class="rating">
         </div>
@@ -34,8 +36,7 @@
         </div>
         <hr />
         <form>
-            <input id="post-id" type="hidden" name="postId" value="@Model.PostId" />
-            <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
+
             <textarea id="comment-content" name="content" class="form-control form-control mb-3" type="text" placeholder="let's disqus"></textarea>
             <button id="comment-submit" type="submit" class="btn btn-primary btn-sm btn-block">Ok</button>
         </form>

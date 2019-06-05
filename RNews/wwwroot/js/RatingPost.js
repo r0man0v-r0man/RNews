@@ -7,9 +7,8 @@ var connectionRating = new signalR.HubConnectionBuilder().withUrl("/RatingPostHu
 var userId = document.getElementById("user-id").value;
 var postId = document.getElementById("post-id").value;
 
-connectionRating.on("RecieveRating", function (userRating, allRating) {
+connectionRating.on("RecieveRating", function (allRating) {
     
-    console.log(userRating);
     console.log(allRating);
 });
 
