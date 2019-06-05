@@ -16,6 +16,7 @@ namespace RNews.DAL
         public virtual ICollection<Comment> Comments { get; set; }
         public Gender Gender { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
         public string ImagePath { get; set; }
         public DateTime Created { get; set; }
         public string ImageName { get; set; }

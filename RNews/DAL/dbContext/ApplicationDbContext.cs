@@ -15,6 +15,7 @@ namespace RNews.DAL.dbContext
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<PostTag> PostTags { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

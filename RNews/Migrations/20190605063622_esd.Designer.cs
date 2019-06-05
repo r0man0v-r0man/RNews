@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190604181201_addR")]
-    partial class addR
+    [Migration("20190605063622_esd")]
+    partial class esd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -220,6 +220,27 @@ namespace RNews.Migrations
                     b.ToTable("PostTags");
                 });
 
+            modelBuilder.Entity("RNews.DAL.Rating", b =>
+                {
+                    b.Property<int>("RatingId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PostId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("Value");
+
+                    b.HasKey("RatingId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("RNews.DAL.Tag", b =>
                 {
                     b.Property<int>("TagId")
@@ -381,6 +402,18 @@ namespace RNews.Migrations
                         .WithMany("PostTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RNews.DAL.Rating", b =>
+                {
+                    b.HasOne("RNews.DAL.Post", "Post")
+                        .WithMany("Ratings")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RNews.DAL.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
