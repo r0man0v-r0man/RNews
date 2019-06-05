@@ -82,7 +82,8 @@ namespace RNews.Controllers.Publication
                 ImagePath = post.ImagePath,
                 Content = Markdown.ToHtml(post.Content),
                 PostComments = post.Comments.ToList(),
-                Tags = post.PostTags.ToList()
+                Tags = post.PostTags.ToList(),
+                Rating = post.Rating
             };
             return View(showPost);
         }

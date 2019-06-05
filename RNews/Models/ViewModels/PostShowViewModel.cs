@@ -17,5 +17,6 @@ namespace RNews.Models.ViewModels
         public DateTime DateOfCreatedAuthor { get; set; }
         public List<Comment> PostComments { get; set; }
         public List<PostTag> Tags { get; set; }
+        public int Rating { get; set; }
     }
 }

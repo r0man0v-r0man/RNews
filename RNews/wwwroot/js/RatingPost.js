@@ -8,7 +8,7 @@ var userId = document.getElementById("user-id").value;
 var postId = document.getElementById("post-id").value;
 
 connectionRating.on("RecieveRating", function (allRating) {
-    
+    document.getElementById("all-rating").innerText = "Рейтинг: " + allRating;
     console.log(allRating);
 });
 
