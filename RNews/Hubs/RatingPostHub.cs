@@ -20,8 +20,8 @@ namespace RNews.Hubs
         {
             var post = await db.Posts.FindAsync(postId);
             var user = await db.People.FindAsync(userId);
-
-            if (await db.Ratings.FirstAsync(c=>c.User == user) == null)
+            var existRating = await db.Ratings.Where(p => p.PostId == postId).FirstAsync(c => c.User == user);
+            if (existRating == null)
             {
                 var rating = new Rating
                 {
@@ -34,12 +34,13 @@ namespace RNews.Hubs
             }
             else
             {
-
+                existRating.Value = Convert.ToInt32(ratingPost);
+                db.Entry(existRating).State = EntityState.Modified;
             }
-
+            post.Rating += existRating.Value;
             
             await db.SaveChangesAsync();
-            await Clients.All.SendAsync("RecieveRating", post.Rating, post.RatingCount);
+            await Clients.All.SendAsync("RecieveRating", existRating.Value, post.Rating);
         }
 
     }

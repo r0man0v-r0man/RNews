@@ -4,11 +4,13 @@
 });
 "use strict";
 var connectionRating = new signalR.HubConnectionBuilder().withUrl("/RatingPostHub").build();
-
-connectionRating.on("RecieveRating", function (averageRating, ratingCount) {
+var userId = document.getElementById("user-id").value;
+var postId = document.getElementById("post-id").value;
+var ratingPost = document.getElementById("post-rating").value;
+connectionRating.on("RecieveRating", function (userRating, allRating) {
     
-    console.log(averageRating);
-    console.log(ratingCount);
+    console.log(userRating);
+    console.log(allRating);
 });
 
 connectionRating.start()
@@ -19,9 +21,8 @@ connectionRating.start()
         console.error(error.message);
     });
 function rateMyPost() {
-    var postId = document.getElementById("post-id").value;
-    var ratingPost = document.getElementById("post-rating").value;
-    connectionRating.invoke("Rating", ratingPost, postId)
+
+    connectionRating.invoke("Rating", ratingPost, postId, userId)
         .catch(function (err) {
             return console.error(err.toString());
         });

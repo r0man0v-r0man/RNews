@@ -410,7 +410,7 @@ namespace RNews.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("RNews.DAL.User", "User")
-                        .WithMany()
+                        .WithMany("Ratings")
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
