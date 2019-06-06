@@ -59,10 +59,16 @@ namespace RNews.Controllers.Publication
                 Content = model.Content,
                 User = user,
                 CategoryId = model.CategoryId,
-                ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
+                ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment),
+                Rating = 5
             };
             await SetPostTagsAsync(GetTags(model.Tags), newPost);
-            
+            await db.Ratings.AddAsync(new Rating
+            {
+                Post = newPost,
+                User = user,
+                Value = 5
+            });
             await db.Posts.AddAsync(newPost);
             await db.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
