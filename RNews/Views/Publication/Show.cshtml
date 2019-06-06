@@ -15,8 +15,7 @@
         <input id="post-id" type="hidden" name="postId" value="@Model.PostId" />
         <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
         <div>
-            <input id="post-rating" name="ratingPost" class="rating" >
-            <p id="all-rating">Рейтинг: @Model.Rating</p>
+            <div class="my-rating"></div>
         </div>
 
         <div class="row justify-content-center">
@@ -66,6 +65,6 @@
 @section Scripts{
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/Comments.js"></script>
-    <script src="~/lib/Input-Field-Star-Rating-Plugin-jQuery/js/simple-rating.js"></script>
+    <script src="~/lib/star-rating-svg-master/dist/jquery.star-rating-svg.js"></script>
     <script src="~/js/RatingPost.js"></script>
 }
