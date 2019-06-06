@@ -12,6 +12,7 @@ using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
 using RNews.Units;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,7 +56,7 @@ namespace RNews.Controllers.Publication
             var newPost = new Post
             {
                 Title = model.Title,
-                Description = Unit.CreateDescription(model.Description),
+                Description = CreateDescription(model.Description),
                 Content = model.Content,
                 User = user,
                 CategoryId = model.CategoryId,
@@ -75,10 +76,10 @@ namespace RNews.Controllers.Publication
             return RedirectToAction("Index", "Home");
         }
         [AllowAnonymous]
-        public IActionResult Show(int id)
+        public async Task<IActionResult> Show(int id)
         {
             ViewBag.CurrentUserId = userManager.GetUserId(HttpContext.User);
-            Post post = Unit.GetPost(db, id);
+            Post post = await GetPostAsync(id);
             var showPost = new PostShowViewModel
             {
                 PostId = post.PostId,
@@ -154,6 +155,28 @@ namespace RNews.Controllers.Publication
                 return null;
             }
         }
-        
+        public string CreateDescription(string descriptionText)
+        {
+            string[] temp = descriptionText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var DescriptionLength = 14;
+            string tempDescription = "";
+            if (temp.Length <= DescriptionLength)
+            {
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
+            }
+            else
+            {
+                for (int i = 0; i < DescriptionLength; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
+            }
+
+        }
     }
 }
