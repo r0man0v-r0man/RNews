@@ -23,13 +23,13 @@ namespace RNews.Hubs
             var existRataing = user.Ratings.FirstOrDefault(c => c.PostId == postId);
             if (existRataing == null)
             {
-                user.Ratings.Add(new DAL.Rating
+                db.Ratings.Add(new DAL.Rating
                 {
                     Post = post,
                     Value = Convert.ToInt32(ratingPost),
                     User = user
                 });
-                
+                await db.SaveChangesAsync();
             }
             else
             {
