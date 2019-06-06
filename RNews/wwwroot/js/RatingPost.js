@@ -3,7 +3,7 @@
     emptyColor: 'lightgray',
     hoverColor: 'orange',
     activeColor: 'gold',
-    initialRating: 4,
+    initialRating: 3,
     strokeWidth: 0,
     useGradient: false,
     starSize: 25,
@@ -39,3 +39,4 @@ function rateMyPost(currentRating) {
         });
     event.preventDefault();
 }
+ 
