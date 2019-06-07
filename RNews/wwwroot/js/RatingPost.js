@@ -1,9 +1,10 @@
-﻿$(".my-rating").starRating({
+﻿
+$(".my-rating").starRating({
     totalStars: 5,
     emptyColor: 'lightgray',
     hoverColor: 'orange',
     activeColor: 'gold',
-    initialRating: 3,
+    initialRating: $("#user-rating").val(),
     strokeWidth: 0,
     useGradient: false,
     starSize: 25,
@@ -20,7 +21,7 @@ var userId = document.getElementById("user-id").value;
 var postId = document.getElementById("post-id").value;
 
 connectionRating.on("RecieveRating", function (allRating) {
-    //document.getElementById("all-rating").innerText = "Рейтинг: " + allRating;
+    document.getElementById("all-rating").innerText = "Рейтинг: " + allRating;
     console.log(allRating);
 });
 
@@ -32,7 +33,7 @@ connectionRating.start()
         console.error(error.message);
     });
 function rateMyPost(currentRating) {
-    //var ratingPost = document.getElementById("post-rating").value;
+
     connectionRating.invoke("Rating", currentRating, postId, userId)
         .catch(function (err) {
             return console.error(err.toString());

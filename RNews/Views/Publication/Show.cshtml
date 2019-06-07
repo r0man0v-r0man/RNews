@@ -16,6 +16,9 @@
         <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
         <div>
             <div class="my-rating"></div>
+            <input id="user-rating" type="hidden" value="@Model.UserRating" />
+
+            <p id="all-rating">Рейтинг: @Model.Rating</p>
         </div>
 
         <div class="row justify-content-center">

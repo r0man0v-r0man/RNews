@@ -91,7 +91,8 @@ namespace RNews.Controllers.Publication
                 Content = Markdown.ToHtml(post.Content),
                 PostComments = post.Comments.ToList(),
                 Tags = post.PostTags.ToList(),
-                Rating = post.Rating
+                Rating = post.Rating,
+                UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value
             };
             return View(showPost);
         }
