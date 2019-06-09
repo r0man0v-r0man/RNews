@@ -152,6 +152,8 @@ namespace RNews.Migrations
 
                     b.Property<DateTime>("Created");
 
+                    b.Property<int>("LikesCount");
+
                     b.Property<int>("PostId");
 
                     b.Property<string>("UserId");
@@ -173,9 +175,9 @@ namespace RNews.Migrations
 
                     b.Property<int>("CommentId");
 
-                    b.Property<string>("UserId");
+                    b.Property<bool>("IsLike");
 
-                    b.Property<bool>("Value");
+                    b.Property<string>("UserId");
 
                     b.HasKey("CommentLikeId");
 

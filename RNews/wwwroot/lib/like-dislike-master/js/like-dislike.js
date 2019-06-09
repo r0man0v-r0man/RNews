@@ -12,7 +12,7 @@
     var defaults = {
         click: null,
         beforeClick: null,
-        initialValue: 0,
+        initialValue: 1,
         reverseMode: true,
         readOnly: false,
         likeBtnClass: 'like',

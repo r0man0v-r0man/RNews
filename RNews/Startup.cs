@@ -89,6 +89,7 @@ namespace RNews
                 routes.MapHub<CommentHub>("/CommentHub");
                 routes.MapHub<AddCategoryHub>("/AddCategoryHub");
                 routes.MapHub<RatingPostHub>("/RatingPostHub");
+                routes.MapHub<CommentLikeHub>("/CommentLikeHub");
 
             });
             app.UseMvc(routes =>
