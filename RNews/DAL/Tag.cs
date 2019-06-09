@@ -15,6 +15,7 @@ namespace RNews.DAL
         public Tag()
         {
             PostTags = new List<PostTag>();
+            TagCount = 1;
         }
     }
 }
