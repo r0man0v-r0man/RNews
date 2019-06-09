@@ -1,5 +1,4 @@
-﻿
-$(".my-rating").starRating({
+﻿$(".my-rating").starRating({
     totalStars: 5,
     emptyColor: 'lightgray',
     hoverColor: 'orange',
@@ -32,8 +31,8 @@ connectionRating.start()
     .catch(error => {
         console.error(error.message);
     });
-function rateMyPost(currentRating) {
 
+function rateMyPost(currentRating) {
     connectionRating.invoke("Rating", currentRating, postId, userId)
         .catch(function (err) {
             return console.error(err.toString());
