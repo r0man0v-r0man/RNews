@@ -55,7 +55,7 @@
                                 <div class="col-2">
                                     <form id="comment-form-like">
                                         <input id="comment-Id" type="hidden" name="commentId" value="@comment.CommentId" />
-                                        <input id="comment-is-like-value" type="hidden" name="isLikeValue" value="@comment.CommentLikes." />
+                                        <input id="comment-is-like-value" type="hidden" name="isLikeValue" value="@comment.UserIsLike.ToString().ToLower()" />
                                         <i id="comment-heart" class="far fa-heart comment-heart"></i>
                                     </form>
                                     <span id="comment-heart-@comment.CommentId-counter">12</span>

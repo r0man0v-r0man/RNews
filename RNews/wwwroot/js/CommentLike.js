@@ -29,19 +29,19 @@ document.getElementById("comment-heart").addEventListener("click", function () {
     document.getElementById("comment-form-like").submit(function (event) {
         var userId = document.getElementById("user-id").value;
         var commentId = document.getElementById("comment-id").value;
-        var isLike =     
+        var isLike = document.getElementById("comment-is-like-value").value;
     });
 });
-document.getElementById("").addEventListener("click", function (event) {
-    var userId = document.getElementById("user-id").value;
-    var postId = document.getElementById("post-id").value;
-    var content = document.getElementById("comment-content").value;
-    connectionLike.invoke("Comments", content, postId, userId)
-        .catch(function (err) {
-            return console.error(err.toString());
-        });
-    event.preventDefault();
-    document.getElementById("messagesList").lastElementChild.scrollIntoView();
-    button.disabled = true;
-    textarea.value = "";
-});
+//document.getElementById("").addEventListener("click", function (event) {
+//    var userId = document.getElementById("user-id").value;
+//    var postId = document.getElementById("post-id").value;
+//    var content = document.getElementById("comment-content").value;
+//    connectionLike.invoke("Comments", content, postId, userId)
+//        .catch(function (err) {
+//            return console.error(err.toString());
+//        });
+//    event.preventDefault();
+//    document.getElementById("messagesList").lastElementChild.scrollIntoView();
+//    button.disabled = true;
+//    textarea.value = "";
+//});
