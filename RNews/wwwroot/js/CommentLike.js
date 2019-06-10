@@ -18,6 +18,8 @@ connectionLike.on("CommentLikes", function (likesCount) {
 });
 
 
+
+
 connectionLike.start()
     .then(function () {
         console.log("connection like started");
