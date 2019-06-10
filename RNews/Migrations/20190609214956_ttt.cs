@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RNews.Migrations
 {
-    public partial class trtrtrt : Migration
+    public partial class ttt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -231,8 +231,7 @@ namespace RNews.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     PostId = table.Column<int>(nullable: false),
-                    LikesCount = table.Column<int>(nullable: false),
-                    UserIsLike = table.Column<bool>(nullable: false)
+                    LikesCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

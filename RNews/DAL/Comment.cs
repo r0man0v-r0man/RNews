@@ -15,7 +15,6 @@ namespace RNews.DAL
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
         public int LikesCount { get; set; }
-        public bool UserIsLike { get; set; }
         public virtual ICollection<CommentLike> CommentLikes { get; set; }
 
         public Comment()

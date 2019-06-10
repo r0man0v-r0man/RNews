@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.DAL.dbContext;
@@ -16,7 +17,7 @@ namespace RNews.Hubs
         {
             this.db = db;
         }
-        public async Task Comments(int commentId, string userId)
+        public async Task Comment(int commentId, string userId, bool isLike)
         {
             var comment = await db.Comments.FirstOrDefaultAsync(c => c.CommentId == commentId);
             var user = await db.People.FindAsync(userId);

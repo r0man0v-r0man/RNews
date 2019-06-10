@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190610064708_trtrtrt")]
-    partial class trtrtrt
+    [Migration("20190609214956_ttt")]
+    partial class ttt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,8 +159,6 @@ namespace RNews.Migrations
                     b.Property<int>("PostId");
 
                     b.Property<string>("UserId");
-
-                    b.Property<bool>("UserIsLike");
 
                     b.HasKey("CommentId");
 

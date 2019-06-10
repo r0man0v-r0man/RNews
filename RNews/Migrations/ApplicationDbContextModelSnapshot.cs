@@ -158,8 +158,6 @@ namespace RNews.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.Property<bool>("UserIsLike");
-
                     b.HasKey("CommentId");
 
                     b.HasIndex("PostId");
