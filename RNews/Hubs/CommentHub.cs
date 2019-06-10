@@ -25,6 +25,13 @@ namespace RNews.Hubs
                 Post = post,
                 User = user
             };
+            var defaultLike = new CommentLike
+            {
+                Comment = newComment,
+                User = user,
+                IsLike = false
+            };
+            db.CommentLikes.Add(defaultLike);
             db.Comments.Add(newComment);
             await db.SaveChangesAsync();
             await Clients.All.SendAsync("ContentComment", newComment.Content, user.UserName, newComment.Created.ToString("MM/dd/yyyy"), newComment.CommentId);

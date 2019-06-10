@@ -80,6 +80,19 @@ namespace RNews.Controllers.Publication
         {
             ViewBag.CurrentUserId = userManager.GetUserId(HttpContext.User);
             Post post = await GetPostAsync(id);
+            foreach (var comment in post.Comments)
+            {
+                if (comment.CommentLikes.FirstOrDefault(c => c.UserId == userManager.GetUserId(HttpContext.User)) == null)
+                {
+                    comment.CommentLikes.Add(new CommentLike
+                    {
+                        IsLike = false,
+                        UserId = userManager.GetUserId(HttpContext.User)
+                    });
+                }
+                
+            }
+            await db.SaveChangesAsync();
             var showPost = new PostShowViewModel
             {
                 PostId = post.PostId,

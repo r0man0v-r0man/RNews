@@ -2,7 +2,7 @@
 var connectionLike = new signalR.HubConnectionBuilder().withUrl("/CommentLikeHub").build();
 
 connectionLike.on("CommentLikes", function (likesCount) {
-    console.log(likesCount);
+    alert(likesCount);
 });
 
 connectionLike.start()
