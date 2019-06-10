@@ -94,6 +94,7 @@ namespace RNews.Controllers.Publication
                 Rating = post.Rating,
                 UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value
             };
+
             return View(showPost);
         }
         [Authorize(Roles = "admin, writer")]
