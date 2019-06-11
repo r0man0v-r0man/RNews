@@ -72,7 +72,7 @@ namespace RNews.Controllers.administrator
                     Author = post.User.UserName,
                     Category = post.Category.Name,
                     DateCreated = post.Created.ToShortDateString(),
-                    Rating = "under construction" /*не должно быть пустым*/
+                    Rating = post.Rating.ToString()
                 });
             }
             return View(listModels);

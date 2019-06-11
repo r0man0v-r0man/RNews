@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Hubs;
 using RNews.Models;
@@ -23,8 +24,8 @@ namespace RNews.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            ViewBag.LastAdded = Unit.LastAddedPosts(db, 3);
-            ViewBag.TopRatingPost = Unit.TopRatingPost(db, 3);
+            ViewBag.LastAdded = LastAddedPosts(3);
+            ViewBag.TopRatingPost = TopRatingPost(3);
 
             ViewBag.Tags = await db.Tags.OrderBy(c => c.TagName).ToListAsync();
             return View();
@@ -40,5 +41,7 @@ namespace RNews.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IEnumerable<Post> TopRatingPost(int count) => db.Posts.OrderByDescending(c => c.Rating).Take(count).ToList();
+        public IEnumerable<Post> LastAddedPosts(int count) => db.Posts.OrderByDescending(c => c.Created).Take(count).ToList();
     }
 }

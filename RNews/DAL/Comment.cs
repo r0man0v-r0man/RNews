@@ -14,6 +14,9 @@ namespace RNews.DAL
         public virtual User User { get; set; }
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
+        public int LikesCount { get; set; }
+        public virtual ICollection<CommentLike> CommentLikes { get; set; }
+
         public Comment()
         {
             Created = DateTime.Now;

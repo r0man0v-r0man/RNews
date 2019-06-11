@@ -12,6 +12,7 @@ using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Models.ViewModels;
 using RNews.Units;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,22 +56,58 @@ namespace RNews.Controllers.Publication
             var newPost = new Post
             {
                 Title = model.Title,
-                Description = Unit.CreateDescription(model.Description),
+                Description = CreateDescription(model.Description),
                 Content = model.Content,
                 User = user,
                 CategoryId = model.CategoryId,
                 ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
             };
             await SetPostTagsAsync(GetTags(model.Tags), newPost);
-            db.Posts.Add(newPost);
-            db.SaveChanges();
+            var defaultRating = new Rating
+            {
+                Post = newPost,
+                User = user,
+                Value = 5
+            };
+            await db.Ratings.AddAsync(defaultRating);
+            newPost.Rating = defaultRating.Value;
+            await db.Posts.AddAsync(newPost);
+            await db.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
         [AllowAnonymous]
-        public IActionResult Show(int id)
+        public async Task<IActionResult> Show(int id)
         {
             ViewBag.CurrentUserId = userManager.GetUserId(HttpContext.User);
-            Post post = Unit.GetPost(db, id);
+            var user = await db.People.FindAsync(userManager.GetUserId(HttpContext.User));
+            Post post = await GetPostAsync(id);
+            var userPostRating = post.Ratings.FirstOrDefault(c => c.UserId == ViewBag.CurrentUserId);
+            if (userPostRating == null)
+            {
+                post.Ratings.Add(new Rating
+                {
+                    Post = post,
+                    User = user,
+                    Value = 0
+                });
+                await db.SaveChangesAsync();
+            }
+            var listComments = post.Comments.ToList();
+            foreach (var comment in listComments)
+            {
+                if (comment.CommentLikes.FirstOrDefault(c=>c.User == user)==null)
+                {
+                    comment.CommentLikes.Add(new CommentLike
+                    {
+                        Comment = comment,
+                        User = user,
+                        IsLike = false
+                    });
+                    comment.LikesCount = LikeCounter(comment);
+                    await db.SaveChangesAsync();
+                }
+            }
+
             var showPost = new PostShowViewModel
             {
                 PostId = post.PostId,
@@ -81,7 +118,9 @@ namespace RNews.Controllers.Publication
                 ImagePath = post.ImagePath,
                 Content = Markdown.ToHtml(post.Content),
                 PostComments = post.Comments.ToList(),
-                Tags = post.PostTags.ToList()
+                Tags = post.PostTags.ToList(),
+                Rating = post.Rating,
+                UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value//отваливается на этом моменте
             };
             return View(showPost);
         }
@@ -145,6 +184,41 @@ namespace RNews.Controllers.Publication
                 return null;
             }
         }
-        
+        public string CreateDescription(string descriptionText)
+        {
+            string[] temp = descriptionText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var DescriptionLength = 14;
+            string tempDescription = "";
+            if (temp.Length <= DescriptionLength)
+            {
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
+            }
+            else
+            {
+                for (int i = 0; i < DescriptionLength; i++)
+                {
+                    tempDescription += " " + temp[i];
+                }
+                return String.Concat(tempDescription, "...");
+            }
+
+        }
+        public int LikeCounter(Comment comment)
+        {
+            var likeCounter = 0;
+            var likes = db.CommentLikes.Where(c => c.Comment == comment).ToList();
+            foreach (var like in likes)
+            {
+                if (like.IsLike == true)
+                {
+                    likeCounter++;
+                }
+            }
+            return likeCounter;
+        }
     }
 }

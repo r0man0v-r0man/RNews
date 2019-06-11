@@ -27,7 +27,9 @@
                 {
                 <tr>
                     @Html.Hidden("Id", post.id)
-                    <td>@post.Title</td>
+                    
+                    @*<td>@post.Title</td>*@
+                    <td>@Html.ActionLink($"{post.Title}", "show", "publication", new { id = post.id }, new { @class = "btn btn-sm btn-link" })</td>
                     <td>@post.Author</td>
                     <td>@post.Category</td>
                     <td>@post.DateCreated</td>
