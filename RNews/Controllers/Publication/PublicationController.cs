@@ -92,7 +92,20 @@ namespace RNews.Controllers.Publication
                 });
                 await db.SaveChangesAsync();
             }
-            
+            var listComments = post.Comments.ToList();
+            foreach (var comment in listComments)
+            {
+                if (comment.CommentLikes.FirstOrDefault(c=>c.User == user)==null)
+                {
+                    comment.CommentLikes.Add(new CommentLike
+                    {
+                        Comment = comment,
+                        User = user,
+                        IsLike = false
+                    });
+                    await db.SaveChangesAsync();
+                }
+            }
             var showPost = new PostShowViewModel
             {
                 PostId = post.PostId,

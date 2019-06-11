@@ -39,6 +39,10 @@ namespace RNews.Hubs
                 {
                     existLike.IsLike = false;
                 }
+                else
+                {
+                    existLike.IsLike = true;
+                }
             }
             comment.LikesCount = LikeCounter(commentId);
             await db.SaveChangesAsync();
