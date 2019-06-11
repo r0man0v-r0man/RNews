@@ -36,5 +36,6 @@ var hearts = document.querySelectorAll(".comment-heart");
                 return console.error(err.toString());
             });
         event.preventDefault();
+        item.classList.add("fas");
     });
 });
