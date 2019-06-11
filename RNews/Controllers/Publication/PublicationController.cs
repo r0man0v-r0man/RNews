@@ -120,7 +120,7 @@ namespace RNews.Controllers.Publication
                 PostComments = post.Comments.ToList(),
                 Tags = post.PostTags.ToList(),
                 Rating = post.Rating,
-                UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value//отваливается на этом моменте
+                UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value
             };
             return View(showPost);
         }
