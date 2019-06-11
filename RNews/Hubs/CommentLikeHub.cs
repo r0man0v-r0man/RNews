@@ -28,7 +28,7 @@ namespace RNews.Hubs
                 {
                     Comment = comment,
                     User = user,
-                    IsLike = true
+                    IsLike = isLike
                 };
                 await db.CommentLikes.AddAsync(like);
                 await db.SaveChangesAsync();
@@ -38,10 +38,6 @@ namespace RNews.Hubs
                 if (existLike.IsLike == true)
                 {
                     existLike.IsLike = false;
-                }
-                else
-                {
-                    existLike.IsLike = true;
                 }
             }
             comment.LikesCount = LikeCounter(commentId);

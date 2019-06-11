@@ -79,20 +79,20 @@ namespace RNews.Controllers.Publication
         public async Task<IActionResult> Show(int id)
         {
             ViewBag.CurrentUserId = userManager.GetUserId(HttpContext.User);
+            var user = await db.People.FindAsync(userManager.GetUserId(HttpContext.User));
             Post post = await GetPostAsync(id);
-            foreach (var comment in post.Comments)
+            var userPostRating = post.Ratings.FirstOrDefault(c => c.UserId == ViewBag.CurrentUserId);
+            if (userPostRating == null)
             {
-                if (comment.CommentLikes.FirstOrDefault(c => c.UserId == userManager.GetUserId(HttpContext.User)) == null)
+                post.Ratings.Add(new Rating
                 {
-                    comment.CommentLikes.Add(new CommentLike
-                    {
-                        IsLike = false,
-                        UserId = userManager.GetUserId(HttpContext.User)
-                    });
-                }
-                
+                    Post = post,
+                    User = user,
+                    Value = 0
+                });
+                await db.SaveChangesAsync();
             }
-            await db.SaveChangesAsync();
+            
             var showPost = new PostShowViewModel
             {
                 PostId = post.PostId,
@@ -105,7 +105,7 @@ namespace RNews.Controllers.Publication
                 PostComments = post.Comments.ToList(),
                 Tags = post.PostTags.ToList(),
                 Rating = post.Rating,
-                UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value
+                UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value//отваливается на этом моменте
             };
             return View(showPost);
         }
