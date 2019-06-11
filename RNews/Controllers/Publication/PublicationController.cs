@@ -95,7 +95,7 @@ namespace RNews.Controllers.Publication
             var listComments = post.Comments.ToList();
             foreach (var comment in listComments)
             {
-                if (comment.CommentLikes.FirstOrDefault(c=>c.User == user)==null)
+                if (comment.CommentLikes.FirstOrDefault(c=>c.User == user) == null) //поиск
                 {
                     comment.CommentLikes.Add(new CommentLike
                     {
@@ -209,15 +209,7 @@ namespace RNews.Controllers.Publication
         }
         public int LikeCounter(Comment comment)
         {
-            var likeCounter = 0;
-            var likes = db.CommentLikes.Where(c => c.Comment == comment).ToList();
-            foreach (var like in likes)
-            {
-                if (like.IsLike == true)
-                {
-                    likeCounter++;
-                }
-            }
+            var likeCounter =  db.CommentLikes.Count(c => c.Comment == comment && c.IsLike == true);
             return likeCounter;
         }
     }
