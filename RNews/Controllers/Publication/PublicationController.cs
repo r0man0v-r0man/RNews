@@ -103,9 +103,11 @@ namespace RNews.Controllers.Publication
                         User = user,
                         IsLike = false
                     });
+                    comment.LikesCount = LikeCounter(comment);
                     await db.SaveChangesAsync();
                 }
             }
+
             var showPost = new PostShowViewModel
             {
                 PostId = post.PostId,
@@ -204,6 +206,19 @@ namespace RNews.Controllers.Publication
                 return String.Concat(tempDescription, "...");
             }
 
+        }
+        public int LikeCounter(Comment comment)
+        {
+            var likeCounter = 0;
+            var likes = db.CommentLikes.Where(c => c.Comment == comment).ToList();
+            foreach (var like in likes)
+            {
+                if (like.IsLike == true)
+                {
+                    likeCounter++;
+                }
+            }
+            return likeCounter;
         }
     }
 }

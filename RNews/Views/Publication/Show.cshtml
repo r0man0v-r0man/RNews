@@ -58,7 +58,7 @@
                                 <input id="comment-id" type="hidden" name="commentId" value="@comment.CommentId" />
                                 <input id="comment-is-like-value" class="test" type="hidden" name="isLikeValue" value="@comment.CommentLikes.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).IsLike.ToString().ToLower()" />
                                 <i id="comment-heart" class="far fa-heart comment-heart"></i>
-                                <span id="comment-heart-@comment.CommentId-counter">12</span>
+                                <span id="comment-heart-@comment.CommentId-counter">@comment.LikesCount</span>
                             </div>
                             <div class="col-12">@comment.Content</div>
 
