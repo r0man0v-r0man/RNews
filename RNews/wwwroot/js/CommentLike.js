@@ -30,14 +30,9 @@ connectionLike.start()
 var hearts = document.querySelectorAll(".comment-heart");
 
 [].forEach.call(hearts, function (item) {
-    item.addEventListener("mouseover", function () {
-        item.style.color = "#dc3545";
-    });
-    item.addEventListener("mouseout", function () {
-        item.style.color = "#212529";
-    });
     if (item.closest("li").getElementsByTagName("input")[2].value == "true") {
         item.classList.add("fas");
+        //add solid class when hover
     };
     if (item.closest("li").getElementsByTagName("input")[2].value == "false") {
         item.classList.add("far");

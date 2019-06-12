@@ -70,3 +70,7 @@ img[src*="?img-fluid"] {
 #tagcloud a{
     color: white;
 }
+.comment-heart:hover {
+    cursor: pointer;
+    color: #dc3545;
+}
