@@ -30,25 +30,17 @@ connectionLike.start()
 var hearts = document.querySelectorAll(".comment-heart");
 
 [].forEach.call(hearts, function (item) {
+    item.addEventListener("mouseover", function () {
+        item.style.color = "#dc3545";
+    });
+    item.addEventListener("mouseout", function () {
+        item.style.color = "#212529";
+    });
     if (item.closest("li").getElementsByTagName("input")[2].value == "true") {
         item.classList.add("fas");
-        //item.addEventListener("mouseover", function () {
-        //    item.classList.remove("fas");
-        //    item.classList.add("far");
-        //});
-        //item.addEventListener("mouseout", function () {
-        //    item.classList.remove("far");
-        //    item.classList.add("fas");
-        //});
     };
     if (item.closest("li").getElementsByTagName("input")[2].value == "false") {
         item.classList.add("far");
-        //item.addEventListener("mouseover", function () {
-        //    item.classList.add("fas");
-        //});
-        //item.addEventListener("mouseout", function () {
-        //    item.classList.remove("fas");
-        //});
     };
     
     item.addEventListener("click", function (event) {
