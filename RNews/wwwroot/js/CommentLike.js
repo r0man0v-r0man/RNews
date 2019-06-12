@@ -4,6 +4,17 @@ var connectionLike = new signalR.HubConnectionBuilder().withUrl("/CommentLikeHub
 connectionLike.on("CommentLikes", function (likesCount, currentUserLikeValue, commentId) {
     document.getElementById("comment-heart-" + commentId + "-counter").innerText = likesCount;
     document.getElementById("comment-" + commentId + "-is-like-value").value = currentUserLikeValue;
+    
+    if (currentUserLikeValue == true) {
+        document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("fas");
+        };
+    if (currentUserLikeValue == false) {
+        document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.remove("fas");
+        document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("far");
+
+        };
+
+    
     console.log(likesCount);
     console.log(currentUserLikeValue);
 });
@@ -19,14 +30,27 @@ connectionLike.start()
 var hearts = document.querySelectorAll(".comment-heart");
 
 [].forEach.call(hearts, function (item) {
-    item.addEventListener("mouseover", function () {
-        item.classList.remove("far");
+    if (item.closest("li").getElementsByTagName("input")[2].value == "true") {
         item.classList.add("fas");
-    });
-    item.addEventListener("mouseout", function () {
-        item.classList.remove("fas");
+        //item.addEventListener("mouseover", function () {
+        //    item.classList.remove("fas");
+        //    item.classList.add("far");
+        //});
+        //item.addEventListener("mouseout", function () {
+        //    item.classList.remove("far");
+        //    item.classList.add("fas");
+        //});
+    };
+    if (item.closest("li").getElementsByTagName("input")[2].value == "false") {
         item.classList.add("far");
-    });
+        //item.addEventListener("mouseover", function () {
+        //    item.classList.add("fas");
+        //});
+        //item.addEventListener("mouseout", function () {
+        //    item.classList.remove("fas");
+        //});
+    };
+    
     item.addEventListener("click", function (event) {
         var userId = item.closest("li").getElementsByTagName("input")[0].value;
         var commentId = item.closest("li").getElementsByTagName("input")[1].value;
@@ -36,6 +60,5 @@ var hearts = document.querySelectorAll(".comment-heart");
                 return console.error(err.toString());
             });
         event.preventDefault();
-        item.classList.add("fas");
     });
 });
