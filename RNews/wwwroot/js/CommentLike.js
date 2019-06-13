@@ -5,14 +5,14 @@ connectionLike.on("CommentLikes", function (likesCount, currentUserLikeValue, co
     document.getElementById("comment-heart-" + commentId + "-counter").innerText = likesCount;
     //document.getElementById("comment-" + commentId + "-is-like-value").value = currentUserLikeValue;
     
-    if (document.getElementById("comment-" + commentId + "-is-like-value").value == "true") {
-        document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("fas");
-        };
-    if (document.getElementById("comment-" + commentId + "-is-like-value").value == "false") {
-        document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.remove("fas");
-        document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("far");
+    //if (document.getElementById("comment-" + commentId + "-is-like-value").value == "true") {
+    //    document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("fas");
+    //    };
+    //if (document.getElementById("comment-" + commentId + "-is-like-value").value == "false") {
+    //    document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.remove("fas");
+    //    document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("far");
 
-        };
+    //    };
 
     
     console.log(likesCount);
