@@ -52,12 +52,12 @@
                         
                         <div class="row">
                             <div class="col-10"><small class="text-muted">@comment.User.UserName | @comment.Created.ToString("MM/dd/yyyy")</small></div>
-                            <div class="col-2">
+                            <div class="col-2 hearts">
                                 
                                 <input id="user-id" type="hidden" name="userId" value="@ViewBag.CurrentUserId" />
                                 <input id="comment-id" type="hidden" name="commentId" value="@comment.CommentId" />
                                 <input id="comment-@comment.CommentId-is-like-value" type="hidden" name="isLikeValue" value="@comment.CommentLikes.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).IsLike.ToString().ToLower()" />
-                                <i id="comment-heart" class="fa-heart comment-heart"></i>
+                                <i id="comment-heart" class="fa-heart comment-heart "></i>
                                 <span id="comment-heart-@comment.CommentId-counter">@comment.LikesCount</span>
                             </div>
                             <div class="col-12">@comment.Content</div>
@@ -80,4 +80,5 @@
     <script src="~/lib/star-rating-svg-master/dist/jquery.star-rating-svg.js"></script>
     <script src="~/js/RatingPost.js"></script>
     <script src="~/js/CommentLike.js"></script>
+    
 }
