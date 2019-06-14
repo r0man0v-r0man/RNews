@@ -34,7 +34,7 @@ namespace RNews.Hubs
             db.CommentLikes.Add(defaultLike);
             db.Comments.Add(newComment);
             await db.SaveChangesAsync();
-            await Clients.All.SendAsync("ContentComment", newComment.Content, newComment.User.UserName, newComment.Created.ToString("MM/dd/yyyy"), newComment.CommentId, user.Id, defaultLike.IsLike.Value.ToString().ToLower());
+            await Clients.All.SendAsync("ContentComment", newComment.Content, newComment.User.UserName, newComment.Created.ToString("MM/dd/yyyy"), newComment.CommentId, user.Id, defaultLike.IsLike.ToString().ToLower());
         }
     }
 }

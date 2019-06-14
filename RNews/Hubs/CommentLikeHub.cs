@@ -32,15 +32,19 @@ namespace RNews.Hubs
                 };
                 await db.CommentLikes.AddAsync(like);
                 await db.SaveChangesAsync();
+                comment.LikesCount = LikeCounter(commentId);
+                await db.SaveChangesAsync();
+                await Clients.All.SendAsync("CommentLikes", comment.LikesCount, like.IsLike, commentId);
             }
             else
             {
-                existLike.IsLike = !existLike.IsLike;
+                existLike.IsLike = !existLike.IsLike;//update exist like
                 await db.SaveChangesAsync();
+                comment.LikesCount = LikeCounter(commentId);
+                await db.SaveChangesAsync();
+                await Clients.All.SendAsync("CommentLikes", comment.LikesCount, existLike.IsLike, commentId);
             }
-            comment.LikesCount = LikeCounter(commentId);
-            await db.SaveChangesAsync();
-            await Clients.All.SendAsync("CommentLikes", comment.LikesCount, existLike.IsLike.Value, commentId);
+            
         }
         public int LikeCounter(int commentId)
         {
