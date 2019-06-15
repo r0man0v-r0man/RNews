@@ -3,18 +3,6 @@ var connectionLike = new signalR.HubConnectionBuilder().withUrl("/CommentLikeHub
 
 connectionLike.on("CommentLikes", function (likesCount, currentUserLikeValue, commentId) {
     document.getElementById("comment-heart-" + commentId + "-counter").innerText = likesCount;
-    //document.getElementById("comment-" + commentId + "-is-like-value").value = currentUserLikeValue;
-    
-    //if (document.getElementById("comment-" + commentId + "-is-like-value").value == "true") {
-    //    document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("fas");
-    //    };
-    //if (document.getElementById("comment-" + commentId + "-is-like-value").value == "false") {
-    //    document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.remove("fas");
-    //    document.getElementById("comment-" + commentId + "-is-like-value").closest("li").getElementsByTagName("i")[0].classList.add("far");
-
-    //    };
-
-    
     console.log(likesCount);
     console.log(currentUserLikeValue);
 });
@@ -32,7 +20,6 @@ var hearts = document.querySelectorAll(".comment-heart");
 [].forEach.call(hearts, function (item) {
     if (item.closest("li").getElementsByTagName("input")[2].value == "true") {
         item.classList.add("fas");
-        //add solid class when hover
     };
     if (item.closest("li").getElementsByTagName("input")[2].value == "false") {
         item.classList.add("far");
@@ -42,6 +29,8 @@ var hearts = document.querySelectorAll(".comment-heart");
         var userId = document.getElementById("user-id").value;
         var commentId = item.closest("li").getElementsByTagName("input")[1].value;
         var isLike = item.closest("li").getElementsByTagName("input")[2].value;
+        item.classList.toggle("fas");
+        item.classList.toggle("far");
         connectionLike.invoke("Comment", commentId, userId, isLike)
             .catch(function (err) {
                 return console.error(err.toString());
@@ -54,6 +43,7 @@ function heart(commentId) {
     var newCommentId = document.getElementById("comment-heart-" + commentId).closest("li").getElementsByTagName("input")[0].value;
     var userId = document.getElementById("user-id").value;
     var isLike = document.getElementById("comment-heart-" + commentId).closest("li").getElementsByTagName("input")[2].value;
+    document.getElementById("comment-heart-" + commentId).classList.toggle("fas");
     connectionLike.invoke("Comment", newCommentId, userId, isLike)
         .catch(function (err) {
             return console.error(err.toString());
