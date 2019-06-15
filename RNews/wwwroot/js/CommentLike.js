@@ -1,12 +1,14 @@
 ﻿"use strict";
 var connectionLike = new signalR.HubConnectionBuilder().withUrl("/CommentLikeHub").build();
 
-connectionLike.on("CommentLikes", function (likesCount, currentUserLikeValue, commentId) {
+connectionLike.on("CommentLikes", function (likesCount, commentId) {
     document.getElementById("comment-heart-" + commentId + "-counter").innerText = likesCount;
     console.log(likesCount);
+});
+connectionLike.on("CurrentLike", function (currentUserLikeValue, commentId) {
+    document.getElementById("comment-" + commentId + "-is-like-value").value = currentUserLikeValue;
     console.log(currentUserLikeValue);
 });
-
 connectionLike.start()
     .then(function () {
         console.log("connection like started");

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +61,7 @@ namespace RNews
                     options.LogoutPath = "/auth/logout";
                     options.AccessDeniedPath = "/auth/accessdenied";
                 });
+
             services.ConfigureExternalCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);

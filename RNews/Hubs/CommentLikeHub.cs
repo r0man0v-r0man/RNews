@@ -43,7 +43,8 @@ namespace RNews.Hubs
             comment.LikesCount = LikeCounter(commentId);
             await db.SaveChangesAsync();
             var curentUserLike = await db.CommentLikes.FirstOrDefaultAsync(c => c.Comment == comment && c.User == user);
-            await Clients.All.SendAsync("CommentLikes", comment.LikesCount, curentUserLike.IsLike, commentId);
+            await Clients.All.SendAsync("CommentLikes", comment.LikesCount, commentId);
+            await Clients.Caller.SendAsync("CurrentLike", curentUserLike.IsLike, commentId);
         }
         public int LikeCounter(int commentId)
         {
