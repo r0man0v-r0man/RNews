@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - RNews</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link id="css-link" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="~/lib/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet" />
         <link href="~/simplemde/simplemde.min.css" rel="stylesheet" />
@@ -68,6 +68,9 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
+                            <i id="theme" class="fas fa-sun"></i>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
@@ -88,7 +91,7 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             <div class="col-md-6">
-                
+
 
             </div>
             <div class="col-md-3">
@@ -125,6 +128,8 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/ThemeToggle.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)

@@ -25,10 +25,6 @@ namespace RNews.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            //if (Request.Cookies["theme"] == null)
-            //{
-            //    Response.Cookies.Append("theme", "/lib/bootstrap/dist/css/bootstrap.css");
-            //}
             ViewBag.LastAdded = LastAddedPosts(3);
             ViewBag.TopRatingPost = TopRatingPost(3);
 

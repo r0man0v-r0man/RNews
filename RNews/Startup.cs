@@ -67,6 +67,7 @@ namespace RNews
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddHttpContextAccessor();
             services.AddSignalR();
         }
 
@@ -92,6 +93,7 @@ namespace RNews
                 routes.MapHub<AddCategoryHub>("/AddCategoryHub");
                 routes.MapHub<RatingPostHub>("/RatingPostHub");
                 routes.MapHub<CommentLikeHub>("/CommentLikeHub");
+                routes.MapHub<ThemeHub>("/ThemeHub");
 
             });
             app.UseMvc(routes =>
