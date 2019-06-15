@@ -1,8 +1,10 @@
 ﻿"use strict";
 var connectionLike = new signalR.HubConnectionBuilder().withUrl("/CommentLikeHub").build();
 
-connectionLike.on("CommentLikes", function (likesCount) {
-    alert(likesCount);
+connectionLike.on("CommentLikes", function (likesCount, currentUserLikeValue, commentId) {
+    document.getElementById("comment-heart-" + commentId + "-counter").innerText = likesCount;
+    console.log(likesCount);
+    console.log(currentUserLikeValue);
 });
 
 connectionLike.start()
@@ -16,18 +18,19 @@ connectionLike.start()
 var hearts = document.querySelectorAll(".comment-heart");
 
 [].forEach.call(hearts, function (item) {
-    item.addEventListener("mouseover", function () {
-        item.classList.remove("far");
+    if (item.closest("li").getElementsByTagName("input")[2].value == "true") {
         item.classList.add("fas");
-    });
-    item.addEventListener("mouseout", function () {
-        item.classList.remove("fas");
+    };
+    if (item.closest("li").getElementsByTagName("input")[2].value == "false") {
         item.classList.add("far");
-    });
+    };
+    
     item.addEventListener("click", function (event) {
-        var userId = item.closest("li").getElementsByTagName("input")[0].value;
+        var userId = document.getElementById("user-id").value;
         var commentId = item.closest("li").getElementsByTagName("input")[1].value;
         var isLike = item.closest("li").getElementsByTagName("input")[2].value;
+        item.classList.toggle("fas");
+        item.classList.toggle("far");
         connectionLike.invoke("Comment", commentId, userId, isLike)
             .catch(function (err) {
                 return console.error(err.toString());
@@ -35,3 +38,14 @@ var hearts = document.querySelectorAll(".comment-heart");
         event.preventDefault();
     });
 });
+
+function heart(commentId) {
+    var newCommentId = document.getElementById("comment-heart-" + commentId).closest("li").getElementsByTagName("input")[0].value;
+    var userId = document.getElementById("user-id").value;
+    var isLike = document.getElementById("comment-heart-" + commentId).closest("li").getElementsByTagName("input")[2].value;
+    document.getElementById("comment-heart-" + commentId).classList.toggle("fas");
+    connectionLike.invoke("Comment", newCommentId, userId, isLike)
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+};

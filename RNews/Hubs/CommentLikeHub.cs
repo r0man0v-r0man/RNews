@@ -21,44 +21,34 @@ namespace RNews.Hubs
         {
             var comment = await db.Comments.FirstOrDefaultAsync(c => c.CommentId == commentId);
             var user = await db.People.FindAsync(userId);
-            var existLike = await db.CommentLikes.FirstOrDefaultAsync(c => c.CommentId == commentId);
+            var existLike = await db.CommentLikes.FirstOrDefaultAsync(c => c.CommentId == commentId && c.UserId == userId);
             if (existLike == null)
             {
                 var like = new CommentLike
                 {
                     Comment = comment,
                     User = user,
-                    IsLike = isLike
+                    IsLike = !isLike
                 };
                 await db.CommentLikes.AddAsync(like);
                 await db.SaveChangesAsync();
+               
             }
             else
             {
-                if (existLike.IsLike == true)
-                {
-                    existLike.IsLike = false;
-                }
-                else
-                {
-                    existLike.IsLike = true;
-                }
+                existLike.IsLike = !existLike.IsLike;//update exist like
+                await db.SaveChangesAsync();
             }
+
             comment.LikesCount = LikeCounter(commentId);
             await db.SaveChangesAsync();
-            await Clients.All.SendAsync("CommentLikes", comment.LikesCount);
+            var curentUserLike = await db.CommentLikes.FirstOrDefaultAsync(c => c.Comment == comment && c.User == user);
+            await Clients.All.SendAsync("CommentLikes", comment.LikesCount, curentUserLike.IsLike, commentId);
         }
         public int LikeCounter(int commentId)
         {
-            var likeCounter = 0;
-            var likes = db.CommentLikes.Where(c => c.CommentId == commentId).ToList();
-            foreach (var like in likes)
-            {
-                if (like.IsLike == true)
-                {
-                    likeCounter++;
-                }
-            }
+            var likeCounter = db.CommentLikes.Count(c => c.CommentId == commentId && c.IsLike == true);
+            
             return likeCounter;
         }
     }
