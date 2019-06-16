@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RNews.Hubs
@@ -16,24 +13,21 @@ namespace RNews.Hubs
         }
         public async Task SetTheme()
         {
-            var currentTheme = httpContextAccessor.HttpContext.Request.Cookies["theme"];
+            var theme = "";
+            var currentCookie = httpContextAccessor.HttpContext.Request.Cookies["theme"];
             var oldTheme = "/lib/bootstrap/dist/css/bootstrap.css";
             var newTheme = "/css/superhero.css";
-            if (currentTheme==null)
-            {
 
-                httpContextAccessor.HttpContext.Response.Cookies.Append("theme", oldTheme);
-            }
-            
-            if (currentTheme != newTheme)
+            if (currentCookie != null && currentCookie == oldTheme)
             {
-                httpContextAccessor.HttpContext.Response.Cookies.Append("theme", newTheme);
+                theme = newTheme;
             }
-            if (currentTheme != oldTheme)
+            else
             {
-                httpContextAccessor.HttpContext.Response.Cookies.Append("theme", newTheme);
+                theme = oldTheme;
+
             }
-            await Clients.Caller.SendAsync("NewTheme", newTheme);
+            await Clients.Caller.SendAsync("NewTheme", theme);
         }
     }
 }

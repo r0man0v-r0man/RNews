@@ -61,7 +61,6 @@ namespace RNews
                     options.LogoutPath = "/auth/logout";
                     options.AccessDeniedPath = "/auth/accessdenied";
                 });
-
             services.ConfigureExternalCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);
