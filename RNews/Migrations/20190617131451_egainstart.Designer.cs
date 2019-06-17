@@ -10,8 +10,8 @@ using RNews.DAL.dbContext;
 namespace RNews.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190611053024_addcLikes")]
-    partial class addcLikes
+    [Migration("20190617131451_egainstart")]
+    partial class egainstart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,7 +177,7 @@ namespace RNews.Migrations
 
                     b.Property<int>("CommentId");
 
-                    b.Property<bool?>("IsLike");
+                    b.Property<bool>("IsLike");
 
                     b.Property<string>("UserId");
 
