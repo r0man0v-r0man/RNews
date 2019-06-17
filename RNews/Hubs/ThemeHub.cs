@@ -13,21 +13,19 @@ namespace RNews.Hubs
         }
         public async Task SetTheme()
         {
-            var theme = "";
             var currentCookie = httpContextAccessor.HttpContext.Request.Cookies["theme"];
-            var oldTheme = "/lib/bootstrap/dist/css/bootstrap.css";
-            var newTheme = "/css/superhero.css";
+            
 
-            if (currentCookie != null && currentCookie == oldTheme)
+            if (currentCookie == "1")
             {
-                theme = newTheme;
+                httpContextAccessor.HttpContext.Response.Cookies.Append("theme", "2");
             }
             else
             {
-                theme = oldTheme;
+                httpContextAccessor.HttpContext.Response.Cookies.Append("theme", "1");
 
             }
-            await Clients.Caller.SendAsync("NewTheme", theme);
+            await Clients.Caller.SendAsync("NewTheme");
         }
     }
 }

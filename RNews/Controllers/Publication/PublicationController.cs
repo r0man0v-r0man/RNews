@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RNews.DAL;
 using RNews.DAL.dbContext;
+using RNews.Filters;
 using RNews.Models.ViewModels;
 using RNews.Units;
 using System;

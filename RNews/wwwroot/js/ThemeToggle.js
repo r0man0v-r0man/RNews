@@ -1,13 +1,13 @@
 ﻿"use strict";
-document.addEventListener("DOMContentLoaded", function () {
-    var currentTheme = getCookie("theme");
-    if (currentTheme == "") {
-        setCookie("theme", document.getElementById("css-link").getAttribute("href"), 7);
-        currentTheme = getCookie("theme");
-    };
-    var link = document.getElementById("css-link");
-    link.setAttribute("href", currentTheme);
-});
+//document.addEventListener("DOMContentLoaded", function () {
+//    var currentTheme = getCookie("theme");
+//    if (currentTheme == "") {
+//        setCookie("theme", document.getElementById("css-link").getAttribute("href"), 7);
+//        currentTheme = getCookie("theme");
+//    };
+//    var link = document.getElementById("css-link");
+//    link.setAttribute("href", currentTheme);
+//});
 
   
 function getCookie(cname) {

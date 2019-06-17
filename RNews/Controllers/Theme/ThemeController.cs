@@ -10,8 +10,8 @@ namespace RNews.Controllers.Theme
     {
         public IActionResult Toggle()
         {
-            string oldTheme = "/lib/bootstrap/dist/css/bootstrap.css";
-            string newTheme = "/css/superhero.css";
+            string oldTheme = "1";
+            string newTheme = "2";
             if (Request.Cookies["theme"] == null)
             {
                 Response.Cookies.Append("theme", oldTheme);

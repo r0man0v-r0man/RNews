@@ -7,7 +7,18 @@
     <title>@ViewData["Title"] - RNews</title>
 
     <environment include="Development">
-        <link id="css-link" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        @if (Context.Request.Cookies["theme"] == "1")
+        {
+            <link id="css-link" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        }
+        else
+        {
+            if (Context.Request.Cookies["theme"] == "2")
+            {
+                <link id="css-link" rel="stylesheet" href="~/css/superhero.css" />
+            }
+        }
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="~/lib/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet" />
         <link href="~/simplemde/simplemde.min.css" rel="stylesheet" />
@@ -67,7 +78,7 @@
                     </ul>
 
                     <ul class="navbar-nav flex-grow-1">
-
+                        
                         <li class="nav-item">
                             <form asp-action="Toggle" asp-controller="Theme">
                                 <button type="submit" class="btn btn-link"><i id="theme" class="fas fa-sun"></i></button>

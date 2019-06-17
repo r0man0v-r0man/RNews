@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
 using RNews.DAL.dbContext;
+using RNews.Filters;
 using RNews.Hubs;
 using RNews.Models;
 using RNews.Models.ViewModels;

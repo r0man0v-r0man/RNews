@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RNews.DAL;
 using RNews.DAL.dbContext;
+using RNews.Filters;
 using RNews.Hubs;
 using System;
 
@@ -65,7 +66,12 @@ namespace RNews
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddMvc(options =>
+                {
+                    options.Filters.Add(new ThemeActionFilter());
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpContextAccessor();
             services.AddSignalR();
         }
