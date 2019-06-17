@@ -17,7 +17,7 @@ namespace RNews.Filters
         {
             if (!context.HttpContext.Request.Cookies.ContainsKey("theme"))
             {
-                context.HttpContext.Response.Cookies.Append("theme", "2");
+                context.HttpContext.Response.Cookies.Append("theme", "1");
             }
         }
     }

@@ -7,6 +7,10 @@
     <title>@ViewData["Title"] - RNews</title>
 
     <environment include="Development">
+        @if (Context.Request.Cookies["theme"] == null)
+        {
+            <link id="css-link" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        }
         @if (Context.Request.Cookies["theme"] == "1")
         {
             <link id="css-link" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
