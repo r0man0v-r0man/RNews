@@ -10,6 +10,7 @@ using RNews.DAL.dbContext;
 using RNews.Hubs;
 using RNews.Models.ViewModels;
 using RNews.Units;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,15 +56,16 @@ namespace RNews.Controllers.Profile
             var userId = userManager.GetUserId(HttpContext.User);//how to upload img to ExternalUser
             if (uploadedFile != null)
             {
-                string path = "/imgs/avatars/" + uploadedFile.FileName;
+                string path = "/imgs/avatars/" + userId + uploadedFile.FileName;
                 using (var fileStream = new FileStream(appEnvironment.WebRootPath + path, FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
-                var user = Unit.GetUser(db, userId);
+                var user = await db.People.FindAsync(userId);
                 user.ImagePath = path;
                 user.ImageName = uploadedFile.FileName;
-                Unit.SaveUser(db, user);
+                db.Entry(user).State = EntityState.Modified;
+                await db.SaveChangesAsync();
                 await hubContext.Clients.All.SendAsync("UserAvatarSend", user.ImagePath);
             }
             return RedirectToAction("Properties", "Properties");

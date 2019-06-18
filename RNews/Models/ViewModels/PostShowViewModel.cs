@@ -14,6 +14,7 @@ namespace RNews.Models.ViewModels
         public string ImagePath { get; set; }
         public string AuthorName { get; set; }
         public string AuthorAvatar { get; set; }
+        public string AuthorDescription { get; set; }
         public DateTime DateOfCreatedAuthor { get; set; }
         public List<Comment> PostComments { get; set; }
         public List<PostTag> Tags { get; set; }

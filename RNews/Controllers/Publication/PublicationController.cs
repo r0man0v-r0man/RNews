@@ -52,29 +52,37 @@ namespace RNews.Controllers.Publication
         [HttpPost]
         public async Task<IActionResult> Create(PostCreateViewModel model)
         {
-            var userId = userManager.GetUserId(HttpContext.User);
-            var user = userManager.FindByIdAsync(userId).Result;
-            var newPost = new Post
+            if (ModelState.IsValid)
             {
-                Title = model.Title,
-                Description = CreateDescription(model.Description),
-                Content = model.Content,
-                User = user,
-                CategoryId = model.CategoryId,
-                ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
-            };
-            await SetPostTagsAsync(GetTags(model.Tags), newPost);
-            var defaultRating = new Rating
+                var userId = userManager.GetUserId(HttpContext.User);
+                var user = userManager.FindByIdAsync(userId).Result;
+                var newPost = new Post
+                {
+                    Title = model.Title,
+                    Description = CreateDescription(model.Description),
+                    Content = model.Content,
+                    User = user,
+                    CategoryId = model.CategoryId,
+                    ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
+                };
+                await SetPostTagsAsync(GetTags(model.Tags), newPost);
+                var defaultRating = new Rating
+                {
+                    Post = newPost,
+                    User = user,
+                    Value = 5
+                };
+                await db.Ratings.AddAsync(defaultRating);
+                newPost.Rating = defaultRating.Value;
+                await db.Posts.AddAsync(newPost);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            else
             {
-                Post = newPost,
-                User = user,
-                Value = 5
-            };
-            await db.Ratings.AddAsync(defaultRating);
-            newPost.Rating = defaultRating.Value;
-            await db.Posts.AddAsync(newPost);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Create","Publication");
+            }
+            
         }
         [AllowAnonymous]
         public async Task<IActionResult> Show(int id)
@@ -121,6 +129,7 @@ namespace RNews.Controllers.Publication
                 PostComments = post.Comments.ToList(),
                 Tags = post.PostTags.ToList(),
                 Rating = post.Rating,
+                AuthorDescription = post.User.Description,
                 UserRating = post.Ratings.FirstOrDefault(c=>c.UserId == ViewBag.CurrentUserId).Value
             };
             return View(showPost);

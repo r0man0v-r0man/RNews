@@ -14,12 +14,6 @@ namespace RNews.Units
 {
     public static class Unit
     {
-        public static User GetUser(ApplicationDbContext db, string id) => db.People.Find(id);
-        public static void SaveUser(ApplicationDbContext db, User user)
-        {
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
         public static async Task<string> UploadPostMainImageAndGetPathAsync(IFormFile file, IHostingEnvironment appEnvironment)
         {
             
