@@ -134,6 +134,19 @@ namespace RNews.Controllers.Publication
             };
             return View(showPost);
         }
+        
+        [Authorize(Roles = "admin, writer")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            Post post = await GetPostAsync(id);
+            var model = new EditPostViewModel
+            {
+                Content = post.Content,
+                Description = post.Description,
+                Id = post.PostId
+            };
+            return View(model);
+        }
         [Authorize(Roles = "admin, writer")]
         public async Task<IActionResult> Delete(int? id)
         {
