@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "GetCategoryPosts";
+}
+
+<div class="row">
+    @foreach (var post in ViewBag.CategoryPosts)
+    {
+    <div class="col-12">
+        <div id="post-@post.PostId" class="card mb-4 box-shadow border-success border-right-0 border-bottom-0 border-left-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small>@post.Category.Name</small>
+                    <small>@post.User.UserName <img src="@post.User.ImagePath" class="img-fluid post-user-pic rounded-circle" alt="Alternate Text" /></small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <a href='@Url.Action("show", "publication", new { id = post.PostId })'>
+                        <img class="card-img rounded-0 " src="@post.ImagePath" alt="Card image">
+                    </a>
+                </div>
+                <div class="col-9">
+                    <div class="card-body">
+                        <h5 class="card-title">@post.Title</h5>
+                        <p class="card-text">@post.Description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                @Html.ActionLink("View", "show", "publication", new { id = post.PostId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                {
+                                    @Html.ActionLink("Edit", "edit", "publication", new { id = post.PostId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                                    @Html.ActionLink("Delete", "delete", "publication", new { id = post.PostId }, new { @class = "btn btn-sm btn-outline-secondary" })
+
+                                }
+                            </div>
+                            <small class="text-muted">@post.Created.ToString("d")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted text-right">
+                <span class="small">Рейтинг: @post.Rating</span>
+            </div>
+            
+
+            
+        </div>
+    </div>
+    }
+</div>

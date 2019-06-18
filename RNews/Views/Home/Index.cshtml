@@ -5,6 +5,7 @@
 <div class="row">
     @foreach (var item in ViewBag.LastAdded)
     {
+    
         <div class="col-md-4">
             <div id="post-@item.PostId" class="card mb-4 box-shadow border-success border-right-0 border-bottom-0 border-left-0">
                 <div class="card-body">
@@ -13,7 +14,10 @@
                         <small>@item.User.UserName <img src="@item.User.ImagePath" class="img-fluid post-user-pic rounded-circle" alt="Alternate Text" /></small>
                     </div>
                 </div>
-                <img class="card-img rounded-0 " src="@item.ImagePath" alt="Card image">
+                <a href='@Url.Action("show", "publication", new { id = item.PostId })'>
+                    <img class="card-img rounded-0 " src="@item.ImagePath" alt="Card image">
+                </a>
+                
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text">@item.Description</p>
@@ -33,6 +37,7 @@
                 </div>
             </div>
         </div>
+    
     }
 </div>
 
@@ -47,7 +52,9 @@
                         <small>@item.User.UserName <img src="@item.User.ImagePath" class="img-fluid post-user-pic rounded-circle" alt="Alternate Text" /></small>
                     </div>
                 </div>
-                <img class="card-img rounded-0" src="@item.ImagePath" alt="Card image">
+                <a href='@Url.Action("show", "publication", new { id = item.PostId })'>
+                    <img class="card-img rounded-0 " src="@item.ImagePath" alt="Card image">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text">@item.Description</p>
