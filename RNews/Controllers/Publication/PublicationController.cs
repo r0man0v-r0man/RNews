@@ -141,12 +141,12 @@ namespace RNews.Controllers.Publication
             Post post = await GetPostAsync(id);
             var model = new EditPostViewModel
             {
-                Content = post.Content,
                 Description = post.Description,
                 Id = post.PostId
             };
             return View(model);
         }
+
         [Authorize(Roles = "admin, writer")]
         public async Task<IActionResult> Delete(int? id)
         {
