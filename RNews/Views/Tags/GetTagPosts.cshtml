@@ -1,0 +1,51 @@
+﻿@model  List<RNews.Models.ViewModels.TagPostsViewModel>
+@{
+    ViewData["Title"] = "GetTagPosts";
+}
+
+@foreach (var post in Model)
+{
+    <div class="row">
+        <div class="col-12">
+            <div id="post-@post.Id" class="card mb-4 box-shadow  border-right-0 border-bottom-0 border-left-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small>@post.Category</small>
+                        <small>@post.Author <img src="@post.UserImagePath" class="img-fluid post-user-pic rounded-circle" alt="Alternate Text" /></small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <a href='@Url.Action("show", "publication", new { id = post.Id })'>
+                            <img class="card-img rounded-0 " src="@post.PostImage" alt="Card image">
+                        </a>
+                    </div>
+                    <div class="col-9">
+                        <div class="card-body">
+                            <h5 class="card-title">@post.Title</h5>
+                            <p class="card-text">@post.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    @Html.ActionLink("View", "show", "publication", new { id = post.Id }, new { @class = "btn btn-sm btn-outline-secondary" })
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                    {
+                                        @Html.ActionLink("Edit", "edit", "publication", new { id = post.Id }, new { @class = "btn btn-sm btn-outline-secondary" })
+                                        @Html.ActionLink("Delete", "delete", "publication", new { id = post.Id }, new { @class = "btn btn-sm btn-outline-secondary" })
+
+                                    }
+                                </div>
+                                <small class="text-muted">@post.Created</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted text-right">
+                    <span class="small">Рейтинг: @post.Rating</span> <span class="small">Комментариев: @post.CountOfComments</span>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+}

@@ -3,6 +3,6 @@
     <h4 class="font-weight-light">Tags</h4>
     @foreach (var tag in ViewBag.Tags)
     {
-        <a href="#" rel="@tag.TagCount" class="text-decoration-none rounded p-2 mt-1 mb-1 d-inline-block"><span>@tag.TagName<sup>@tag.TagCount</sup></span></a>
+        <a href="@Url.Action("GetTagPosts", "Tags", new { name = tag.TagName })" rel="@tag.TagCount" class="text-decoration-none rounded p-2 mt-1 mb-1 d-inline-block"><span>@tag.TagName<sup>@tag.TagCount</sup></span></a>
     }
 </div>
