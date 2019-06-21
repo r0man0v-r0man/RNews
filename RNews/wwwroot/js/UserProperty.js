@@ -1,6 +1,9 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/UserPropertyHub").build();
 var connectionAvatar = new signalR.HubConnectionBuilder().withUrl("/UserAvatarHub").build();
+
+var mail = document.getElementById("user-property-email");
+
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {
     var avatar = document.getElementById("user-avatar");
