@@ -38,7 +38,7 @@ namespace RNews.Controllers.Profile
         public async Task<IActionResult> Properties()
         {
             var userId = userManager.GetUserId(HttpContext.User);
-            var user = db.People.Include(c => c.Posts).SingleOrDefault(c => c.Id == userId);
+            var user = await db.People.FirstOrDefaultAsync(c => c.Id == userId);
             var model = new PropertyViewModel
             {
                 PropertyViewModelId = user.Id,

@@ -15,17 +15,16 @@ namespace RNews.Hubs
         {
             this.db = db;
         }
-        public async Task UserProperty(string userPropertyDescription, string userPropertyName, string userPropertyEmail, string userId)
+        public async Task UserProperty(string userPropertyDescription, string userPropertyName, string userId)
         {
-            if (!String.IsNullOrEmpty(userPropertyDescription) && !String.IsNullOrEmpty(userPropertyName) && !String.IsNullOrEmpty(userPropertyEmail))
+            if (!String.IsNullOrEmpty(userPropertyDescription) && !String.IsNullOrEmpty(userPropertyName))
             {
                 var user = await db.People.FindAsync(userId);
                 user.UserName = userPropertyName;
-                user.Email = userPropertyEmail;
                 user.Description = userPropertyDescription;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                await Clients.All.SendAsync("UserPropertySend", user.Description, user.UserName, user.Email);
+                await Clients.All.SendAsync("UserPropertySend", user.Description, user.UserName);
             }
             
         }
