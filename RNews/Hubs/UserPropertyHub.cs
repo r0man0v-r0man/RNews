@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL.dbContext;
-using RNews.Units;
 using System;
 using System.Threading.Tasks;
 

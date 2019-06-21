@@ -12,7 +12,6 @@ using RNews.Filters;
 using RNews.Hubs;
 using RNews.Models;
 using RNews.Models.ViewModels;
-using RNews.Units;
 
 namespace RNews.Controllers
 {

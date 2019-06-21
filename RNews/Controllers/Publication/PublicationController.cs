@@ -12,9 +12,9 @@ using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Filters;
 using RNews.Models.ViewModels;
-using RNews.Units;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -63,7 +63,7 @@ namespace RNews.Controllers.Publication
                     Content = model.Content,
                     User = user,
                     CategoryId = model.CategoryId,
-                    ImagePath = await Unit.UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
+                    ImagePath = await UploadPostMainImageAndGetPathAsync(model.Image, appEnvironment)
                 };
                 await SetPostTagsAsync(GetTags(model.Tags), newPost);
                 var defaultRating = new Rating
@@ -163,7 +163,7 @@ namespace RNews.Controllers.Publication
         [HttpPost("~/upload")]
         public async Task<IActionResult> Upload(IFormFile file)
         {
-            var output = new { filename = await Unit.UploadPostMainImageAndGetPathAsync(file, appEnvironment) };
+            var output = new { filename = await UploadPostMainImageAndGetPathAsync(file, appEnvironment) };
             return Json(output);
         }
 
@@ -234,6 +234,24 @@ namespace RNews.Controllers.Publication
         {
             var likeCounter =  db.CommentLikes.Count(c => c.Comment == comment && c.IsLike == true);
             return likeCounter;
+        }
+        public static async Task<string> UploadPostMainImageAndGetPathAsync(IFormFile file, IHostingEnvironment appEnvironment)
+        {
+
+            if (file != null)
+            {
+                string path = "/imgs/posts/" + file.FileName;
+                using (var fileStream = new FileStream(appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+                return path;
+            }
+            else
+            {
+                return "test";
+            }
+
         }
     }
 }

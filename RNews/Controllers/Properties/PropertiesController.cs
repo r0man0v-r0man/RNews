@@ -9,7 +9,6 @@ using RNews.DAL;
 using RNews.DAL.dbContext;
 using RNews.Hubs;
 using RNews.Models.ViewModels;
-using RNews.Units;
 using System;
 using System.IO;
 using System.Linq;
