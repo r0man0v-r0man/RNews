@@ -50,7 +50,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 
                     <ul class="navbar-nav">
-                        
+
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -65,10 +65,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Properties" asp-action="Properties">Properties</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Publication" asp-action="Create"><i class="fas fa-feather-alt fa-lg"></i></a>
-                            </li>
-
+                            @if (!User.IsInRole("reader"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Publication" asp-action="Create"><i class="fas fa-feather-alt fa-lg"></i></a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <form class="form-inline" asp-controller="Auth" asp-action="LogOut" asp-route-returnUrl="@Url.Action("Index", "Home")">
                                     <button type="submit" class="nav-link btn btn-link text-dark">LogOut</button>
