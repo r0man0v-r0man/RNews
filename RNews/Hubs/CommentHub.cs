@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using RNews.DAL;
 using RNews.DAL.dbContext;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace RNews.Hubs
 {
+    [Authorize]
     public class CommentHub : Hub
     {
         private readonly ApplicationDbContext db;
@@ -15,6 +17,7 @@ namespace RNews.Hubs
         {
             this.db = db;
         }
+        
         public async Task Comments(string content, int postId, string userId)
         {
             var post = await db.Posts.FindAsync(postId);

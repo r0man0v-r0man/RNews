@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace RNews.Hubs
 {
+    [Authorize]
     public class CommentLikeHub  : Hub
     {
         private readonly ApplicationDbContext db;
