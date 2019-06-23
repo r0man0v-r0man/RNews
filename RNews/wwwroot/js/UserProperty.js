@@ -5,48 +5,48 @@ var connectionAvatar = new signalR.HubConnectionBuilder().withUrl("/UserAvatarHu
 var userId = document.getElementById("PropertyViewModelId");
 
 
-var mailArea = document.getElementById("mail");
-var mailButtons = document.getElementById("email-buttons");
-var mailEditButton = document.getElementById("edit-button");
-var mailSubmitButton = document.getElementById("submit-button");
-var emailField = document.getElementById("user-property-email");
-mailArea.addEventListener("mouseenter", function () {
-    mailButtons.style.display = "inline-block";
+var nameArea = document.getElementById("name");
+var nameButtons = document.getElementById("name-buttons");
+var nameEditButton = document.getElementById("name-edit-button");
+var nameSubmitButton = document.getElementById("name-submit-button");
+var nameField = document.getElementById("user-property-name");
+nameArea.addEventListener("mouseenter", function () {
+    nameButtons.style.display = "inline-block";
 });
-mailArea.addEventListener("mouseleave", function () {
-    mailButtons.style.display = "none";
+nameArea.addEventListener("mouseleave", function () {
+    nameButtons.style.display = "none";
 });
-mailEditButton.addEventListener("click", function () {
-    emailField.setAttribute("contenteditable", "true");
-    emailField.classList.add("single-line");
-    emailField.focus();
-    mailButtons.style.display = "inline-block";
+nameEditButton.addEventListener("click", function () {
+    nameField.setAttribute("contenteditable", "true");
+    nameField.classList.add("single-line");
+    nameField.focus();
+    nameButtons.style.display = "inline-block";
 });
-emailField.onblur = function () {
-    if (!emailField.textContent) {
+nameField.onblur = function () {
+    if (!nameField.textContent) {
         document.execCommand("undo");
     };
-    mailButtons.style.display = "inline-block";
-    emailField.setAttribute("contenteditable", "false");
+    nameButtons.style.display = "inline-block";
+    nameField.setAttribute("contenteditable", "false");
 };
-emailField.onfocus = function () {
-    mailButtons.style.display = "inline-block";
+nameField.onfocus = function () {
+    nameButtons.style.display = "inline-block";
 };
-mailSubmitButton.addEventListener("click", function () {
-    mailButtons.style.display = "none";
-    if (!emailField.textContent) {
+nameSubmitButton.addEventListener("click", function () {
+    nameButtons.style.display = "none";
+    if (!nameField.textContent) {
         document.execCommand("undo");
     };
-    emailField.setAttribute("contenteditable", "false");
-    connection.invoke("EmailChange", emailField.textContent, userId.value)
+    nameField.setAttribute("contenteditable", "false");
+    connection.invoke("NameChange", nameField.textContent, userId.value)
         .catch(function (err) {
             return console.error(err.toString());
         });
 });
 
-connection.on("EmailChange", function (changedEmail) {
-    emailField.innerText = changedEmail;
-    alertify.success("Success!");
+connection.on("NameChange", function (changedName, status) {
+    nameField.innerText = changedName;
+    alertify.success(status);
 });
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {
@@ -64,11 +64,7 @@ connectionAvatar.start()
         console.error(error.message);
     });
 
-//user properties
-connection.on("UserPropertySend", function (description, name) {
-    document.getElementById("user-property-name").value = name;
-    document.getElementById("user-property-description").value = description;
-});
+
 connection.start()
     .then(function () {
         console.log("connection started");
@@ -77,55 +73,3 @@ connection.start()
         console.error(error.message);
     });
 
-document.getElementById("user-property-name").addEventListener("keypress",async function (event) {
-    var key = event.which || event.keyCode;
-    if (key === 13) {
-        var userId = document.getElementById("PropertyViewModelId").value;
-        var name = document.getElementById("user-property-name").value;
-        var description = document.getElementById("user-property-description").value;
-        await connection.invoke("UserProperty", description, name, userId)
-            .catch(function (err) {
-                return console.error(err.toString());
-            });
-        event.preventDefault();
-    }
-});
-
-document.getElementById("user-property-description").addEventListener("keypress", function (event) {
-    var key = event.which || event.keyCode;
-    if (key === 13) {
-        var userId = document.getElementById("PropertyViewModelId").value;
-        var name = document.getElementById("user-property-name").value;
-        var description = document.getElementById("user-property-description").value;
-        connection.invoke("UserProperty", description, name, userId)
-            .catch(function (err) {
-                return console.error(err.toString());
-            });
-        event.preventDefault();
-    }
-});
-document.getElementById("user-property-btn").addEventListener("click", function (event) {
-    var userId = document.getElementById("PropertyViewModelId").value;
-    var name = document.getElementById("user-property-name").value;
-    var description = document.getElementById("user-property-description").value;
-    connection.invoke("UserProperty", description, name, userId)
-            .catch(function (err) {
-                return console.error(err.toString());
-            });
-    event.preventDefault();
-    }
-);
-$(document).ready(function () {
-
-    $('input[type=text]').keypress(function (e) {
-        if (e.keyCode == 13) {
-
-            if ($(this).attr('class') === "last") {
-                $('input[type=text]').eq(0).focus()
-            } else {
-
-                $('input[type=text]').closest('input[type=text]').focus();
-            }
-        }
-    });
-});

@@ -18,35 +18,15 @@ namespace RNews.Hubs
         {
             this.db = db;
         }
-        public async Task UserProperty(string userPropertyDescription, string userPropertyName, string userId)
+        public async Task NameChange(string newName, string userId)
         {
-            if (!String.IsNullOrEmpty(userPropertyDescription) && !String.IsNullOrEmpty(userPropertyName))
+            if (!String.IsNullOrWhiteSpace(newName) && !String.IsNullOrEmpty(userId))
             {
                 var user = await db.People.FindAsync(userId);
-                user.UserName = userPropertyName;
-                user.Description = userPropertyDescription;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                await Clients.All.SendAsync("UserPropertySend", user.Description, user.UserName);
-            }
-            
-        }
-        public async Task EmailChange(string newEmail, string userId)
-        {
-            if (!String.IsNullOrWhiteSpace(newEmail) && !String.IsNullOrEmpty(userId))
-            {
-                var user = await db.People.FindAsync(userId);
-                if (RegexUtilities.IsValidEmail(newEmail))
-                {
-                    user.Email = newEmail;
-                    user.NormalizedEmail = newEmail.ToUpper();
-                    await db.SaveChangesAsync();
-                    await Clients.Caller.SendAsync("EmailChange", user.Email);
-                }
-                else
-                {
-                    await Clients.Caller.SendAsync("EmailChange", user.Email);
-                }
+                user.UserName = newName;
+                user.NormalizedUserName = newName.ToUpper();
+                await db.SaveChangesAsync();
+                await Clients.Caller.SendAsync("NameChange", user.UserName, "ok");
             }
         }
     }
