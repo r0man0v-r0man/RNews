@@ -46,8 +46,7 @@ mailSubmitButton.addEventListener("click", function () {
 
 connection.on("EmailChange", function (changedEmail) {
     emailField.innerText = changedEmail;
-    alertify.success("Success!", "success", 1);
-    alertify.delay(1);
+    alertify.success("Success!");
 });
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {

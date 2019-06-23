@@ -3,12 +3,12 @@
     ViewData["Title"] = "Properties";
 }
 <div class="row justify-content-center ">
-    <div class="col-md-8 row ">
-        <div class="col-md-4 box-shadow">
+    <div class="col-sm-8 row ">
+        <div class="col-sm-4 box-shadow">
             <img src="@Model.ImagePath" alt="User Avatar" class="img-fluid" id="user-avatar" />
             <partial name="UploadAvatar" />
         </div>
-        <div class="col-md-8" id="properties">
+        <div class="col-sm-8" id="properties">
             <h4 class="text-center font-weight-light">
                 @foreach (var role in Model.Roles)
                 {
@@ -27,7 +27,7 @@
                     <button id="name-submit-button" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
                 </div>
             </div>
-            <div class="form-group row" id="mail">
+            <div class="form-row" id="mail">
                 <div class="col-sm-2 font-weight-bold">E-Mail</div>
                 <div class="col-sm-6 property-change">
                     <p id="user-property-email" class="mb-2">@Model.Email</p>
@@ -42,9 +42,6 @@
                 <div class="col-sm-12">
                     <input type="text" class="form-control-plaintext last" id="user-property-description" value="@Model.Description">
                 </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" id="user-property-btn">Ok</button>
             </div>
 
         </div>
