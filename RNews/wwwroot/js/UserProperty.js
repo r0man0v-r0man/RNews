@@ -2,8 +2,50 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/UserPropertyHub").build();
 var connectionAvatar = new signalR.HubConnectionBuilder().withUrl("/UserAvatarHub").build();
 
-var mail = document.getElementById("user-property-email");
+var userId = document.getElementById("PropertyViewModelId");
 
+
+var mailArea = document.getElementById("mail");
+var mailButtons = document.getElementById("email-buttons");
+var mailEditButton = document.getElementById("edit-button");
+var mailSubmitButton = document.getElementById("submit-button");
+var emailField = document.getElementById("user-property-email");
+mailArea.addEventListener("mouseenter", function () {
+    mailButtons.style.display = "inline-block";
+});
+mailArea.addEventListener("mouseleave", function () {
+    mailButtons.style.display = "none";
+});
+mailEditButton.addEventListener("click", function () {
+    emailField.setAttribute("contenteditable", "true");
+    emailField.classList.add("single-line");
+    emailField.focus();
+    document.execCommand("selectall", null, false);
+    mailButtons.style.display = "inline-block";
+});
+emailField.onblur = function () {
+    document.execCommand("undo");
+    mailButtons.style.display = "inline-block";
+    emailField.setAttribute("contenteditable", "false");
+};
+emailField.onfocus = function () {
+    mailButtons.style.display = "inline-block";
+};
+mailSubmitButton.addEventListener("click", function () {
+    mailButtons.style.display = "none";
+    if (!emailField.textContent) {
+        document.execCommand("undo");
+    };
+    emailField.setAttribute("contenteditable", "false");
+    connection.invoke("EmailChange", emailField.textContent, userId.value)
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+});
+
+connection.on("EmailChange", function (changedEmail) {
+    emailField.innerText = changedEmail;
+});
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {
     var avatar = document.getElementById("user-avatar");
@@ -20,14 +62,6 @@ connectionAvatar.start()
         console.error(error.message);
     });
 
-//document.getElementById("user-avatar-download-btn").addEventListener("click", function (event) {
-//    var userId = document.getElementById("PropertyViewModelId").value;
-//    connectionAvatar.invoke("UserAvatarRecieve",  userId)
-//        .catch(function (err) {
-//            return console.error(err.toString());
-//        });
-//    event.preventDefault();
-//});
 //user properties
 connection.on("UserPropertySend", function (description, name) {
     document.getElementById("user-property-name").value = name;
@@ -93,25 +127,3 @@ $(document).ready(function () {
         }
     });
 });
-//function doCheck() {
-//    var allFilled = true;
-//    var inputs = document.getElementsByTagName('input');
-//    for (var i = 0; i < inputs.length; i++) {
-//        if (inputs[i].type == "text" && inputs[i].value == "")  {
-//            allFilled = false;
-//            break;
-//        }
-//    }
-
-//    document.getElementById("user-property-btn").disabled = !allFilled;
-//}
-
-//window.onload = function () {
-//    var inputs = document.getElementsByTagName('input');
-//    for (var i = 0; i < inputs.length; i++) {
-//        if (inputs[i].type == "text") {
-//            inputs[i].onkeyup = doCheck;
-//            inputs[i].onblur = doCheck;
-//        }
-//    }
-//};

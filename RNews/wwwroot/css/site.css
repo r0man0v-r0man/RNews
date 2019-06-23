@@ -74,3 +74,24 @@ img[src*="?img-fluid"] {
     cursor: pointer;
     color: #dc3545;
 }
+[contenteditable="true"].single-line {
+    white-space: nowrap;
+    /*width: 200px;*/
+    overflow: hidden;
+}
+
+    [contenteditable="true"].single-line br {
+        display: none;
+    }
+
+    [contenteditable="true"].single-line * {
+        display: inline;
+        white-space: nowrap;
+    }
+#email-buttons, #name-buttons {
+    display: none;
+}
+
+.property-change{
+    overflow:hidden;
+}

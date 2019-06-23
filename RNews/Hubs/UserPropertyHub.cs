@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RNews.DAL.dbContext;
+using RNews.Services;
 using System;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace RNews.Hubs
 {
+    [Authorize]
     public class UserPropertyHub : Hub
     {
         private readonly ApplicationDbContext db;
@@ -27,6 +31,22 @@ namespace RNews.Hubs
             }
             
         }
-        
+        public async Task EmailChange(string newEmail, string userId)
+        {
+            if (!String.IsNullOrWhiteSpace(newEmail) && !String.IsNullOrEmpty(userId))
+            {
+                var user = await db.People.FindAsync(userId);
+                if (RegexUtilities.IsValidEmail(newEmail))
+                {
+                    user.Email = newEmail;
+                    await db.SaveChangesAsync();
+                    await Clients.Caller.SendAsync("EmailChange", user.Email);
+                }
+                else
+                {
+                    await Clients.Caller.SendAsync("EmailChange", user.Email);
+                }
+            }
+        }
     }
 }
