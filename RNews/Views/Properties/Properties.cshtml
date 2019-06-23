@@ -9,49 +9,51 @@
             <partial name="UploadAvatar" />
         </div>
         <div class="col-md-8" id="properties">
-            <h4 class="text-center font-weight-light">@foreach (var role in Model.Roles)
-            {
-                <strong> @role</strong> 
-            }
+            <h4 class="text-center font-weight-light">
+                @foreach (var role in Model.Roles)
+                {
+                    <strong> @role</strong>
+                }
             </h4>
             <hr />
-                @Html.HiddenFor(m => m.PropertyViewModelId)
-                <div class="form-group row" id="name">
-                    <div class="col-sm-2 font-weight-bold">Name</div>
-                    <div class="col-sm-6 property-change">
-                        <p id="user-property-name" class="mb-2">@Model.Name</p>
-                    </div>
-                    <div class="col-sm-4" id="name-buttons">
-                        <button id="name-edit-button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></button>
-                        <button id="name-submit-button" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
-                    </div>
+            @Html.HiddenFor(m => m.PropertyViewModelId)
+            <div class="form-group row" id="name">
+                <div class="col-sm-2 font-weight-bold">Name</div>
+                <div class="col-sm-6 property-change">
+                    <p id="user-property-name" class="mb-2">@Model.Name</p>
                 </div>
-                <div class="form-group row" id="mail">
-                    <div class="col-sm-2 font-weight-bold">E-Mail</div>
-                    <div class="col-sm-6 property-change">
-                        <p id="user-property-email" class="mb-2">@Model.Email</p>
-                    </div>
-                    <div class="col-sm-4" id="email-buttons">
-                        <button id="edit-button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></button>
-                        <button id="submit-button" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
-                    </div>
+                <div class="col-sm-4" id="name-buttons">
+                    <button id="name-edit-button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></button>
+                    <button id="name-submit-button" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
                 </div>
-                <div class="form-group row">
-                    <label for="user-property-description" class="col-sm-12 col-form-label font-weight-bold">Description:</label>
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control-plaintext last" id="user-property-description" value="@Model.Description">
-                    </div>
+            </div>
+            <div class="form-group row" id="mail">
+                <div class="col-sm-2 font-weight-bold">E-Mail</div>
+                <div class="col-sm-6 property-change">
+                    <p id="user-property-email" class="mb-2">@Model.Email</p>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" id="user-property-btn">Ok</button>
+                <div class="col-sm-4" id="email-buttons">
+                    <button id="edit-button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></button>
+                    <button id="submit-button" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
                 </div>
-           
+            </div>
+            <div class="form-group row">
+                <label for="user-property-description" class="col-sm-12 col-form-label font-weight-bold">Description:</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control-plaintext last" id="user-property-description" value="@Model.Description">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" id="user-property-btn">Ok</button>
+            </div>
+
         </div>
-        
+
     </div>
 </div>
 
 @section Scripts {
+    <script src="~/lib/alertifyjs/alertify.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/UserProperty.js"></script>
 }

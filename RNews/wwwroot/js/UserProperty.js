@@ -20,11 +20,12 @@ mailEditButton.addEventListener("click", function () {
     emailField.setAttribute("contenteditable", "true");
     emailField.classList.add("single-line");
     emailField.focus();
-    document.execCommand("selectall", null, false);
     mailButtons.style.display = "inline-block";
 });
 emailField.onblur = function () {
-    document.execCommand("undo");
+    if (!emailField.textContent) {
+        document.execCommand("undo");
+    };
     mailButtons.style.display = "inline-block";
     emailField.setAttribute("contenteditable", "false");
 };
@@ -45,6 +46,8 @@ mailSubmitButton.addEventListener("click", function () {
 
 connection.on("EmailChange", function (changedEmail) {
     emailField.innerText = changedEmail;
+    alertify.success("Success!", "success", 1);
+    alertify.delay(1);
 });
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {

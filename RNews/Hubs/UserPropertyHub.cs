@@ -39,6 +39,7 @@ namespace RNews.Hubs
                 if (RegexUtilities.IsValidEmail(newEmail))
                 {
                     user.Email = newEmail;
+                    user.NormalizedEmail = newEmail.ToUpper();
                     await db.SaveChangesAsync();
                     await Clients.Caller.SendAsync("EmailChange", user.Email);
                 }
