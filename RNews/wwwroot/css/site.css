@@ -88,7 +88,7 @@ img[src*="?img-fluid"] {
         display: inline;
         white-space: nowrap;
     }
-#email-buttons, #name-buttons {
+#email-buttons, #name-buttons, #description-buttons {
     display: none;
 }
 

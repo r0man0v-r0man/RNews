@@ -63,6 +63,12 @@ var descriptionEditButton = document.getElementById("description-edit-button");
 var descriptionSubmitButton = document.getElementById("description-submit-button");
 var descriptionField = document.getElementById("user-property-description");
 var existDescription = descriptionField.value;
+descriptionArea.onmouseenter = function () {
+    descriptionButtons.style.display = "inline-block";
+};
+descriptionArea.onmouseleave = function () {
+    descriptionButtons.style.display = "none";
+};
 descriptionField.onblur = function () {
     if (!descriptionField.value) {
         descriptionField.value = existDescription;
@@ -72,6 +78,7 @@ descriptionEditButton.onclick = function () {
     descriptionField.focus();
 };
 descriptionSubmitButton.onclick = function () {
+    descriptionButtons.style.display = "none";
     existDescription = descriptionField.value;
     connection.invoke("DescriptionChange", descriptionField.value, userId.value)
         .catch(function (err) {
