@@ -46,7 +46,8 @@ namespace RNews.Controllers.Profile
                 ImagePath = user.ImagePath,
                 Description = user.Description,
                 Roles = await userManager.GetRolesAsync(user),
-                UserPosts = await db.Posts.Where(c => c.User == user).ToListAsync()
+                UserPosts = await db.Posts.Where(c => c.User == user).ToListAsync(),
+                UserComments = await db.Comments.Where(c => c.User == user).ToListAsync()
             };
             return View(model);
         }

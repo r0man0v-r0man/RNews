@@ -20,5 +20,6 @@ namespace RNews.Models.ViewModels
         public string Description { get; set; }
         public IList<string> Roles { get; set; }
         public List<Post> UserPosts { get; set; }
+        public List<Comment> UserComments { get; set; }
     }
 }

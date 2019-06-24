@@ -5,7 +5,7 @@
 <div class="row justify-content-center ">
     <div class="col-sm-8 row ">
         <div class="col-sm-4 box-shadow">
-            <img src="@Model.ImagePath" alt="User Avatar" class="img-fluid" id="user-avatar" />
+            <img src="@Model.ImagePath" alt="User Avatar" class="img-fluid overflow-hidden" id="user-avatar" />
             <partial name="UploadAvatar" />
         </div>
         <div class="col-sm-8" id="properties">
@@ -17,22 +17,22 @@
             </h4>
             <hr />
             @Html.HiddenFor(m => m.PropertyViewModelId)
-        <div class="form-group row" id="name">
-            <label for="user-property-name" class="col-sm-6 col-form-label font-weight-bold">Name:</label>
-            <div class="col-sm-6" id="name-buttons">
-                <button id="name-edit-button" class="btn btn-info btn-sm" tabindex="0"><i class="fas fa-pencil-alt"></i></button>
-                <button id="name-submit-button" class="btn btn-success btn-sm" tabindex="0"><i class="fas fa-check"></i></button>
+            <div class="form-group row" id="name">
+                <label for="user-property-name" class="col-sm-6 col-form-label font-weight-bold">Name:</label>
+                <div class="col-sm-6" id="name-buttons">
+                    <button id="name-edit-button" class="btn btn-info btn-sm" tabindex="0"><i class="fas fa-pencil-alt"></i></button>
+                    <button id="name-submit-button" class="btn btn-success btn-sm" tabindex="0"><i class="fas fa-check"></i></button>
+                </div>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control-plaintext" id="user-property-name" value="@Model.Name" required>
+                </div>
             </div>
-            <div class="col-sm-12">
-                <input type="text" class="form-control-plaintext" id="user-property-name" value="@Model.Name" required>
+            <div class="form-group row" id="email">
+                <label for="user-property-email" class="col-sm-12 col-form-label font-weight-bold">Email:</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control-plaintext" id="user-property-email" value="@Model.Email" readonly>
+                </div>
             </div>
-        </div>
-        <div class="form-group row" id="email">
-            <label for="user-property-email" class="col-sm-12 col-form-label font-weight-bold">Email:</label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control-plaintext" id="user-property-email" value="@Model.Email" readonly>
-            </div>
-        </div>
             <div class="form-group row" id="description">
                 <label for="user-property-description" class="col-sm-6 col-form-label font-weight-bold">Description:</label>
                 <div class="col-sm-6" id="description-buttons">
@@ -43,6 +43,14 @@
                     <input type="text" class="form-control-plaintext" id="user-property-description" value="@Model.Description" required>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="col-sm-8 row mt-3">
+        <div class="col-sm-2">
+            <p class="text-muted small">Постов: @Model.UserPosts.Count</p>
+        </div>
+        <div class="col-sm-2">
+            <p class="text-muted small">Комментариев: @Model.UserComments.Count</p>
         </div>
     </div>
     <div class="col-sm-8">
