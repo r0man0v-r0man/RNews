@@ -60,11 +60,21 @@ connection.start()
 var descriptionArea = document.getElementById("description");
 var descriptionButtons = document.getElementById("description-buttons");
 var descriptionEditButton = document.getElementById("description-edit-button");
+var descriptionSubmitButton = document.getElementById("description-submit-button");
 var descriptionField = document.getElementById("user-property-description");
 descriptionEditButton.onclick = function () {
     descriptionField.focus();
-}
-
+};
+descriptionSubmitButton.onclick = function () {
+    connection.invoke("DescriptionChange", descriptionField.value, userId.value)
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+};
+connection.on("DescriptionChange", function (changedDescription, status) {
+    descriptionField.value = changedDescription;
+    alertify.success(status);
+});
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {
     var avatar = document.getElementById("user-avatar");
