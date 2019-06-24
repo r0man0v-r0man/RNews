@@ -29,5 +29,15 @@ namespace RNews.Hubs
                 await Clients.Caller.SendAsync("NameChange", user.UserName, "ok");
             }
         }
+        public async Task DescriptionChange(string newDescription, string userId)
+        {
+            if (!String.IsNullOrWhiteSpace(newDescription) && !String.IsNullOrEmpty(userId))
+            {
+                var user = await db.People.FindAsync(userId);
+                user.Description = newDescription;
+                await db.SaveChangesAsync();
+                await Clients.Caller.SendAsync("DescriptionChange", user.Description, "ok");
+            }
+        }
     }
 }

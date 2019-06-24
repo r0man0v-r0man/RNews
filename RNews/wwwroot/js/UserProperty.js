@@ -48,6 +48,23 @@ connection.on("NameChange", function (changedName, status) {
     nameField.innerText = changedName;
     alertify.success(status);
 });
+
+connection.start()
+    .then(function () {
+        console.log("connection started");
+    })
+    .catch(error => {
+        console.error(error.message);
+    });
+
+var descriptionArea = document.getElementById("description");
+var descriptionButtons = document.getElementById("description-buttons");
+var descriptionEditButton = document.getElementById("description-edit-button");
+var descriptionField = document.getElementById("user-property-description");
+descriptionEditButton.onclick = function () {
+    descriptionField.focus();
+}
+
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {
     var avatar = document.getElementById("user-avatar");
@@ -64,12 +81,4 @@ connectionAvatar.start()
         console.error(error.message);
     });
 
-
-connection.start()
-    .then(function () {
-        console.log("connection started");
-    })
-    .catch(error => {
-        console.error(error.message);
-    });
 
