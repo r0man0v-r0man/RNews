@@ -62,6 +62,12 @@ var descriptionButtons = document.getElementById("description-buttons");
 var descriptionEditButton = document.getElementById("description-edit-button");
 var descriptionSubmitButton = document.getElementById("description-submit-button");
 var descriptionField = document.getElementById("user-property-description");
+var existDescription = descriptionField.value;
+descriptionField.onblur = function () {
+    if (!descriptionField.value) {
+        descriptionField.value = existDescription;
+    };
+};
 descriptionEditButton.onclick = function () {
     descriptionField.focus();
 };
