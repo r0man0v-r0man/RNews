@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RNews.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace RNews.Models.ViewModels
         [Required]
         public string Description { get; set; }
         public IList<string> Roles { get; set; }
+        public List<Post> UserPosts { get; set; }
     }
 }

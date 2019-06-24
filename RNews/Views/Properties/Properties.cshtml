@@ -43,9 +43,19 @@
                     <input type="text" class="form-control-plaintext" id="user-property-description" value="@Model.Description" required>
                 </div>
             </div>
-
         </div>
-
+    </div>
+    <div class="col-sm-8">
+        @foreach (var post in Model.UserPosts)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">@post.Title</h6>
+                    <p class="card-text">@post.Description</p>
+                    <a href=@Url.Action("show", "publication", new { id = post.PostId }) class="card-link stretched-link">View</a>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
