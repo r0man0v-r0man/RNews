@@ -10,43 +10,41 @@ var nameButtons = document.getElementById("name-buttons");
 var nameEditButton = document.getElementById("name-edit-button");
 var nameSubmitButton = document.getElementById("name-submit-button");
 var nameField = document.getElementById("user-property-name");
-nameArea.addEventListener("mouseenter", function () {
+var existName = nameField.value;
+
+var descriptionArea = document.getElementById("description");
+var descriptionButtons = document.getElementById("description-buttons");
+var descriptionEditButton = document.getElementById("description-edit-button");
+var descriptionSubmitButton = document.getElementById("description-submit-button");
+var descriptionField = document.getElementById("user-property-description");
+var existDescription = descriptionField.value;
+
+
+nameArea.onmouseenter = function () {
     nameButtons.style.display = "inline-block";
-});
-nameArea.addEventListener("mouseleave", function () {
+};
+nameArea.onmouseleave = function () {
     nameButtons.style.display = "none";
-});
-nameEditButton.addEventListener("click", function () {
-    nameField.setAttribute("contenteditable", "true");
-    nameField.classList.add("single-line");
-    nameField.focus();
-    nameButtons.style.display = "inline-block";
-});
+};
 nameField.onblur = function () {
-    if (!nameField.textContent) {
-        document.execCommand("undo");
+    if (!nameField.value) {
+        nameField.value = existName;
     };
-    nameButtons.style.display = "inline-block";
-    nameField.setAttribute("contenteditable", "false");
 };
-nameField.onfocus = function () {
-    nameButtons.style.display = "inline-block";
+nameEditButton.onclick = function () {
+    nameField.focus();
 };
-nameSubmitButton.addEventListener("click", function () {
+nameSubmitButton.onclick = function () {
     nameButtons.style.display = "none";
-    if (!nameField.textContent) {
-        document.execCommand("undo");
-    };
-    nameField.setAttribute("contenteditable", "false");
-    connection.invoke("NameChange", nameField.textContent, userId.value)
+    existName = nameField.value;
+    connection.invoke("NameChange", nameField.value, userId.value)
         .catch(function (err) {
             return console.error(err.toString());
         });
-});
-
+};
 connection.on("NameChange", function (changedName, status) {
-    nameField.innerText = changedName;
     alertify.success(status);
+    nameField.value = changedName;
 });
 
 connection.start()
@@ -57,12 +55,7 @@ connection.start()
         console.error(error.message);
     });
 
-var descriptionArea = document.getElementById("description");
-var descriptionButtons = document.getElementById("description-buttons");
-var descriptionEditButton = document.getElementById("description-edit-button");
-var descriptionSubmitButton = document.getElementById("description-submit-button");
-var descriptionField = document.getElementById("user-property-description");
-var existDescription = descriptionField.value;
+
 descriptionArea.onmouseenter = function () {
     descriptionButtons.style.display = "inline-block";
 };
