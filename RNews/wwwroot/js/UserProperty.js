@@ -72,14 +72,15 @@ descriptionEditButton.onclick = function () {
     descriptionField.focus();
 };
 descriptionSubmitButton.onclick = function () {
+    existDescription = descriptionField.value;
     connection.invoke("DescriptionChange", descriptionField.value, userId.value)
         .catch(function (err) {
             return console.error(err.toString());
         });
 };
 connection.on("DescriptionChange", function (changedDescription, status) {
-    descriptionField.value = changedDescription;
     alertify.success(status);
+    descriptionField.value = changedDescription;
 });
 //user avatar
 connectionAvatar.on("UserAvatarSend", function (data) {
