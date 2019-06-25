@@ -10,6 +10,7 @@ var nameButtons = document.getElementById("name-buttons");
 var nameEditButton = document.getElementById("name-edit-button");
 var nameSubmitButton = document.getElementById("name-submit-button");
 var nameField = document.getElementById("user-property-name");
+var nameError = document.getElementById("name-error");
 var existName = nameField.value;
 
 var descriptionArea = document.getElementById("description");
@@ -45,6 +46,7 @@ nameSubmitButton.onclick = function () {
 connection.on("NameChange", function (changedName, status) {
     alertify.success(status);
     nameField.value = changedName;
+    nameError.innerText = status;
 });
 
 connection.start()
